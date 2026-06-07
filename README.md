@@ -103,8 +103,12 @@ Key files:
 🔄 **In Development**
 
 - [x] Phase 0: Environment setup
-- [ ] Phase 1: Data pipeline
-- [ ] Phase 2: React UI + game logic
+- [x] Phase 1: Data pipeline (fetch → enrich → compress)
+  - [x] 1a: Zafronix validation & fetching
+  - [x] 1b: Claude API enrichment with age penalties
+  - [x] 1c: JSON optimization & gzip compression
+- [🔄] Phase 2: React UI + game logic (in progress)
+  - [🔄] 2a: React setup & component scaffolding
 - [ ] Phase 3: Integration & deployment
 - [ ] Phase 4: Polish & extras
 
@@ -114,8 +118,6 @@ Each session is tracked via **[docs/HANDOFF.md](docs/HANDOFF.md)**:
 - ✅ What was completed
 - 🔄 What's in progress
 - 📋 Copy-paste prompt to resume next session
-
-After Phase 0, check HANDOFF.md for the next steps prompt.
 
 See [docs/PROGRESS.md](docs/PROGRESS.md) for detailed phase progress.
 
