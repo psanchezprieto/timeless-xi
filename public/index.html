@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMELESS XI - World Cup Dream Teams</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro 80s Font: Press Start 2P for headers, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --neon-pink: #FF10F0;
+      --neon-cyan: #00F0FF;
+      --neon-yellow: #FFFF00;
+      --dark-bg: #0a0e27;
+      --dark-card: #1a1f3a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 16, 240, 0.03) 0px,
+          rgba(255, 16, 240, 0.03) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Press Start 2P', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+
+    .neon-text-pink {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink), 0 0 20px rgba(255, 16, 240, 0.5);
+    }
+
+    .neon-text-cyan {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0, 240, 255, 0.5);
+    }
+
+    .neon-text-yellow {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px rgba(255, 255, 0, 0.5);
+    }
+
+    .neon-border {
+      border: 2px solid var(--neon-pink);
+      box-shadow: 0 0 10px rgba(255, 16, 240, 0.5), inset 0 0 10px rgba(255, 16, 240, 0.1);
+    }
+
+    .neon-border-cyan {
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.1);
+    }
+
+    .glow-button {
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+      border: 2px solid var(--neon-cyan);
+      color: #000;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 16, 240, 0.5);
+    }
+
+    .glow-button:hover {
+      box-shadow: 0 0 30px rgba(255, 16, 240, 0.8), 0 0 40px rgba(0, 240, 255, 0.6);
+      transform: scale(1.05);
+    }
+
+    .glow-button:active {
+      transform: scale(0.98);
+    }
+
+    .card-retro {
+      background-color: var(--dark-card);
+      border: 2px solid var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255, 16, 240, 0.3);
+      border-radius: 0;
+    }
+
+    @keyframes pulse-neon {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .pulse-neon {
+      animation: pulse-neon 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.8; }
+    }
+
+    .flicker {
+      animation: flicker 3s infinite;
+    }
+
+    #app {
+      min-height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
