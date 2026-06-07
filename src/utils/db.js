@@ -41,19 +41,34 @@ export async function getPlayersByCountry(countryName) {
   const meta = await loadMeta()
   const players = []
 
+  console.log(`🔍 Loading players for ${countryName}...`)
+
   for (const decade of meta.decades) {
-    if (decade.playerCount === 0) continue
+    if (decade.playerCount === 0) {
+      console.log(`⏭️  Skipping ${decade.name} (no players)`)
+      continue
+    }
+
+    console.log(`📦 Loading ${decade.filename}...`)
     const data = await loadGzFile(decade.filename)
-    if (!data || !data.squads) continue
+
+    if (!data || !data.squads) {
+      console.warn(`⚠️  No squads in ${decade.filename}`)
+      continue
+    }
+
+    console.log(`  Found ${data.squads.length} squads`)
 
     for (const squad of data.squads) {
-      if (squad.c === countryName || squad.cn === countryName) {
+      const matchesCountry = squad.c === countryName || squad.cn === countryName
+      if (matchesCountry) {
+        console.log(`  ✓ Found squad for ${squad.cn || squad.c}: ${squad.p?.length || 0} players`)
         for (const p of squad.p || []) {
           players.push({
             name: p.n,
             position: p.pos,
             number: p.num,
-            rating: typeof p.r === 'number' ? p.r : 6,
+            rating: typeof p.r === 'number' ? Math.round(p.r * 10) : 70, // Convert 1-10 scale to 0-100
             year: squad.y,
             country: squad.c || squad.cn,
           })
@@ -62,6 +77,7 @@ export async function getPlayersByCountry(countryName) {
     }
   }
 
+  console.log(`✅ Total players for ${countryName}: ${players.length}`)
   return players
 }
 
