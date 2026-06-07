@@ -160,19 +160,18 @@ export default function CountryPicker({ onSelect }) {
             onMouseEnter={stickerHoverIn}
             onMouseLeave={stickerHoverOut}
           >
-            {/* Cream sticker backing with flag */}
-            <div style={{ padding: '5px', background: '#E8E2D6' }}>
-              <div className="flag-emboss" style={{ width: '100%' }}>
-                <img
-                  src={getFlagUrl(country)}
-                  alt={`${country.name} flag`}
-                  style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', display: 'block' }}
-                />
-              </div>
+            {/* Flag edge-to-edge */}
+            <div className="flag-emboss" style={{ width: '100%', borderRadius: 0 }}>
+              <img
+                src={getFlagUrl(country)}
+                alt={`${country.name} flag`}
+                style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', display: 'block' }}
+              />
             </div>
             {/* Name label strip */}
             <div style={{
-              background: C.accent,
+              background: C.bg,
+              borderTop: `1px solid ${C.border}`,
               padding: '0.32rem 0.4rem',
               display: 'flex',
               alignItems: 'center',
@@ -181,7 +180,7 @@ export default function CountryPicker({ onSelect }) {
               flex: 1,
             }}>
               <span style={{
-                color: '#fff',
+                color: C.gold,
                 fontSize: '0.58rem',
                 fontWeight: '700',
                 letterSpacing: '0.1em',
