@@ -1,138 +1,115 @@
 import pako from 'pako'
 
-let squadCache = {}
-let coachCache = null
-let metaCache = null
+const cache = {}
 
-/**
- * Load meta.json - registry of all data files
- */
 export async function loadMeta() {
-  if (metaCache) return metaCache
-
-  try {
-    const res = await fetch('/data/meta.json')
-    metaCache = await res.json()
-    return metaCache
-  } catch (e) {
-    console.error('Error loading meta.json:', e)
-    throw new Error('Failed to load tournament data')
-  }
+  if (cache.meta) return cache.meta
+  const res = await fetch('/data/meta.json')
+  if (!res.ok) throw new Error('Failed to load meta.json')
+  cache.meta = await res.json()
+  return cache.meta
 }
 
-/**
- * Load gzipped squad file for a specific decade
- */
-export async function loadSquadsByDecade(decade) {
-  if (squadCache[decade]) return squadCache[decade]
+async function loadGzFile(filename) {
+  if (cache[filename]) return cache[filename]
 
   try {
-    const res = await fetch(`/data/squads-${decade}.json.gz`)
+    const res = await fetch(`/data/${filename}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading ${filename}`)
+
     const buffer = await res.arrayBuffer()
-    const decompressed = pako.inflate(buffer, { to: 'string' })
-    const data = JSON.parse(decompressed)
-    squadCache[decade] = data
-    return data
+    if (buffer.byteLength === 0) {
+      console.warn(`Empty file: ${filename}`)
+      cache[filename] = { squads: [] }
+      return cache[filename]
+    }
+
+    const inflated = pako.inflate(new Uint8Array(buffer), { to: 'string' })
+    cache[filename] = JSON.parse(inflated)
+    return cache[filename]
   } catch (e) {
-    console.error(`Error loading squads for ${decade}:`, e)
-    return null
+    console.error(`Error loading ${filename}:`, e.message)
+    cache[filename] = { squads: [] }
+    return cache[filename]
   }
 }
 
-/**
- * Load all coaches
- */
-export async function loadCoaches() {
-  if (coachCache) return coachCache
-
-  try {
-    const res = await fetch('/data/coaches.json.gz')
-    const buffer = await res.arrayBuffer()
-    const decompressed = pako.inflate(buffer, { to: 'string' })
-    coachCache = JSON.parse(decompressed)
-    return coachCache
-  } catch (e) {
-    console.error('Error loading coaches:', e)
-    return {}
-  }
-}
-
-/**
- * Get all players from a specific country
- */
+// Returns all players for a country across all World Cup decades.
+// Squad data uses abbreviated keys: c=country, cn=countryName, y=year, p=players array
+// Player keys: n=name, num=number, pos=position, r=rating (1-10), conf=confidence
 export async function getPlayersByCountry(countryName) {
   const meta = await loadMeta()
   const players = []
 
-  // Load data from all decades that have this country
   for (const decade of meta.decades) {
-    const data = await loadSquadsByDecade(decade.range)
-    if (data && data.squads) {
-      // Find squads for this country
-      const countrySquads = data.squads.filter(s => {
-        // Denormalize: look up country code in meta
-        const countryData = meta.countries.find(c => c.c === s.c)
-        return countryData && countryData.n === countryName
-      })
+    if (decade.playerCount === 0) continue
+    const data = await loadGzFile(decade.filename)
+    if (!data || !data.squads) continue
 
-      // Extract players
-      countrySquads.forEach(squad => {
-        if (squad.p) {
-          squad.p.forEach(player => {
-            players.push({
-              name: player.n,
-              position: player.pos,
-              number: player.num,
-              rating: player.r,
-              confidence: player.conf,
-              year: squad.y,
-              country: countryName,
-            })
+    for (const squad of data.squads) {
+      if (squad.c === countryName || squad.cn === countryName) {
+        for (const p of squad.p || []) {
+          players.push({
+            name: p.n,
+            position: p.pos,
+            number: p.num,
+            rating: typeof p.r === 'number' ? p.r : 6,
+            year: squad.y,
+            country: squad.c || squad.cn,
           })
         }
-      })
+      }
     }
   }
 
   return players
 }
 
-/**
- * Get coaches for a specific country
- */
 export async function getCoachesByCountry(countryName) {
-  const coaches = await loadCoaches()
-  return coaches[countryName] || []
-}
-
-/**
- * Get random players for a position
- */
-export async function getRandomPlayersForPosition(countryName, position, count = 3) {
-  const players = await getPlayersByCountry(countryName)
-  const positionPlayers = players.filter(p => p.position === position)
-
-  // Shuffle and take first N
-  const shuffled = positionPlayers.sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
-}
-
-/**
- * Get all countries available in the database
- */
-export async function getAvailableCountries() {
-  const meta = await loadMeta()
-  if (meta.countries) {
-    return meta.countries.map(c => c.n).sort()
+  if (!cache.coaches) {
+    const res = await fetch('/data/coaches.json.gz')
+    if (!res.ok) throw new Error('Failed to load coaches')
+    const buffer = await res.arrayBuffer()
+    const inflated = pako.inflate(new Uint8Array(buffer), { to: 'string' })
+    cache.coaches = JSON.parse(inflated)
   }
-  return []
+  return cache.coaches[countryName] || []
 }
 
-/**
- * Clear cache (for testing)
- */
+export async function getRandomPlayersForPosition(countryName, position, count = 3) {
+  try {
+    const players = await getPlayersByCountry(countryName)
+    const pool = players.filter(p => p.position === position)
+
+    if (pool.length === 0) {
+      console.warn(`No ${position} players found for ${countryName}`)
+      // Return mock players if no real ones found
+      return Array(count).fill(null).map((_, i) => ({
+        name: `Player ${i + 1}`,
+        position,
+        number: i + 1,
+        rating: 70,
+        year: 2020,
+        country: countryName,
+      }))
+    }
+
+    const shuffled = pool.sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, count)
+  } catch (e) {
+    console.error(`Error loading players for ${countryName}/${position}:`, e)
+    // Return fallback mock players
+    return Array(count).fill(null).map((_, i) => ({
+      name: `Player ${i + 1}`,
+      position,
+      number: i + 1,
+      rating: 70,
+      year: 2020,
+      country: countryName,
+    }))
+  }
+}
+
 export function clearCache() {
-  squadCache = {}
-  coachCache = null
-  metaCache = null
+  Object.keys(cache).forEach(k => delete cache[k])
 }
