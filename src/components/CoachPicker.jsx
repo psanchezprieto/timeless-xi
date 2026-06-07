@@ -1,13 +1,36 @@
-import React from 'react'
-
-// Placeholder coach data - will load from coaches.json in Phase 2c
-const COACHES_SAMPLE = [
-  { name: 'Coach A', era: '2010-2020', moraleBoost: 3 },
-  { name: 'Coach B', era: '2000-2010', moraleBoost: 4 },
-  { name: 'Coach C', era: '1990-2000', moraleBoost: 5 },
-]
+import React, { useState, useEffect } from 'react'
+import { getCoachesByCountry } from '../utils/db'
 
 export default function CoachPicker({ country, onSelect }) {
+  const [coaches, setCoaches] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadCoaches = async () => {
+      setLoading(true)
+      try {
+        const coachList = await getCoachesByCountry(country)
+        setCoaches(coachList || [])
+      } catch (e) {
+        console.error('Error loading coaches:', e)
+        setCoaches([])
+      }
+      setLoading(false)
+    }
+    loadCoaches()
+  }, [country])
+
+  if (loading) {
+    return (
+      <div style={{ maxWidth: '64rem', margin: '0 auto', textAlign: 'center' }}>
+        <h1 style={{ color: '#d97fb6', fontSize: '2.5rem', fontWeight: '900', marginBottom: '2rem', textTransform: 'uppercase' }}>
+          Select Your Coach
+        </h1>
+        <p style={{ color: '#5eb3c6', fontSize: '1.125rem' }}>Loading legendary managers...</p>
+      </div>
+    )
+  }
+
   return (
     <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
       <h1 style={{ color: '#d97fb6', fontSize: '2.5rem', fontWeight: '900', textAlign: 'center', marginBottom: '1rem', textTransform: 'uppercase' }}>
@@ -22,7 +45,7 @@ export default function CoachPicker({ country, onSelect }) {
         gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
         gap: '1.5rem',
       }}>
-        {COACHES_SAMPLE.map(coach => (
+        {coaches.map(coach => (
           <button
             key={coach.name}
             onClick={() => onSelect(coach)}
