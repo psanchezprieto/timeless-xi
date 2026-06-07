@@ -7,8 +7,42 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 ## **Current Session Status**
 
 **Last completed**: Phase 1a - Zafronix Fetcher (API validation + full fetch) (2026-06-07)  
-**Current task**: Phase 1a validated. Ready for Phase 1b (enrichment)  
+**Current task**: Ready to delegate Phase 1b (enrichment) to agent  
 **Blocker status**: None ✅
+
+---
+
+## **AGENT TASK: Phase 1b - Claude API Enrichment**
+
+**Task**: Build `scripts/enrich-ratings.mjs` to add player ratings (1-10 scale) via Claude batch API.
+
+**Input**: `data/raw-squads.json` (457 squads, 10,437 players)
+
+**Output**: 
+- `data/enriched-squads.json` (same structure + rating/confidence per player)
+- `data/enrichment-gaps.json` (report of uncertain/failed ratings)
+
+**Implementation checklist**:
+- [ ] Create `scripts/enrich-ratings.mjs`
+- [ ] Read `data/raw-squads.json`
+- [ ] Use Claude API batch mode (CLAUDE_API_KEY from .env)
+- [ ] For each player: prompt "Rate this footballer 1-10 historically (era, position, country, year). Respond ONLY with a number 1-10."
+- [ ] Input: {name, position, country, year}
+- [ ] Parse response → {rating: 1-10, confidence: 0.0-1.0}
+- [ ] Implement --test flag (50 players only for cost validation)
+- [ ] Implement --sample flag (batch of 10 with detailed output)
+- [ ] Add caching to skip re-rated players
+- [ ] Output enriched data with stats
+- [ ] Handle API errors gracefully
+- [ ] Update `PROGRESS.md` when complete
+- [ ] Commit to git
+
+**Cost notes**: 
+- ~2,500 players × batch API = ~$20-40 USD
+- Use batch API (50% cheaper than regular)
+- Test mode first with --test flag
+
+**Reference**: See `CLAUDE.md` for Claude API usage details
 
 ---
 
@@ -123,40 +157,69 @@ None at this time. All key decisions made:
 
 ---
 
-## **Copy-Paste Handoff Prompt for Next Chat**
+## **Copy-Paste Handoff Prompt for Next Chat / Agent**
 
-Use this prompt to resume work. Paste it verbatim:
+Paste this verbatim to resume Phase 1b work:
 
 ```
-I'm continuing development of Timeless XI, a World Cup simulation game.
-Check the context by reading:
-- docs/TIMELESS_XI_PROJECT_BRIEF.md (product spec)
-- CLAUDE.md (system prompt + full context)
-- docs/PROGRESS.md (current status)
-- docs/ARCHITECTURE.md (technical design)
+Build Phase 1b: Claude API enrichment for World Cup player ratings.
 
-Phase 0 is complete. Phase 1a (Zafronix Fetcher) is complete and validated. Ready to build Phase 1b.
+Context:
+- Project: Timeless XI (World Cup simulation game)
+- Status: Phase 1a (Zafronix fetcher) complete. Phase 1b ready to build.
+- Working directory: /home/botuser/timeless-xi
+
+Read for full context:
+- CLAUDE.md (project system prompt + tech stack)
+- docs/PROGRESS.md (phase tracking)
+- data/raw-squads.json (input: 457 squads, 10,437 players)
 
 Current state:
-✅ Phase 1a complete: 457 squads fetched, 10,437 players, 19/23 years with data
-✅ data/raw-squads.json generated
-✅ data/fetch-gaps.json report generated
-✅ dotenv + API authentication implemented
-✅ Committed to git
+✅ Phase 1a: 457 squads fetched, 10,437 players from Zafronix API
+✅ data/raw-squads.json exists with schema: {squads: [{year, country, countryCode, flag, playerCount, players: [{name, number, position, country, year}]}]}
+✅ Package.json configured with scripts
+✅ dotenv support in place
+✅ Git repo ready
 
-Next task: Build Phase 1b - Claude API enrichment script.
+Task: Build scripts/enrich-ratings.mjs
 
-Phase 1b plan:
-1. Create scripts/enrich-ratings.mjs
-2. Read from data/raw-squads.json
-3. For each player: call Claude batch API (rate 1-10 historically)
-4. Add {rating, confidence} to each player
-5. Output to data/enriched-squads.json
-6. Create data/enrichment-gaps.json report
-7. Test with sample batch
-8. Run full enrichment (cost: ~$20-40)
+Requirements:
+1. Read data/raw-squads.json
+2. For each player, call Claude batch API with prompt:
+   "Rate this footballer 1-10 historically (era, position, country, year). Respond ONLY with a number 1-10."
+   Input: {name, position, country, year}
+3. Parse response as integer 1-10
+4. Calculate confidence (0.0-1.0) based on response quality
+5. Add {rating: 1-10, confidence: 0-1} to each player object
+6. Output data/enriched-squads.json (same structure as input + ratings)
+7. Create data/enrichment-gaps.json report (failed/uncertain ratings)
 
-After Phase 1b, Phase 1c (JSON optimizer + compressor) will split data by decade and compress to <2MB.
+Implementation:
+- Use Claude API batch mode (cheaper: batch = 50% cost of regular API)
+- Add --test flag: enrich 50 players only (cost validation)
+- Add --sample flag: batch of 10 with console output
+- Implement caching: skip players already in data/enriched-squads.json
+- Read CLAUDE_API_KEY from process.env (via .env file)
+- Validate API responses, handle errors gracefully
+- Log progress and final statistics
+
+Cost estimate: ~2,500 players × batch API = ~$20-40 USD
+
+Steps:
+1. Create scripts/enrich-ratings.mjs from scratch
+2. Implement full flow: read → batch API → enrich → output
+3. Test with --test flag (50 players)
+4. Review data/enrichment-gaps.json for issues
+5. Run full enrichment (all 10,437 players) — this will incur cost
+6. Verify data/enriched-squads.json quality
+7. Update PROGRESS.md: mark 1b complete with stats
+8. Commit to git with message: "Phase 1b: Complete Claude API enrichment"
+
+Files to modify/create:
+- CREATE: scripts/enrich-ratings.mjs (new script)
+- CREATE: data/enriched-squads.json (output)
+- CREATE: data/enrichment-gaps.json (report)
+- MODIFY: PROGRESS.md (mark 1b complete)
 
 Current blockers: None
 Ready to start: Yes
