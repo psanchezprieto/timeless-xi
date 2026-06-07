@@ -1,19 +1,27 @@
-import React, { useState, useMemo } from 'react'
-import { generateAITeams, calcTeamRating, createGroups, simulateGroup, simulateKnockoutMatch } from '../utils/simulator'
-import { C } from '../styles/theme'
+import React, { useState, useMemo, useEffect } from 'react'
+import {
+  generateHistoricalAITeams, generateAITeams,
+  calcTeamRating, createGroups, simulateGroup, simulateKnockoutMatch,
+} from '../utils/simulator'
+import { C, S } from '../styles/theme'
 
 const ROUNDS = ['Round of 16', 'Quarterfinals', 'Semifinals', 'Final']
 
+// "Spain (1982)" for AI teams, plain "Spain" for user
+function teamLabel(team) {
+  if (team.isUser) return team.country
+  return team.year ? `${team.country} (${team.year})` : team.country
+}
+
 function buildResult(campaign, champion, exitRound) {
-  const allScorers = campaign.results.flatMap(r => r.homeScorers || [])
   const scorerCount = {}
-  for (const s of allScorers) scorerCount[s] = (scorerCount[s] || 0) + 1
+  for (const s of campaign.results.flatMap(r => r.homeScorers || [])) {
+    scorerCount[s] = (scorerCount[s] || 0) + 1
+  }
   const mvpEntry = Object.entries(scorerCount).sort((a, b) => b[1] - a[1])[0]
-  const mvp = mvpEntry ? mvpEntry[0] : '—'
   return {
-    champion,
-    exitRound,
-    mvp,
+    champion, exitRound,
+    mvp: mvpEntry ? mvpEntry[0] : '—',
     matches: campaign.results.length,
     goalsFor: campaign.gf,
     goalsAgainst: campaign.ga,
@@ -21,89 +29,125 @@ function buildResult(campaign, champion, exitRound) {
   }
 }
 
-const btn = (color = C.pink) => ({
-  background: color,
-  border: `1px solid ${color}`,
-  color: '#fff',
-  fontWeight: '700',
-  padding: '0.75rem 1.75rem',
-  cursor: 'pointer',
-  textTransform: 'uppercase',
-  borderRadius: '4px',
-  fontSize: '0.9rem',
-  letterSpacing: '0.05em',
-})
+// ── Sub-components ────────────────────────────────────────────────────────
 
-function ScoreBox({ result, country }) {
-  const userIsHome = result.home === country
+function Btn({ children, onClick, color = C.accent, disabled = false }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{
+        ...S.btn,
+        background: color,
+        opacity: disabled ? 0.5 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+      }}
+      onMouseEnter={e => {
+        if (!disabled) {
+          e.currentTarget.style.filter = 'brightness(1.12)'
+          e.currentTarget.style.transform = 'translateY(-1px)'
+        }
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.filter = 'none'
+        e.currentTarget.style.transform = 'translateY(0)'
+      }}
+    >
+      {children}
+    </button>
+  )
+}
+
+function ScoreBox({ result, userCountry }) {
+  const userIsHome = result.home === userCountry
   const userGoals = userIsHome ? result.homeGoals : result.awayGoals
-  const oppGoals = userIsHome ? result.awayGoals : result.homeGoals
-  const opp = userIsHome ? result.away : result.home
-  const scorers = result.homeScorers || []
-  const won = userGoals > oppGoals || (result.penalties && result.penHome > result.penAway)
+  const oppGoals  = userIsHome ? result.awayGoals : result.homeGoals
+  const oppLabel  = userIsHome ? result.awayLabel : result.homeLabel
+  const userScorers = userIsHome ? result.homeScorers : result.awayScorers
+  const oppScorers  = userIsHome ? result.awayScorers : result.homeScorers
+  const won       = userGoals > oppGoals || (result.penalties && result.penHome > result.penAway)
 
   return (
-    <div style={{ backgroundColor: C.card, border: `2px solid ${won ? C.gold : C.pink}`, borderRadius: '8px', padding: '1.5rem', textAlign: 'center', boxShadow: `0 0 20px ${won ? C.gold : C.pink}33` }}>
-      <div style={{ color: C.cyan, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-        {country} vs {opp}
+    <div style={{
+      backgroundColor: C.surface,
+      border: `1px solid ${won ? C.gold : C.danger}`,
+      borderRadius: '10px',
+      padding: '1.5rem',
+      textAlign: 'center',
+    }}>
+      <div style={{ fontSize: '0.7rem', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase', color: C.textDim, marginBottom: '1.25rem' }}>
+        {userCountry} vs {oppLabel}
       </div>
+
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ color: '#e0e0e0', fontWeight: '700', fontSize: '0.95rem' }}>{country}</div>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '0.95rem', color: C.text }}>{userCountry}</div>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.25rem', fontWeight: '800', color: C.gold, minWidth: '90px', textAlign: 'center', letterSpacing: '-0.03em' }}>
+          {userGoals}–{oppGoals}
         </div>
-        <div style={{ fontSize: '2.5rem', fontWeight: '900', color: C.gold, minWidth: '100px', textAlign: 'center' }}>
-          {userGoals} – {oppGoals}
-        </div>
-        <div style={{ textAlign: 'left' }}>
-          <div style={{ color: '#a0a0a0', fontWeight: '600', fontSize: '0.95rem' }}>{opp}</div>
-        </div>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '600', fontSize: '0.9rem', color: C.textSub }}>{oppLabel}</div>
       </div>
+
       {result.penalties && (
-        <div style={{ color: C.cyan, fontSize: '0.8rem', marginBottom: '0.75rem' }}>
-          (Penalties: {result.penHome} – {result.penAway})
+        <div style={{ fontSize: '0.78rem', color: C.cyan, marginBottom: '0.75rem' }}>
+          Penalties: {result.penHome}–{result.penAway}
         </div>
       )}
-      {scorers.length > 0 && (
-        <div style={{ color: '#a0a0a0', fontSize: '0.78rem' }}>
-          ⚽ {scorers.join(', ')}
+      {(userScorers.length > 0 || oppScorers.length > 0) && (
+        <div style={{ fontSize: '0.75rem', color: C.textDim, marginBottom: '1rem' }}>
+          {userScorers.length > 0 && <div>⚽ {userScorers.join(', ')}</div>}
+          {oppScorers.length > 0 && <div style={{ opacity: 0.7 }}>⚽ {oppScorers.join(', ')}</div>}
         </div>
       )}
-      <div style={{ marginTop: '1rem', fontSize: '1.1rem', fontWeight: '800', color: won ? C.gold : C.pink }}>
-        {won ? '✓ WIN' : '✗ LOSS'}
+
+      <div style={{
+        display: 'inline-block',
+        fontSize: '0.7rem', fontWeight: '700',
+        letterSpacing: '0.08em', textTransform: 'uppercase',
+        color: won ? C.gold : C.danger,
+        backgroundColor: won ? C.goldGlow : C.dangerGlow,
+        padding: '0.25rem 0.75rem', borderRadius: '99px',
+      }}>
+        {won ? 'Victory' : 'Eliminated'}
       </div>
     </div>
   )
 }
 
-function GroupTable({ group, country }) {
-  const isUser = (t) => t.country === country || t.isUser
+function GroupTable({ group, userCountry }) {
+  const isUser = t => t.isUser
   return (
-    <div style={{ backgroundColor: C.card, border: `1px solid #333`, borderRadius: '4px', overflow: 'hidden', fontSize: '0.8rem' }}>
-      <div style={{ backgroundColor: C.deep, padding: '0.4rem 0.75rem', color: C.cyan, fontWeight: '700', fontSize: '0.75rem', letterSpacing: '0.08em' }}>
-        GROUP {group.name}
+    <div style={{ backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: '10px', overflow: 'hidden' }}>
+      <div style={{
+        backgroundColor: C.surfaceHi, padding: '0.5rem 1rem',
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontSize: '0.7rem', fontWeight: '700',
+        letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textSub,
+      }}>
+        Group {group.name}
       </div>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
         <thead>
-          <tr style={{ color: '#666', fontSize: '0.7rem' }}>
-            <th style={{ padding: '0.3rem 0.75rem', textAlign: 'left' }}>Team</th>
-            <th style={{ padding: '0.3rem', textAlign: 'center' }}>P</th>
-            <th style={{ padding: '0.3rem', textAlign: 'center' }}>W</th>
-            <th style={{ padding: '0.3rem', textAlign: 'center' }}>D</th>
-            <th style={{ padding: '0.3rem', textAlign: 'center' }}>L</th>
-            <th style={{ padding: '0.3rem 0.75rem', textAlign: 'center' }}>Pts</th>
+          <tr style={{ color: C.textDim, fontSize: '0.68rem', letterSpacing: '0.05em' }}>
+            <th style={{ padding: '0.4rem 1rem', textAlign: 'left', fontWeight: '500' }}>Team</th>
+            {['P','W','D','L','Pts'].map(h => (
+              <th key={h} style={{ padding: '0.4rem 0.5rem', textAlign: 'center', fontWeight: '500' }}>{h}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {group.teams.map((t, i) => (
-            <tr key={t.country} style={{ borderTop: '1px solid #222', backgroundColor: isUser(t) ? '#1a2a1a' : 'transparent' }}>
-              <td style={{ padding: '0.35rem 0.75rem', color: isUser(t) ? C.gold : i < 2 ? '#e0e0e0' : '#a0a0a0', fontWeight: isUser(t) ? '700' : '400' }}>
-                {isUser(t) ? '★ ' : ''}{t.country}
+            <tr key={t.country + t.year} style={{
+              borderTop: `1px solid ${C.border}`,
+              backgroundColor: isUser(t) ? 'rgba(124,92,252,0.08)' : 'transparent',
+            }}>
+              <td style={{ padding: '0.4rem 1rem', color: isUser(t) ? C.accent : i < 2 ? C.text : C.textSub, fontWeight: isUser(t) ? '700' : '400' }}>
+                {isUser(t) ? '★ ' : ''}{teamLabel(t)}
               </td>
-              <td style={{ padding: '0.35rem', textAlign: 'center', color: '#a0a0a0' }}>{(t.w || 0) + (t.d || 0) + (t.l || 0)}</td>
-              <td style={{ padding: '0.35rem', textAlign: 'center', color: '#a0a0a0' }}>{t.w || 0}</td>
-              <td style={{ padding: '0.35rem', textAlign: 'center', color: '#a0a0a0' }}>{t.d || 0}</td>
-              <td style={{ padding: '0.35rem', textAlign: 'center', color: '#a0a0a0' }}>{t.l || 0}</td>
-              <td style={{ padding: '0.35rem 0.75rem', textAlign: 'center', color: C.gold, fontWeight: '700' }}>{t.pts || 0}</td>
+              <td style={{ padding: '0.4rem 0.5rem', textAlign: 'center', color: C.textDim }}>{(t.w||0)+(t.d||0)+(t.l||0)}</td>
+              <td style={{ padding: '0.4rem 0.5rem', textAlign: 'center', color: C.textDim }}>{t.w||0}</td>
+              <td style={{ padding: '0.4rem 0.5rem', textAlign: 'center', color: C.textDim }}>{t.d||0}</td>
+              <td style={{ padding: '0.4rem 0.5rem', textAlign: 'center', color: C.textDim }}>{t.l||0}</td>
+              <td style={{ padding: '0.4rem 0.5rem', textAlign: 'center', fontWeight: '700', color: C.gold }}>{t.pts||0}</td>
             </tr>
           ))}
         </tbody>
@@ -112,33 +156,59 @@ function GroupTable({ group, country }) {
   )
 }
 
-export default function TournamentSim({ team, coach, country, onComplete }) {
+// ── Main component ────────────────────────────────────────────────────────
+export default function TournamentSim({ team, coach, country, onComplete, onNewGame }) {
   const userTeam = useMemo(() => ({
     country,
+    year: null,
     avgRating: calcTeamRating(team, coach),
     players: team,
     isUser: true,
-  }), [])
+  }), []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const allTeams = useMemo(() => [userTeam, ...generateAITeams(country)], [])
-  const rawGroups = useMemo(() => createGroups(allTeams), [])
+  // Load historical AI teams async
+  const [allTeams, setAllTeams] = useState(null)
+  const [loadingTeams, setLoadingTeams] = useState(true)
+
+  useEffect(() => {
+    generateHistoricalAITeams(country, null, 31)
+      .then(aiTeams => {
+        setAllTeams([userTeam, ...aiTeams])
+        setLoadingTeams(false)
+      })
+      .catch(() => {
+        // Fallback to tier-based AI teams
+        setAllTeams([userTeam, ...generateAITeams(country, 31)])
+        setLoadingTeams(false)
+      })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const rawGroups = useMemo(() => allTeams ? createGroups(allTeams) : null, [allTeams])
 
   const [phase, setPhase] = useState('groups')
   const [simGroups, setSimGroups] = useState(null)
-  const [remaining, setRemaining] = useState([])
   const [roundIdx, setRoundIdx] = useState(0)
   const [pendingMatch, setPendingMatch] = useState(null)
   const [matchResult, setMatchResult] = useState(null)
   const [campaign, setCampaign] = useState({ gf: 0, ga: 0, results: [], wins: 0 })
 
-  const userGroupRaw = rawGroups.find(g => g.teams.some(t => t.isUser))
+  const userGroupRaw = rawGroups?.find(g => g.teams.some(t => t.isUser))
 
-  // ── Phase: groups ──────────────────────────────────────────────
+  // ── Group stage ──────────────────────────────────────────────────────────
   const simulateGroupStage = () => {
     const simmed = rawGroups.map(simulateGroup)
     setSimGroups(simmed)
     const ug = simmed.find(g => g.teams.some(t => t.isUser))
-    const userMatches = (ug.matches || []).filter(m => m.home === country || m.away === country)
+    const userMatches = (ug.matches || []).map(m => {
+      // Attach team labels to all results for display
+      const homeTeam = ug.teams.find(t => t.country === m.home)
+      const awayTeam = ug.teams.find(t => t.country === m.away)
+      return {
+        ...m,
+        homeLabel: homeTeam ? teamLabel(homeTeam) : m.home,
+        awayLabel: awayTeam ? teamLabel(awayTeam) : m.away,
+      }
+    }).filter(m => m.home === country || m.away === country)
     let gf = 0, ga = 0, wins = 0
     for (const m of userMatches) {
       const myGoals = m.home === country ? m.homeGoals : m.awayGoals
@@ -150,14 +220,13 @@ export default function TournamentSim({ team, coach, country, onComplete }) {
     setPhase('group_results')
   }
 
-  // ── Phase: advance to knockout ──────────────────────────────────
   const advanceToKnockout = () => {
     const qualifiers = simGroups.flatMap(g => [g.teams[0], g.teams[1]])
     if (!qualifiers.some(t => t.isUser)) {
       onComplete(buildResult(campaign, false, 'Group Stage'))
       return
     }
-    setRemaining(qualifiers)
+    setPhase('knockout')
     startRound(qualifiers, 0)
   }
 
@@ -178,15 +247,19 @@ export default function TournamentSim({ team, coach, country, onComplete }) {
     setPhase('match_preview')
   }
 
-  // ── Phase: play the match ───────────────────────────────────────
   const playMatch = () => {
     const result = simulateKnockoutMatch(pendingMatch.home, pendingMatch.away, team)
+    // Attach display labels to result for ScoreBox
+    result.homeLabel = teamLabel(pendingMatch.home)
+    result.awayLabel = teamLabel(pendingMatch.away)
     const userWon = result.winner.isUser
     const myGoals = result.home === country ? result.homeGoals : result.awayGoals
     const theirGoals = result.home === country ? result.awayGoals : result.homeGoals
-    setCampaign(c => ({ ...c, gf: c.gf + myGoals, ga: c.ga + theirGoals, wins: c.wins + (userWon ? 1 : 0), results: [...c.results, result] }))
-    const newRemaining = userWon ? [result.winner, ...pendingMatch.otherWinners] : pendingMatch.otherWinners
-    setRemaining(newRemaining)
+    setCampaign(c => ({
+      ...c, gf: c.gf + myGoals, ga: c.ga + theirGoals,
+      wins: c.wins + (userWon ? 1 : 0),
+      results: [...c.results, result],
+    }))
     setMatchResult({ ...result, userWon })
     setPhase('match_result')
   }
@@ -196,108 +269,150 @@ export default function TournamentSim({ team, coach, country, onComplete }) {
       onComplete(buildResult(campaign, false, ROUNDS[roundIdx]))
       return
     }
+    const newRemaining = [matchResult.winner, ...pendingMatch.otherWinners]
     if (roundIdx + 1 >= ROUNDS.length) {
       onComplete(buildResult(campaign, true, 'Final'))
       return
     }
-    startRound(remaining, roundIdx + 1)
+    startRound(newRemaining, roundIdx + 1)
   }
 
-  // ── Render ──────────────────────────────────────────────────────
+  // ── Render ───────────────────────────────────────────────────────────────
+  if (loadingTeams) {
+    return (
+      <div style={{ textAlign: 'center', padding: '6rem 0' }}>
+        <div className="spinner" style={{ margin: '0 auto 1.5rem' }} />
+        <p style={{ color: C.textSub, fontSize: '0.9rem' }}>Assembling the field…</p>
+        <p style={{ color: C.textDim, fontSize: '0.8rem', marginTop: '0.5rem' }}>Loading historical squads</p>
+      </div>
+    )
+  }
+
   return (
     <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
-
+      {onNewGame && (
+        <button
+          onClick={onNewGame}
+          style={{ ...S.btnGhost, marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }}
+        >
+          ← Start over
+        </button>
+      )}
       {/* Header */}
-      <h1 style={{ color: C.pink, fontSize: '2.5rem', fontWeight: '900', textAlign: 'center', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
-        World Cup Tournament
-      </h1>
-      <p style={{ color: C.cyan, textAlign: 'center', marginBottom: '2rem' }}>
-        {country} • Rating: {userTeam.avgRating.toFixed(0)}/100
-      </p>
+      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <p style={S.label}>World Cup Tournament</p>
+        <h1 style={{ ...S.h1, marginTop: '0.5rem' }}>{country}</h1>
+        <p style={{ color: C.textDim, fontSize: '0.85rem', marginTop: '0.25rem' }}>
+          Team rating: <span style={{ color: C.gold, fontWeight: '700' }}>{userTeam.avgRating.toFixed(0)}</span>/100
+        </p>
+      </div>
 
       {/* ── Phase: groups ── */}
-      {phase === 'groups' && (
+      {phase === 'groups' && rawGroups && (
         <>
-          <div style={{ backgroundColor: C.card, border: `1px solid ${C.pink}`, borderRadius: '4px', padding: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>
-            <p style={{ color: '#e0e0e0', marginBottom: '0.5rem' }}>Your group: <strong style={{ color: C.gold }}>Group {userGroupRaw ? userGroupRaw.name : '?'}</strong></p>
-            <p style={{ color: '#a0a0a0', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-              {userGroupRaw ? userGroupRaw.teams.map(t => t.country).join(' • ') : ''}
+          <div style={{
+            ...S.card,
+            textAlign: 'center', marginBottom: '2rem', padding: '2rem',
+            borderColor: C.borderLight,
+          }}>
+            <p style={{ color: C.textSub, marginBottom: '0.4rem', fontSize: '0.9rem' }}>
+              Your group:{' '}
+              <strong style={{ color: C.accent, fontFamily: "'Space Grotesk', sans-serif" }}>
+                Group {userGroupRaw?.name ?? '?'}
+              </strong>
             </p>
-            <button style={btn(C.pink)} onClick={simulateGroupStage}>Simulate Group Stage</button>
+            <p style={{ color: C.textDim, fontSize: '0.8rem', marginBottom: '1.75rem' }}>
+              {userGroupRaw?.teams.map(teamLabel).join(' · ')}
+            </p>
+            <Btn onClick={simulateGroupStage}>Simulate Group Stage →</Btn>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
-            {rawGroups.map(g => (
-              <GroupTable key={g.name} group={g} country={country} />
-            ))}
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
+            {rawGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} />)}
           </div>
         </>
       )}
 
       {/* ── Phase: group_results ── */}
-      {phase === 'group_results' && simGroups && (
-        <>
-          {/* User's group results */}
-          {(() => {
-            const ug = simGroups.find(g => g.teams.some(t => t.isUser))
-            const qualified = ug.teams.findIndex(t => t.isUser) < 2
-            const userMatches = (ug.matches || []).filter(m => m.home === country || m.away === country)
-            return (
-              <>
-                <div style={{ backgroundColor: C.card, border: `1px solid ${qualified ? C.gold : C.pink}`, borderRadius: '4px', padding: '1.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: qualified ? C.gold : C.pink, marginBottom: '0.5rem' }}>
-                    {qualified ? '✓ QUALIFIED!' : '✗ Eliminated in Group Stage'}
-                  </div>
-                  <p style={{ color: '#a0a0a0', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-                    {qualified ? 'Your team advanced to the Round of 16!' : 'Better luck next time.'}
-                  </p>
-                  <button style={btn(qualified ? C.gold : C.pink)} onClick={advanceToKnockout}>
-                    {qualified ? 'Continue to Round of 16 →' : 'See Final Results'}
-                  </button>
-                </div>
+      {phase === 'group_results' && simGroups && (() => {
+        const ug = simGroups.find(g => g.teams.some(t => t.isUser))
+        const qualified = ug.teams.findIndex(t => t.isUser) < 2
+        const userMatches = (ug.matches || []).filter(m => m.home === country || m.away === country)
+        return (
+          <>
+            <div style={{
+              ...S.card,
+              textAlign: 'center', marginBottom: '1.75rem', padding: '2rem',
+              borderColor: qualified ? C.gold : C.danger,
+            }}>
+              <div style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '1.4rem', fontWeight: '800',
+                color: qualified ? C.gold : C.danger, marginBottom: '0.5rem',
+              }}>
+                {qualified ? '✓ Qualified for Round of 16' : '✗ Eliminated in Group Stage'}
+              </div>
+              <p style={{ color: C.textSub, fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+                {qualified ? 'Your team advances to the knockout stage.' : 'Better luck next time.'}
+              </p>
+              <Btn onClick={advanceToKnockout} color={qualified ? C.gold : C.accent}>
+                {qualified ? 'Continue to Round of 16 →' : 'See Final Results'}
+              </Btn>
+            </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
-                  {userMatches.map((m, i) => <ScoreBox key={i} result={m} country={country} />)}
-                </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem', marginBottom: '1.75rem' }}>
+              {userMatches.map((m, i) => <ScoreBox key={i} result={m} userCountry={country} />)}
+            </div>
 
-                <h3 style={{ color: C.cyan, fontWeight: '700', marginBottom: '1rem', textTransform: 'uppercase', fontSize: '0.875rem', letterSpacing: '0.1em' }}>All Group Standings</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
-                  {simGroups.map(g => <GroupTable key={g.name} group={g} country={country} />)}
-                </div>
-              </>
-            )
-          })()}
-        </>
-      )}
+            <p style={{ ...S.label, marginBottom: '0.75rem' }}>All Group Standings</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
+              {simGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} />)}
+            </div>
+          </>
+        )
+      })()}
 
       {/* ── Phase: match_preview ── */}
       {phase === 'match_preview' && pendingMatch && (
         <div style={{ textAlign: 'center' }}>
-          <div style={{ color: C.gold, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-            {ROUNDS[roundIdx]}
-          </div>
-          <div style={{ backgroundColor: C.card, border: `2px solid ${C.gold}`, borderRadius: '8px', padding: '2.5rem 2rem', maxWidth: '480px', margin: '0 auto 2rem', boxShadow: `0 0 30px ${C.gold}20` }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: '#e0e0e0' }}>{country}</div>
-                <div style={{ fontSize: '0.75rem', color: C.cyan, marginTop: '0.25rem' }}>
+          <p style={S.label}>{ROUNDS[roundIdx]}</p>
+
+          <div style={{
+            ...S.card,
+            maxWidth: '440px', margin: '1.5rem auto 2rem',
+            padding: '2.5rem 2rem',
+            borderColor: C.borderLight,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                  {country}
+                </div>
+                <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
                   {userTeam.avgRating.toFixed(0)} rating
                 </div>
               </div>
-              <div style={{ fontSize: '2rem', color: '#555', fontWeight: '900' }}>vs</div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: '#a0a0a0' }}>{pendingMatch.away.country}</div>
-                <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.25rem' }}>
+              <div style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
+              }}>vs</div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                  {teamLabel(pendingMatch.away)}
+                </div>
+                <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
                   {pendingMatch.away.avgRating.toFixed(0)} rating
                 </div>
               </div>
             </div>
-            <button style={{ ...btn(C.pink), fontSize: '1rem', padding: '1rem 2.5rem' }} onClick={playMatch}>
-              ▶ Play Match
-            </button>
+            <Btn onClick={playMatch}>▶ Play Match</Btn>
           </div>
+
           {pendingMatch.otherWinners.length > 0 && (
-            <p style={{ color: '#555', fontSize: '0.8rem' }}>
-              {pendingMatch.otherWinners.length} other {ROUNDS[roundIdx]} matches will be simulated simultaneously.
+            <p style={{ color: C.textDim, fontSize: '0.8rem' }}>
+              {pendingMatch.otherWinners.length} other {ROUNDS[roundIdx].toLowerCase()} matches simulated simultaneously
             </p>
           )}
         </div>
@@ -306,17 +421,15 @@ export default function TournamentSim({ team, coach, country, onComplete }) {
       {/* ── Phase: match_result ── */}
       {phase === 'match_result' && matchResult && (
         <div style={{ textAlign: 'center' }}>
-          <div style={{ color: C.gold, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-            {ROUNDS[roundIdx]} Result
+          <p style={{ ...S.label, marginBottom: '1.25rem' }}>{ROUNDS[roundIdx]} — Result</p>
+          <div style={{ maxWidth: '440px', margin: '0 auto 2rem' }}>
+            <ScoreBox result={matchResult} userCountry={country} />
           </div>
-          <div style={{ maxWidth: '480px', margin: '0 auto 2rem' }}>
-            <ScoreBox result={matchResult} country={country} />
-          </div>
-          <button style={btn(matchResult.userWon ? C.gold : C.pink)} onClick={afterMatch}>
+          <Btn onClick={afterMatch} color={matchResult.userWon ? C.gold : C.accent}>
             {matchResult.userWon
-              ? roundIdx + 1 < ROUNDS.length ? `Continue to ${ROUNDS[roundIdx + 1]} →` : '🏆 Victory!'
+              ? roundIdx + 1 < ROUNDS.length ? `Continue to ${ROUNDS[roundIdx + 1]} →` : '🏆 Claim the trophy!'
               : 'See Final Results'}
-          </button>
+          </Btn>
         </div>
       )}
     </div>

@@ -97,46 +97,57 @@ export default function CountryPicker({ onSelect }) {
   }, [search])
 
   return (
-    <div style={S.page}>
-      <h1 style={S.h1}>Select Your Team</h1>
+    <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
+      <h1 style={S.h1}>Choose Your Nation</h1>
+      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '2rem', fontSize: '0.9rem' }}>
+        Build an all-time dream squad from your country's entire World Cup history
+      </p>
 
-      <input
-        type="text"
-        placeholder="Search countries..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        style={{
-          width: '100%',
-          padding: '0.75rem',
-          marginBottom: '2rem',
-          backgroundColor: C.card,
-          border: `1px solid ${C.pink}`,
-          color: C.text,
-          fontSize: '1rem',
-          borderRadius: '4px',
-          boxShadow: `0 0 8px rgba(217,127,182,0.2)`,
-          outline: 'none',
-        }}
-      />
+      <div style={{ position: 'relative', marginBottom: '2rem' }}>
+        <input
+          type="text"
+          placeholder="Search nations…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ ...S.input, paddingLeft: '2.5rem' }}
+          autoFocus
+        />
+        <span style={{
+          position: 'absolute', left: '0.85rem', top: '50%',
+          transform: 'translateY(-50%)', color: C.textDim, pointerEvents: 'none', fontSize: '1rem',
+        }}>⌕</span>
+      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
+        gap: '0.65rem',
+      }}>
         {filtered.map(country => (
           <button
             key={country.name}
             onClick={() => onSelect(country.name)}
-            style={{ ...S.cardCyan, cursor: 'pointer', transition: 'all 0.2s ease', textAlign: 'center' }}
+            style={{
+              ...S.card,
+              cursor: 'pointer',
+              textAlign: 'center',
+              padding: '1rem 0.75rem',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
+            }}
             onMouseEnter={cardHoverIn}
             onMouseLeave={cardHoverOut}
           >
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{country.flag}</div>
-            <div style={{ fontSize: '0.85rem', color: C.text, fontWeight: '600' }}>{country.name}</div>
+            <span style={{ fontSize: '1.75rem', lineHeight: 1 }}>{country.flag}</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: '600', color: C.text, lineHeight: 1.3 }}>
+              {country.name}
+            </span>
           </button>
         ))}
       </div>
 
       {filtered.length === 0 && (
-        <p style={{ textAlign: 'center', marginTop: '2rem', color: C.muted }}>
-          No countries found matching &ldquo;{search}&rdquo;
+        <p style={{ textAlign: 'center', marginTop: '3rem', color: C.textDim }}>
+          No results for &ldquo;{search}&rdquo;
         </p>
       )}
     </div>

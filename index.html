@@ -3,59 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TIMELESS XI - World Cup Dream Teams</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Timeless XI — World Cup Dream Teams</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --pink: #d97fb6;
-      --cyan: #5eb3c6;
-      --gold: #e8c547;
-      --bg: #1a1a2e;
-      --card: #16213e;
-      --text: #e0e0e0;
-      --muted: #a0a0a0;
+      --bg:          #0B0B0F;
+      --surface:     #131318;
+      --surface-hi:  #1A1A24;
+      --border:      #252530;
+      --accent:      #7C5CFC;
+      --accent-h:    #9B84FD;
+      --cyan:        #06B6D4;
+      --gold:        #F59E0B;
+      --text:        #EEEEF2;
+      --text-sub:    #8B8BA0;
+      --text-dim:    #4A4A60;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
-      background-image: repeating-linear-gradient(
-        0deg,
-        rgba(217,127,182,0.02) 0px,
-        rgba(217,127,182,0.02) 1px,
-        transparent 1px,
-        transparent 2px
-      );
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Inter', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-    }
-
-    @keyframes pulse-neon {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 54%, 56%, 100% { opacity: 1; }
-      20%, 24%, 55% { opacity: 0.8; }
+      letter-spacing: -0.02em;
+      line-height: 1.15;
     }
 
     #app { min-height: 100vh; width: 100%; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.25s ease forwards; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin 0.7s linear infinite;
+    }
   </style>
 </head>
 <body>

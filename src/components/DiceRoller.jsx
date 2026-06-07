@@ -13,12 +13,13 @@ function buildSlots(formation) {
   return slots
 }
 
-export default function DiceRoller({ country, formation, onComplete }) {
+const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#EF4444' }
+
+export default function DiceRoller({ country, formation, team: initialTeam, rerolls, onReroll, onComplete, onNewGame }) {
   const slots = buildSlots(formation)
-  const [team, setTeam] = useState([])
+  const [team, setTeam] = useState(initialTeam || [])
   const [candidates, setCandidates] = useState([])
   const [loading, setLoading] = useState(true)
-  const [rerolls, setRerolls] = useState(3)
 
   const slotIndex = team.length
   const currentPos = slots[slotIndex]
@@ -33,8 +34,7 @@ export default function DiceRoller({ country, formation, onComplete }) {
   useEffect(() => {
     if (slotIndex >= slots.length) return
     rollDice()
-    setRerolls(3)
-  }, [team.length]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [slotIndex]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (player) => {
     const next = [...team, { ...player, position: currentPos }]
@@ -47,78 +47,128 @@ export default function DiceRoller({ country, formation, onComplete }) {
 
   const handleReroll = async () => {
     if (rerolls <= 0) return
-    setRerolls(r => r - 1)
+    onReroll()
     await rollDice()
   }
 
   return (
-    <div style={S.page}>
+    <div style={{ maxWidth: '56rem', margin: '0 auto' }}>
+      {onNewGame && (
+        <button
+          onClick={onNewGame}
+          style={{ ...S.btnGhost, marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }}
+        >
+          ← Start over
+        </button>
+      )}
       <h1 style={S.h1}>Build Your Squad</h1>
-      <p style={{ color: C.cyan, textAlign: 'center', marginBottom: '0.25rem' }}>
-        {country} • {formation}
+      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '0.4rem', fontSize: '0.9rem' }}>
+        {country} <span style={{ color: C.textDim }}>·</span> {formation}
       </p>
-      <p style={{ color: C.muted, textAlign: 'center', marginBottom: '2rem' }}>
-        Pick your {currentPos} — slot {slotIndex + 1} of {slots.length}
+      <p style={{ color: C.textDim, textAlign: 'center', marginBottom: '2rem', fontSize: '0.82rem' }}>
+        Slot {Math.min(slotIndex + 1, slots.length)} of {slots.length}
+        {currentPos && (
+          <> — pick your{' '}
+            <strong style={{ color: POS_COLORS[currentPos] || C.text }}>
+              {currentPos === 'GK' ? 'goalkeeper' : currentPos === 'DEF' ? 'defender' : currentPos === 'MID' ? 'midfielder' : 'forward'}
+            </strong>
+          </>
+        )}
       </p>
 
+      {/* Slot tracker */}
+      <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2rem' }}>
+        {slots.map((pos, i) => (
+          <div key={i} style={{
+            width: '2.25rem', height: '2.25rem',
+            borderRadius: '6px',
+            border: `1px solid ${i === slotIndex ? (POS_COLORS[pos] || C.accent) : i < team.length ? C.borderLight : C.border}`,
+            backgroundColor: i < team.length ? C.surfaceHi : 'transparent',
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            fontSize: '0.52rem', fontWeight: '700',
+            color: i === slotIndex ? (POS_COLORS[pos] || C.accent) : i < team.length ? C.accent : C.textDim,
+          }}>
+            <span>{pos}</span>
+            {i < team.length && <span style={{ fontSize: '0.48rem', marginTop: '1px' }}>✓</span>}
+          </div>
+        ))}
+      </div>
+
       {loading ? (
-        <p style={{ color: C.cyan, textAlign: 'center', fontSize: '1.125rem', marginBottom: '2rem' }}>
-          🎲 Rolling...
-        </p>
+        <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+          <div className="spinner" style={{ margin: '0 auto 1rem' }} />
+          <p style={{ color: C.textDim, fontSize: '0.875rem' }}>Rolling…</p>
+        </div>
       ) : (
         <>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '1rem',
+            marginBottom: '1.5rem',
+          }}>
             {candidates.map((player, i) => (
               <button
                 key={i}
                 onClick={() => pick(player)}
-                style={{ ...S.card, cursor: 'pointer', transition: 'all 0.2s ease', textAlign: 'center' }}
+                style={{ ...S.card, cursor: 'pointer', textAlign: 'center', padding: '1.5rem 1rem' }}
                 onMouseEnter={cardHoverIn}
                 onMouseLeave={cardHoverOut}
               >
-                <div style={{ color: C.cyan, fontSize: '0.7rem', fontWeight: '600', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                <span style={{
+                  display: 'inline-block',
+                  fontSize: '0.62rem', fontWeight: '700',
+                  letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: POS_COLORS[currentPos] || C.accent,
+                  backgroundColor: `${POS_COLORS[currentPos] || C.accent}18`,
+                  padding: '0.18rem 0.55rem', borderRadius: '99px',
+                  marginBottom: '0.85rem',
+                }}>
                   {currentPos}
-                </div>
-                <div style={{ color: C.text, fontSize: '1rem', fontWeight: '700', marginBottom: '0.25rem' }}>
+                </span>
+
+                <div style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: '1rem', fontWeight: '700',
+                  color: C.text, marginBottom: '0.2rem', lineHeight: 1.25,
+                }}>
                   {player.name}
                 </div>
-                <div style={{ color: C.muted, fontSize: '0.8rem', marginBottom: '0.5rem' }}>
+                <div style={{ fontSize: '0.75rem', color: C.textDim, marginBottom: '1rem' }}>
                   {player.year}
                 </div>
-                <div style={{ color: C.gold, fontWeight: '700', fontSize: '1.5rem' }}>
+
+                <div style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: '2.2rem', fontWeight: '800', color: C.gold,
+                  letterSpacing: '-0.02em',
+                }}>
                   {player.rating}
+                </div>
+                <div style={{ fontSize: '0.6rem', color: C.textDim, marginTop: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  rating
                 </div>
               </button>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div style={{ textAlign: 'center' }}>
             <button
               onClick={handleReroll}
-              disabled={rerolls <= 0 || loading}
+              disabled={rerolls <= 0}
               style={{
-                background: rerolls > 0 ? C.pink : '#555',
-                border: `1px solid ${rerolls > 0 ? C.pink : '#555'}`,
-                color: '#fff',
-                fontWeight: '600',
-                padding: '0.75rem 1.5rem',
+                ...S.btnGhost,
+                opacity: rerolls > 0 ? 1 : 0.4,
                 cursor: rerolls > 0 ? 'pointer' : 'not-allowed',
-                textTransform: 'uppercase',
-                borderRadius: '4px',
-                fontSize: '0.9rem',
-                transition: 'all 0.2s ease',
               }}
-              onMouseEnter={(e) => {
-                if (rerolls > 0) {
-                  e.target.style.background = C.cyan
-                  e.target.style.borderColor = C.cyan
-                }
+              onMouseEnter={e => {
+                if (rerolls > 0) { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }
               }}
-              onMouseLeave={(e) => {
-                if (rerolls > 0) {
-                  e.target.style.background = C.pink
-                  e.target.style.borderColor = C.pink
-                }
+              onMouseLeave={e => {
+                if (rerolls > 0) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }
               }}
             >
               🎲 Reroll ({rerolls} left)
@@ -126,30 +176,6 @@ export default function DiceRoller({ country, formation, onComplete }) {
           </div>
         </>
       )}
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(72px, 1fr))', gap: '0.4rem' }}>
-        {slots.map((pos, i) => (
-          <div
-            key={i}
-            style={{
-              border: `1px solid ${i === slotIndex ? C.cyan : i < team.length ? C.pink : C.muted}`,
-              borderRadius: '4px',
-              padding: '0.4rem',
-              fontSize: '0.7rem',
-              textAlign: 'center',
-              color: i === slotIndex ? C.cyan : i < team.length ? C.pink : C.muted,
-              backgroundColor: i < team.length ? C.card : 'transparent',
-            }}
-          >
-            <div>{pos}</div>
-            {i < team.length && (
-              <div style={{ fontSize: '0.6rem', marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {team[i].name.split(' ').pop()}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }

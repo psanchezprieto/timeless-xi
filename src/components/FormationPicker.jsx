@@ -2,41 +2,62 @@ import React from 'react'
 import { FORMATIONS } from '../constants'
 import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
 
-export default function FormationPicker({ country, onSelect }) {
+const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#EF4444' }
+
+export default function FormationPicker({ country, onSelect, onNewGame }) {
   return (
-    <div style={S.page}>
+    <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
+      {onNewGame && (
+        <button
+          onClick={onNewGame}
+          style={{ ...S.btnGhost, marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }}
+        >
+          ← Start over
+        </button>
+      )}
       <h1 style={S.h1}>Choose Your Formation</h1>
-      <p style={{ color: C.cyan, textAlign: 'center', marginBottom: '2rem', fontSize: '1.125rem' }}>
+      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '2.5rem', fontSize: '0.9rem' }}>
         {country}
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         {Object.entries(FORMATIONS).map(([key, formation]) => (
           <button
             key={key}
             onClick={() => onSelect(key)}
-            style={{ ...S.card, cursor: 'pointer', transition: 'all 0.2s ease', textAlign: 'center' }}
+            style={{ ...S.card, cursor: 'pointer', textAlign: 'center', padding: '2rem 1.5rem' }}
             onMouseEnter={cardHoverIn}
             onMouseLeave={cardHoverOut}
           >
-            <div style={{ fontSize: '2.5rem', fontWeight: '900', color: C.pink, marginBottom: '0.5rem' }}>
+            <div style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: '2rem', fontWeight: '800',
+              color: C.accent, marginBottom: '0.4rem',
+              letterSpacing: '-0.02em',
+            }}>
               {key}
             </div>
-            <div style={{ fontSize: '1.125rem', fontWeight: '600', color: C.text, marginBottom: '0.5rem' }}>
+            <div style={{ fontWeight: '600', fontSize: '0.9rem', color: C.text, marginBottom: '0.25rem' }}>
               {formation.name}
             </div>
-            <div style={{ fontSize: '0.875rem', color: C.muted, marginBottom: '1rem' }}>
+            <div style={{ fontSize: '0.8rem', color: C.textDim, marginBottom: '1.25rem' }}>
               {formation.description}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginTop: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
               {Object.entries(formation.positions).map(([pos, count]) => (
-                <div
-                  key={pos}
-                  style={{ backgroundColor: C.deep, padding: '0.5rem', borderRadius: '4px', fontSize: '0.875rem' }}
-                >
-                  <div style={{ color: C.cyan, fontWeight: '600', fontSize: '0.75rem' }}>{pos}</div>
-                  <div style={{ color: C.gold, fontWeight: '700', fontSize: '1.25rem' }}>{count}</div>
+                <div key={pos} style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center',
+                  backgroundColor: `${POS_COLORS[pos] || C.accent}14`,
+                  border: `1px solid ${POS_COLORS[pos] || C.accent}30`,
+                  borderRadius: '8px',
+                  padding: '0.4rem 0.6rem',
+                  minWidth: '3rem',
+                }}>
+                  <span style={{ fontSize: '0.65rem', fontWeight: '600', color: POS_COLORS[pos] || C.accent, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{pos}</span>
+                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.25rem', fontWeight: '700', color: C.text }}>{count}</span>
                 </div>
               ))}
             </div>
