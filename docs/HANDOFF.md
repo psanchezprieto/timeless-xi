@@ -239,7 +239,9 @@ None at this time. All key decisions made:
 
 ## **Copy-Paste Handoff Prompt for Next Chat / Agent**
 
-Paste this verbatim to resume Phase 2a work:
+**Phase 1d (coaches) running in background. Resume with Phase 2a when ready.**
+
+Paste this verbatim to start Phase 2a:
 
 ```
 Build Phase 2a: React + Vite setup for World Cup simulation game.
@@ -252,53 +254,129 @@ Context:
 Read for full context:
 - CLAUDE.md (project system prompt + tech stack + retro 80s design rules)
 - docs/PROGRESS.md (phase tracking)
-- docs/TIMELESS_XI_PROJECT_BRIEF.md (product vision)
-- public/data/meta.json (data registry - 10,437 players, 5 decades)
+- public/data/meta.json (data ready: 10,437 players, 5 decades)
+- data/coaches.json (ready from Phase 1d)
 
 Current state:
 ✅ Phase 1: Complete data pipeline
-  - data/enriched-squads.json: 10,437 players rated 0-100
-  - public/data/: 5 decade-split .json.gz files (152KB total)
-  - public/data/meta.json: country/player registry
+  - public/data/: 5 .json.gz files (152KB total)
+  - data/coaches.json: Historical coaches per country (3-5 coaches each)
 ✅ Package.json with Vite + React 18 + Tailwind dependencies
 ✅ vite.config.js configured
-✅ .gitignore set up
 
 Task: Build Phase 2a - React entry point & Vite template
 
-Requirements:
-1. Create src/main.jsx (React entry point)
-   - Import React + ReactDOM
-   - Create root div (#app) and mount React app
-   - Export default Game component (to be built next)
+## REQUIREMENTS
 
-2. Create public/index.html (Vite template)
-   - Standard HTML5 structure
-   - <div id="app"></div> for React mount
-   - <script type="module" src="/src/main.jsx"></script>
-   - Tailwind CDN link: https://cdn.tailwindcss.com
-   - Title: "Timeless XI - World Cup Dream Team"
-   - Favicon placeholder (optional)
+### 1. Create src/main.jsx (React entry point)
 
-3. Create src/components/Game.jsx (placeholder)
-   - Return simple div with "Game loading..." for now
-   - Will be expanded in Phase 2b
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import Game from './components/Game';
+import './styles/index.css';
 
-4. Verify setup
-   - Run `npm run dev` (should start Vite server on localhost:5173)
-   - Visit http://localhost:5173 in browser
-   - Verify "Game loading..." displays
-   - Verify no console errors
+ReactDOM.createRoot(document.getElementById('app')).render(
+  <React.StrictMode>
+    <Game />
+  </React.StrictMode>,
+);
+```
 
-5. Update PROGRESS.md: mark 2a complete
+### 2. Create public/index.html (Vite template)
 
-6. Commit to git with message: "Phase 2a: Setup React + Vite with initial entry point"
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeless XI - World Cup Dream Team</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+  </head>
+  <body class="bg-black text-white">
+    <div id="app"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
 
-Files to create/modify:
-- CREATE: src/main.jsx (React entry point)
-- CREATE: public/index.html (Vite template)
-- CREATE: src/components/Game.jsx (placeholder component)
-- MODIFY: PROGRESS.md (mark 2a complete)
+### 3. Create src/components/Game.jsx (placeholder)
+
+```javascript
+export default function Game() {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold">⚽ Timeless XI</h1>
+        <p className="mt-4 text-xl">Loading game...</p>
+      </div>
+    </div>
+  );
+}
+```
+
+### 4. Create src/styles/index.css (Tailwind setup)
+
+```css
+@layer base {
+  body {
+    @apply bg-black text-white font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded-lg font-bold text-white;
+  }
+}
+```
+
+### 5. Verify setup
+
+```bash
+npm run dev
+```
+
+Expected:
+- ✅ Vite server starts on http://localhost:5173
+- ✅ Browser loads with "⚽ Timeless XI" title
+- ✅ "Loading game..." message displays
+- ✅ No console errors
+- ✅ Dark background with white text visible
+- ✅ Tailwind classes work (check spacing)
+
+### 6. Update PROGRESS.md
+
+Mark Phase 2a complete:
+- [x] Create src/main.jsx
+- [x] Create public/index.html
+- [x] Create src/components/Game.jsx
+- [x] Create src/styles/index.css
+- [x] Verify npm run dev works
+
+### 7. Commit
+
+```bash
+git add src/ public/index.html
+git commit -m "Phase 2a: Setup React + Vite with initial entry point
+
+- Create src/main.jsx (React entry point)
+- Create public/index.html (Vite template with Tailwind CDN)
+- Create src/components/Game.jsx (placeholder component)
+- Create src/styles/index.css (global Tailwind setup)
+- Verify npm run dev loads to localhost:5173
+
+Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>"
+```
+
+## FILES TO CREATE/MODIFY
+
+- CREATE: src/main.jsx
+- CREATE: public/index.html
+- CREATE: src/components/Game.jsx
+- CREATE: src/styles/index.css
+- MODIFY: docs/PROGRESS.md (mark 2a complete)
 
 Current blockers: None
 Ready to start: Yes
