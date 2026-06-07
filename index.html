@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMELESS XI - World Cup Dream Teams</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro 80s Font: Press Start 2P for headers, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-pink: #d97fb6;
+      --accent-cyan: #5eb3c6;
+      --accent-gold: #e8c547;
+      --dark-bg: #1a1a2e;
+      --dark-card: #16213e;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(217, 127, 182, 0.02) 0px,
+          rgba(217, 127, 182, 0.02) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    h1 { font-size: 3rem; font-weight: 900; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+
+    .neon-text-pink {
+      color: var(--accent-pink);
+    }
+
+    .neon-text-cyan {
+      color: var(--accent-cyan);
+    }
+
+    .neon-text-yellow {
+      color: var(--accent-gold);
+    }
+
+    .neon-border {
+      border: 1px solid var(--accent-pink);
+      box-shadow: 0 0 8px rgba(217, 127, 182, 0.2);
+    }
+
+    .neon-border-cyan {
+      border: 1px solid var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(94, 179, 198, 0.2);
+    }
+
+    .glow-button {
+      background: var(--accent-pink);
+      border: 1px solid var(--accent-pink);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      box-shadow: none;
+    }
+
+    .glow-button:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(94, 179, 198, 0.15);
+    }
+
+    .glow-button:active {
+      transform: translateY(0);
+    }
+
+    .card-retro {
+      background-color: var(--dark-card);
+      border: 1px solid var(--accent-pink);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+    }
+
+    @keyframes pulse-neon {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .pulse-neon {
+      animation: pulse-neon 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.8; }
+    }
+
+    .flicker {
+      animation: flicker 3s infinite;
+    }
+
+    #app {
+      min-height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
