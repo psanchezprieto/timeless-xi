@@ -70,6 +70,7 @@ const COUNTRIES_DATA = [
   { name: 'South Africa', flag: '🇿🇦' },
   { name: 'South Korea', flag: '🇰🇷' },
   { name: 'Spain', flag: '🇪🇸' },
+  { name: 'Soviet Union', flag: '🇷🇺' },
   { name: 'Sweden', flag: '🇸🇪' },
   { name: 'Switzerland', flag: '🇨🇭' },
   { name: 'Togo', flag: '🇹🇬' },

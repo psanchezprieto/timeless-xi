@@ -126,7 +126,7 @@ export default function Game() {
         )}
         {stage === 'coach' && <CoachPicker country={country} onSelect={onCoach} onNewGame={onNewGame} />}
         {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country} onComplete={onTournament} onNewGame={onNewGame} />}
-        {stage === 'summary' && result && <CampaignSummary result={result} onNewGame={onNewGame} />}
+        {stage === 'summary' && result && <CampaignSummary result={result} team={team} onNewGame={onNewGame} />}
       </div>
     </div>
   )

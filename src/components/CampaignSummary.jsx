@@ -1,7 +1,10 @@
 import React from 'react'
 import { C, S, btnHoverIn, btnHoverOut } from '../styles/theme'
 
-export default function CampaignSummary({ result, onNewGame }) {
+const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
+const POS_ORDER = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
+
+export default function CampaignSummary({ result, team, onNewGame }) {
   const stats = [
     { label: 'Result', value: result.champion ? 'Champions' : `Out — ${result.exitRound}`, accent: result.champion },
     { label: 'MVP', value: result.mvp },
@@ -52,7 +55,7 @@ export default function CampaignSummary({ result, onNewGame }) {
               {stat.label}
             </div>
             <div style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Oswald', sans-serif",
               fontSize: '1.4rem', fontWeight: '800',
               color: stat.accent ? C.gold : C.text,
               lineHeight: 1.2,
@@ -62,6 +65,50 @@ export default function CampaignSummary({ result, onNewGame }) {
           </div>
         ))}
       </div>
+
+      {/* Squad */}
+      {team?.length > 0 && (
+        <div style={{ marginBottom: '2rem' }}>
+          <p style={{ ...S.label, marginBottom: '0.75rem' }}>Your Squad</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            {[...team]
+              .sort((a, b) => (POS_ORDER[a.position] ?? 9) - (POS_ORDER[b.position] ?? 9))
+              .map((player, i) => {
+                const color = POS_COLORS[player.position] || C.accent
+                return (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '0.5rem 0.85rem',
+                    backgroundColor: C.surface,
+                    border: `1px solid ${C.border}`,
+                    borderRadius: '8px',
+                    fontSize: '0.82rem',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                      <span style={{
+                        fontSize: '0.58rem', fontWeight: '700',
+                        letterSpacing: '0.06em', textTransform: 'uppercase',
+                        color, backgroundColor: `${color}18`,
+                        padding: '0.15rem 0.45rem', borderRadius: '4px',
+                        minWidth: '2.6rem', textAlign: 'center',
+                      }}>
+                        {player.position}
+                      </span>
+                      <span style={{ color: C.text, fontWeight: '600' }}>{player.name}</span>
+                      <span style={{ color: C.textDim, fontSize: '0.75rem' }}>{player.year}</span>
+                    </div>
+                    <span style={{
+                      fontFamily: "'Oswald', sans-serif",
+                      fontWeight: '700', color: C.gold, fontSize: '1rem',
+                    }}>
+                      {player.rating}
+                    </span>
+                  </div>
+                )
+              })}
+          </div>
+        </div>
+      )}
 
       {/* Match log */}
       {result.results?.length > 0 && (
@@ -83,7 +130,7 @@ export default function CampaignSummary({ result, onNewGame }) {
                 }}>
                   <span style={{ color: C.textSub }}>{m.home} vs {m.away}</span>
                   <span style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Oswald', sans-serif",
                     fontWeight: '700', color: C.text,
                   }}>
                     {m.homeGoals}–{m.awayGoals}

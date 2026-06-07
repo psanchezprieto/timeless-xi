@@ -85,11 +85,11 @@ function ScoreBox({ result, userCountry, isGroupStage = false }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '0.95rem', color: C.text }}>{userCountry}</div>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.25rem', fontWeight: '800', color: C.gold, minWidth: '90px', textAlign: 'center', letterSpacing: '-0.03em' }}>
+        <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '0.95rem', color: C.text }}>{userCountry}</div>
+        <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: '2.25rem', fontWeight: '800', color: C.gold, minWidth: '90px', textAlign: 'center', letterSpacing: '-0.03em' }}>
           {userGoals}–{oppGoals}
         </div>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '600', fontSize: '0.9rem', color: C.textSub }}>{oppLabel}</div>
+        <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '600', fontSize: '0.9rem', color: C.textSub }}>{oppLabel}</div>
       </div>
 
       {result.penalties && (
@@ -118,13 +118,111 @@ function ScoreBox({ result, userCountry, isGroupStage = false }) {
   )
 }
 
-function GroupTable({ group, userCountry }) {
+const POS_COLORS_T = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
+const POS_ORDER_T  = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
+
+function SquadOverlay({ team: t, onClose }) {
+  if (!t) return null
+  const players = [...(t.players || [])].sort(
+    (a, b) => (POS_ORDER_T[a.position] ?? 9) - (POS_ORDER_T[b.position] ?? 9)
+  )
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1000,
+        backgroundColor: 'rgba(0,0,0,0.72)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '1.5rem',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          backgroundColor: C.surface,
+          border: `1px solid ${C.borderLight}`,
+          borderRadius: '12px',
+          width: '100%', maxWidth: '420px',
+          maxHeight: '80vh',
+          display: 'flex', flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Header */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '1rem 1.25rem',
+          borderBottom: `1px solid ${C.border}`,
+          backgroundColor: C.surfaceHi,
+        }}>
+          <div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.1rem', color: C.text }}>
+              {teamLabel(t)}
+            </div>
+            <div style={{ fontSize: '0.72rem', color: C.textDim, marginTop: '0.15rem' }}>
+              Avg rating: <span style={{ color: C.gold, fontWeight: '700' }}>{t.avgRating?.toFixed(0)}</span>
+              {players.length > 0 && <span> · {players.length} players</span>}
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none', border: 'none', color: C.textDim,
+              fontSize: '1.25rem', cursor: 'pointer', lineHeight: 1,
+              padding: '0.25rem 0.4rem', borderRadius: '6px',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = C.text; e.currentTarget.style.backgroundColor = C.border }}
+            onMouseLeave={e => { e.currentTarget.style.color = C.textDim; e.currentTarget.style.backgroundColor = 'transparent' }}
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Player list */}
+        <div style={{ overflowY: 'auto', padding: '0.75rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+          {players.length === 0 ? (
+            <p style={{ color: C.textDim, fontSize: '0.85rem', textAlign: 'center', padding: '1.5rem 0' }}>No squad data available</p>
+          ) : players.map((p, i) => {
+            const color = POS_COLORS_T[p.position] || C.accent
+            return (
+              <div key={i} style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '0.4rem 0.65rem',
+                backgroundColor: C.surfaceHi,
+                borderRadius: '7px',
+                fontSize: '0.82rem',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+                  <span style={{
+                    fontSize: '0.56rem', fontWeight: '700',
+                    letterSpacing: '0.05em', textTransform: 'uppercase',
+                    color, backgroundColor: `${color}18`,
+                    padding: '0.12rem 0.4rem', borderRadius: '4px',
+                    minWidth: '2.4rem', textAlign: 'center',
+                  }}>
+                    {p.position}
+                  </span>
+                  <span style={{ color: C.text, fontWeight: '500' }}>{p.name}</span>
+                </div>
+                <span style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', color: C.gold, fontSize: '0.95rem' }}>
+                  {p.rating}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function GroupTable({ group, userCountry, onTeamClick }) {
   const isUser = t => t.isUser
   return (
     <div style={{ backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: '10px', overflow: 'hidden' }}>
       <div style={{
         backgroundColor: C.surfaceHi, padding: '0.5rem 1rem',
-        fontFamily: "'Space Grotesk', sans-serif",
+        fontFamily: "'Oswald', sans-serif",
         fontSize: '0.7rem', fontWeight: '700',
         letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textSub,
       }}>
@@ -141,10 +239,18 @@ function GroupTable({ group, userCountry }) {
         </thead>
         <tbody>
           {group.teams.map((t, i) => (
-            <tr key={t.country + t.year} style={{
-              borderTop: `1px solid ${C.border}`,
-              backgroundColor: isUser(t) ? 'rgba(124,92,252,0.08)' : 'transparent',
-            }}>
+            <tr
+              key={t.country + t.year}
+              onClick={() => onTeamClick(t)}
+              style={{
+                borderTop: `1px solid ${C.border}`,
+                backgroundColor: isUser(t) ? 'rgba(124,92,252,0.08)' : 'transparent',
+                cursor: 'pointer',
+                transition: 'background 0.12s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = isUser(t) ? 'rgba(124,92,252,0.16)' : C.surfaceHi }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = isUser(t) ? 'rgba(124,92,252,0.08)' : 'transparent' }}
+            >
               <td style={{ padding: '0.4rem 1rem', color: isUser(t) ? C.accent : i < 2 ? C.text : C.textSub, fontWeight: isUser(t) ? '700' : '400' }}>
                 {isUser(t) ? '★ ' : ''}{teamLabel(t)}
               </td>
@@ -190,6 +296,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
 
   const [phase, setPhase] = useState('groups')
   const [simGroups, setSimGroups] = useState(null)
+  const [selectedTeam, setSelectedTeam] = useState(null)
 
   // Group stage playback
   const [groupMatches, setGroupMatches] = useState([])
@@ -217,6 +324,8 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         ...m,
         homeLabel: homeTeam ? teamLabel(homeTeam) : m.home,
         awayLabel: awayTeam ? teamLabel(awayTeam) : m.away,
+        homeRating: homeTeam?.avgRating,
+        awayRating: awayTeam?.avgRating,
       }
     }).filter(m => m.home === country || m.away === country)
 
@@ -318,6 +427,8 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   }
 
   return (
+    <>
+    <SquadOverlay team={selectedTeam} onClose={() => setSelectedTeam(null)} />
     <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
       {onNewGame && (
         <button
@@ -349,7 +460,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           }}>
             <p style={{ color: C.textSub, marginBottom: '0.4rem', fontSize: '0.9rem' }}>
               Your group:{' '}
-              <strong style={{ color: C.accent, fontFamily: "'Space Grotesk', sans-serif" }}>
+              <strong style={{ color: C.accent, fontFamily: "'Oswald', sans-serif" }}>
                 Group {userGroupRaw?.name ?? '?'}
               </strong>
             </p>
@@ -360,7 +471,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
-            {rawGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} />)}
+            {rawGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} onTeamClick={setSelectedTeam} />)}
           </div>
         </>
       )}
@@ -369,6 +480,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
       {phase === 'group_match_preview' && groupMatches[groupMatchIdx] && (() => {
         const m = groupMatches[groupMatchIdx]
         const oppLabel = m.home === country ? m.awayLabel : m.homeLabel
+        const oppRating = m.home === country ? m.awayRating : m.homeRating
         return (
           <div style={{ textAlign: 'center' }}>
             <p style={S.label}>Group Stage — Match {groupMatchIdx + 1} of {groupMatches.length}</p>
@@ -380,7 +492,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
             }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
                     {country}
                   </div>
                   <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
@@ -388,13 +500,18 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
                   </div>
                 </div>
                 <div style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "'Oswald', sans-serif",
                   fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
                 }}>vs</div>
                 <div style={{ textAlign: 'left' }}>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
                     {oppLabel}
                   </div>
+                  {oppRating != null && (
+                    <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                      {oppRating.toFixed(0)} rating
+                    </div>
+                  )}
                 </div>
               </div>
               <Btn onClick={revealGroupMatch}>▶ Reveal Result</Btn>
@@ -430,7 +547,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
               borderColor: qualified ? C.gold : C.danger,
             }}>
               <div style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Oswald', sans-serif",
                 fontSize: '1.4rem', fontWeight: '800',
                 color: qualified ? C.gold : C.danger, marginBottom: '0.5rem',
               }}>
@@ -450,7 +567,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
 
             <p style={{ ...S.label, marginBottom: '0.75rem' }}>All Group Standings</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
-              {simGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} />)}
+              {simGroups.map(g => <GroupTable key={g.name} group={g} userCountry={country} onTeamClick={setSelectedTeam} />)}
             </div>
           </>
         )
@@ -469,7 +586,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
                   {country}
                 </div>
                 <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
@@ -477,11 +594,11 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
                 </div>
               </div>
               <div style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Oswald', sans-serif",
                 fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
               }}>vs</div>
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
                   {teamLabel(pendingMatch.away)}
                 </div>
                 <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
@@ -515,5 +632,6 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         </div>
       )}
     </div>
+    </>
   )
 }
