@@ -1,0 +1,26 @@
+{
+  "name": "timeless-xi",
+  "version": "0.1.0",
+  "description": "World Cup simulation game - build dream teams and win tournaments",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "fetch": "node scripts/fetch-squads.mjs",
+    "enrich": "node scripts/enrich-ratings.mjs",
+    "build:data": "node scripts/build-json.mjs && node scripts/compress.mjs",
+    "pipeline": "npm run fetch && npm run enrich && npm run build:data"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "pako": "^2.1.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.0"
+  }
+}

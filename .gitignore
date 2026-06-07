@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.local
+*.db
+.DS_Store
+.vscode/
+.idea/
+*.log
+data/raw-squads.json
+data/fetch-gaps.json
+data/enrichment-gaps.json
+public/data/*.json
+public/data/*.gz
