@@ -7,8 +7,6 @@ dist/
 .vscode/
 .idea/
 *.log
-data/raw-squads.json
-data/fetch-gaps.json
-data/enrichment-gaps.json
+data/
 public/data/*.json
 public/data/*.gz

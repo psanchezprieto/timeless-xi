@@ -6,8 +6,8 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **Current Session Status**
 
-**Last completed**: Phase 1a - Zafronix Fetcher (API validation + full fetch) (2026-06-07)  
-**Current task**: Ready to delegate Phase 1b (enrichment) to agent  
+**Last completed**: Phase 1b - Claude API Enrichment (10,437 players rated 0-100 + age penalties) (2026-06-07)  
+**Current task**: Ready for Phase 1c (JSON optimization & compression)  
 **Blocker status**: None ✅
 
 ---
@@ -47,6 +47,29 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 ---
 
 ## **What Was Just Done**
+
+✅ **Phase 1b: Claude API Enrichment & Age Penalties** (Complete)
+
+**Built `scripts/enrich-ratings.mjs`**:
+- Switched to Sonnet 4.6 (from Opus) for cost efficiency
+- Created batch request for all 10,437 players
+- Batch ID: `msgbatch_01FpyfACab2M7Ly5asMvErUN` (100% success rate)
+- Rating scale: 0-100 (FIFA-style, minimum 50 for World Cup squad players)
+- Confidence: 95% across all ratings
+
+**Added age-based decline penalties** via `scripts/apply-age-penalty.mjs`:
+- Players 35+: -5 points at age 35-36
+- Players 38+: -6 to -7 points
+- Example: Messi 2022 (age 35): 99 → 94; Messi 2026 (age 39): 99 → 92
+- Preserved elite 37-year-olds (Modrić, Cristiano): kept at 91
+
+**Results**:
+- 10,437 players enriched with ratings (0-100 scale)
+- Average rating: 71.3/100 (realistic distribution)
+- Zero gaps/errors
+- `data/enriched-squads.json` ready for Phase 1c
+
+---
 
 ✅ **Phase 1a: Zafronix Fetcher Validation & Execution** (Complete)
 
@@ -95,11 +118,12 @@ timeless-xi/
 ├── .gitignore ✅                   (Git rules)
 ├── .claude/
 │   └── settings.json ✅            (Hook: git commit reminder)
-├── scripts/                        (Phase 1a Complete)
+├── scripts/                        (Phase 1b Complete)
 │   ├── fetch-squads.mjs ✅         (Zafronix fetcher - DONE)
 │   ├── test-api.mjs ✅             (API validator - DONE)
+│   ├── enrich-ratings.mjs ✅       (Claude batch enrichment - DONE)
+│   ├── apply-age-penalty.mjs ✅    (Age-based penalties - DONE)
 │   ├── README.md ✅                (Documentation - DONE)
-│   ├── enrich-ratings.mjs          (TODO: Phase 1b)
 │   ├── build-json.mjs              (TODO: Phase 1c)
 │   └── compress.mjs                (TODO: Phase 1c)
 ├── src/                            (Empty - Phase 2 to build)
@@ -120,28 +144,25 @@ timeless-xi/
 - ✅ Phase 1a: Zafronix fetcher scripts built
   * `fetch-squads.mjs` with full error handling
   * `test-api.mjs` for quick validation
-  * `scripts/README.md` with complete guide
+  * 10,437 players fetched across 457 squads
+- ✅ Phase 1b: Claude API enrichment complete
+  * `enrich-ratings.mjs` using batch API (Sonnet 4.6)
+  * `apply-age-penalty.mjs` for age-based penalties
+  * 10,437 players rated 0-100 (FIFA-style)
+  * Average rating: 71.3/100, 95% confidence
 - ✅ Documentation complete + handoff system
 - ✅ Git repo initialized with all artifacts
 
 **What's next**:
 
-- **Phase 1b** (Next): Build Claude API enrichment (`scripts/enrich-ratings.mjs`)
-  * Read from `data/raw-squads.json`
-  * For each player: call Claude batch API with prompt "Rate this footballer 1-10 historically"
-  * Add `{rating: 1-10, confidence: 0-1}` to each player
-  * Output to `data/enriched-squads.json`
-  * Create `data/enrichment-gaps.json` with uncertain ratings
-  * Cost estimate: ~$20-40 USD (batch = 50% cheaper)
-  
-- **Phase 1c**: Build JSON optimizer and compressor (`scripts/build-json.mjs` + `scripts/compress.mjs`)
+- **Phase 1c** (Next): Build JSON optimizer and compressor (`scripts/build-json.mjs` + `scripts/compress.mjs`)
   * Read from `data/enriched-squads.json`
   * Split by decade (1930-1950, 1950-1970, etc.)
   * Optimize keys: `c` (country), `y` (year), `p` (players), `r` (rating)
   * Compress with gzip to `public/data/*.json.gz`
   * Generate `public/data/meta.json` (country/year registry)
   * Target: <2MB total gzipped
-
+  
 - **Phase 2**: Build React UI (forms, selection screens, game logic)
 
 ---
