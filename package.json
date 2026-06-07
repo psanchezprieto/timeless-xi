@@ -11,8 +11,9 @@
     "preview": "vite preview",
     "fetch": "node scripts/fetch-squads.mjs",
     "enrich": "node scripts/enrich-ratings.mjs",
+    "coaches": "node scripts/generate-coaches.mjs",
     "build:data": "node scripts/build-json.mjs && node scripts/compress.mjs",
-    "pipeline": "npm run fetch && npm run enrich && npm run build:data"
+    "pipeline": "npm run fetch && npm run enrich && npm run coaches && npm run build:data"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.102.0",

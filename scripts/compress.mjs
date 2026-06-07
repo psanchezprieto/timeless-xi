@@ -40,6 +40,26 @@ async function main() {
 
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
 
+    // Compress coaches.json if it exists
+    const coachesPath = path.join(DATA_DIR, 'coaches.json');
+    const coachesCompressed = {};
+    if (fs.existsSync(coachesPath)) {
+      const outputPath = path.join(PUBLIC_DATA_DIR, 'coaches.json.gz');
+      const stats = fs.statSync(coachesPath);
+      const uncompressedSize = stats.size;
+      await compressFile(coachesPath, outputPath);
+      const compressedStats = fs.statSync(outputPath);
+      const compressedSize = compressedStats.size;
+      const ratio = ((1 - compressedSize / uncompressedSize) * 100).toFixed(1);
+      coachesCompressed.uncompressedSize = uncompressedSize;
+      coachesCompressed.compressedSize = compressedSize;
+      coachesCompressed.compressionRatio = `${ratio}%`;
+      console.log('✅ coaches.json.gz');
+      console.log(`   Uncompressed: ${(uncompressedSize / 1024).toFixed(2)} KB`);
+      console.log(`   Compressed: ${(compressedSize / 1024).toFixed(2)} KB`);
+      console.log(`   Ratio: ${ratio}%`);
+    }
+
     // Compress each decade file
     const files = fs.readdirSync(TEMP_DIR).filter(f => f.startsWith('squads-') && f.endsWith('.json'));
     const compressedFiles = [];
@@ -72,6 +92,9 @@ async function main() {
     }
 
     // Generate public meta.json
+    const totalUncompressed = compressedFiles.reduce((sum, f) => sum + f.uncompressedSize, 0) + (coachesCompressed.uncompressedSize || 0);
+    const totalCompressed = compressedFiles.reduce((sum, f) => sum + f.compressedSize, 0) + (coachesCompressed.compressedSize || 0);
+
     const publicMetadata = {
       generatedAt: new Date().toISOString(),
       format: 'optimized-keys',
@@ -89,14 +112,18 @@ async function main() {
           compressedSize: compressed ? compressed.compressedSize : 0,
         };
       }),
+      coaches: {
+        filename: 'coaches.json.gz',
+        compressedSize: coachesCompressed.compressedSize || 0,
+        uncompressedSize: coachesCompressed.uncompressedSize || 0,
+      },
       summary: metadata.summary,
       compressionStats: {
-        totalFiles: files.length,
-        totalUncompressed: compressedFiles.reduce((sum, f) => sum + f.uncompressedSize, 0),
-        totalCompressed: compressedFiles.reduce((sum, f) => sum + f.compressedSize, 0),
+        totalFiles: files.length + (coachesCompressed.uncompressedSize ? 1 : 0),
+        totalUncompressed,
+        totalCompressed,
         overallRatio: `${(
-          (1 - compressedFiles.reduce((sum, f) => sum + f.compressedSize, 0) /
-               compressedFiles.reduce((sum, f) => sum + f.uncompressedSize, 0)) * 100
+          (1 - totalCompressed / totalUncompressed) * 100
         ).toFixed(1)}%`,
       },
     };

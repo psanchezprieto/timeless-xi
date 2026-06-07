@@ -6,8 +6,8 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **Current Session Status**
 
-**Last completed**: Phase 1c - JSON Optimization & Compression (152KB gzipped data files) (2026-06-07)  
-**Current task**: Phase 1d - Generate coach data (ready to run)  
+**Last completed**: Phase 1d - Coach Data Generation via Claude Sonnet (258 coaches, 4.8KB gzipped) (2026-06-07)  
+**Current task**: None - all Phase 1 complete, ready for Phase 2a (React setup)  
 **Blocker status**: None ✅
 
 ---
@@ -48,22 +48,38 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **What's Currently In Progress**
 
-🔄 **Phase 1d: Coach Data Generation** (Ready to run)
-
-**Created `scripts/generate-coaches.mjs`**:
-- Uses Claude Sonnet 4.6 to generate historical coaches per country
-- Extracts country list from raw squads data
-- For each coach: name, era (years/period), moraleBoost (2-5)
-- Calls Claude API once with all countries
-- Validates coach structure and saves to `data/coaches.json`
-- Status: Script ready, execution pending
-
-**To run**: `node scripts/generate-coaches.mjs`
-**Cost**: ~1-2 API credits (single request for all countries)
+None - Phase 1 (entire data pipeline) is complete! 🎉
 
 ---
 
 ## **What Was Just Done**
+
+✅ **Phase 1d: Coach Data Generation** (Complete)
+
+**Built `scripts/generate-coaches.mjs`**:
+- Uses Claude Sonnet 4.6 to generate historical coaches per country
+- Extracts country list from raw squads data (86 unique countries)
+- For each coach: name, era (years/period), moraleBoost (2-5)
+- Calls Claude API once with all countries
+- Validates coach structure and saves to `data/coaches.json`
+- Integrated into data pipeline: `npm run coaches` + `npm run pipeline`
+- Compresses coaches.json.gz in output phase
+
+**Results**:
+- 258 historical coaches (3 per country)
+- coaches.json: 25.57 KB uncompressed → 4.76 KB gzipped (81.4% compression)
+- coaches.json.gz now included in `public/data/` folder
+- coaches metadata in `public/data/meta.json`
+
+**Integration**:
+- Added `npm run coaches` script to package.json
+- Updated `npm run pipeline` to include coach generation
+- Updated compress.mjs to handle coaches.json.gz
+- Updated meta.json to include coaches file stats
+
+---
+
+✅ **Phase 1c: JSON Optimization & Compression** (Complete)
 
 ✅ **Phase 1c: JSON Optimization & Compression** (Complete)
 
@@ -165,14 +181,14 @@ timeless-xi/
 ├── .gitignore ✅                   (Git rules)
 ├── .claude/
 │   └── settings.json ✅            (Hook: git commit reminder)
-├── scripts/                        (Phase 1 ~95% Complete)
+├── scripts/                        (Phase 1 ✅ 100% Complete)
 │   ├── fetch-squads.mjs ✅         (Zafronix fetcher - DONE)
 │   ├── test-api.mjs ✅             (API validator - DONE)
 │   ├── enrich-ratings.mjs ✅       (Claude batch enrichment - DONE)
 │   ├── apply-age-penalty.mjs ✅    (Age-based penalties - DONE)
 │   ├── build-json.mjs ✅           (JSON optimizer - DONE)
 │   ├── compress.mjs ✅             (gzip compressor - DONE)
-│   ├── generate-coaches.mjs 🔄     (Coach generator - READY TO RUN)
+│   ├── generate-coaches.mjs ✅     (Coach generator - DONE)
 │   └── README.md ✅                (Documentation - DONE)
 ├── src/                            (Empty - Phase 2 to build)
 │   ├── components/                 (TODO: Game screens)
@@ -199,18 +215,22 @@ timeless-xi/
   * 5 decade-split .json.gz files in `public/data/`
   * 80% compression ratio (665KB → 133KB)
   * `meta.json` registry with statistics
-- ✅ Data pipeline complete: fetch → enrich → compress
+- ✅ Phase 1d: Coach data generation complete
+  * `coaches.json.gz` (4.8 KB gzipped)
+  * 258 historical coaches (3 per country)
+  * Integrated into data pipeline
+- ✅ Data pipeline complete: fetch → enrich → coaches → compress
 - ✅ Documentation complete + handoff system
 - ✅ Git repo with 12 commits tracking all phases
 
 **What's next**:
 
-- **Phase 1d** (Next): Generate coach data
-  * Run `npm run generate:coaches` (or `node scripts/generate-coaches.mjs`)
-  * Output: `data/coaches.json` (3-5 coaches per country)
-  * Validates coach structure (name, era, moraleBoost)
+- **Phase 1d**: ✅ COMPLETE - Coach data generated via Claude Sonnet
+  * `data/coaches.json` created (3 coaches per country)
+  * `public/data/coaches.json.gz` (4.8 KB)
+  * Integrated into pipeline
   
-- **Phase 2a**: Build React + Vite setup
+- **Phase 2a** (Next): Build React + Vite setup
   * Create `src/main.jsx` (React entry point)
   * Create `public/index.html` (Vite template)
   * Setup Tailwind CSS via CDN
@@ -431,10 +451,11 @@ This will remind you to review the handoff after every commit.
 | 2026-06-07 | 1a | Zafronix fetcher: script + validation + full fetch | 1 |
 | 2026-06-07 | 1b | Claude API enrichment + age penalties | 1 |
 | 2026-06-07 | 1c | JSON optimizer + compressor (gzip) | 1 |
+| 2026-06-07 | 1d | Coach data generation with Claude Sonnet (258 coaches) | Pending |
 
 ---
 
-**Last updated**: 2026-06-07 @ end of Phase 1c compression
+**Last updated**: 2026-06-07 @ end of Phase 1d (coach generation)
 
-Phase 1 data pipeline: ✅ 100% complete (fetch → enrich → compress all done) 🚀
+Phase 1 data pipeline: ✅ 100% complete (fetch → enrich → coaches → compress all done) 🚀
 Phase 2 React UI: Ready to build 🎬
