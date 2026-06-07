@@ -227,6 +227,19 @@ For each player:
 
 ---
 
+## Session Handoff Workflow
+
+**After each task**, I update [docs/HANDOFF.md](docs/HANDOFF.md) with:
+- ✅ What was completed this session
+- 🔄 What's currently in progress (if interrupted)
+- 📋 Copy-paste prompt to resume in next chat
+
+**To resume**: Paste the prompt from HANDOFF.md into the next chat. I'll read all context automatically and pick up exactly where you left off.
+
+This enables **seamless continuity** across Claude Code sessions without losing context.
+
+---
+
 ## Notes for Future Agents
 
 1. **Test data before scaling**: Validate Zafronix response structure first (curl 1 year)
@@ -235,6 +248,7 @@ For each player:
 4. **Ask before risky changes**: Force-push, deleting files, API key exposure
 5. **Reference the roadmap**: When stuck, re-read TIMELESS_ELEVEN_ROADMAP.md
 6. **Player feedback loop**: Share builds early, iterate on 7a0-style UI
+7. **Update HANDOFF.md**: After each task, update the handoff file so next session is seamless
 
 ---
 

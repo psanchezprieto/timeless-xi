@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "if": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\": \"✅ Commit successful! Check docs/HANDOFF.md for next steps and the resume prompt.\"}'",
+            "statusMessage": "Session handoff reminder..."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -108,7 +108,16 @@ Key files:
 - [ ] Phase 3: Integration & deployment
 - [ ] Phase 4: Polish & extras
 
-See [docs/PROGRESS.md](docs/PROGRESS.md) for detailed progress.
+### Development Workflow
+
+Each session is tracked via **[docs/HANDOFF.md](docs/HANDOFF.md)**:
+- ✅ What was completed
+- 🔄 What's in progress
+- 📋 Copy-paste prompt to resume next session
+
+After Phase 0, check HANDOFF.md for the next steps prompt.
+
+See [docs/PROGRESS.md](docs/PROGRESS.md) for detailed phase progress.
 
 ---
 

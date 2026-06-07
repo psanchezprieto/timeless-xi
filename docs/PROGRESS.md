@@ -148,3 +148,14 @@ None yet. 🎉
 ---
 
 **Last updated**: 2026-06-07
+
+---
+
+## 📋 Session Handoff
+
+After each development session, check [docs/HANDOFF.md](HANDOFF.md) for:
+- What was completed ✅
+- What's currently in progress 🔄
+- Copy-paste prompt to resume in next chat
+
+See HANDOFF.md for full details and workflow.
