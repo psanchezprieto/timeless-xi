@@ -59,6 +59,10 @@ export async function getPlayersByCountry(countryName) {
 
     console.log(`  Found ${data.squads.length} squads`)
 
+    // Debug: Show first few countries
+    const uniqueCountries = [...new Set(data.squads.map(s => s.cn || s.c))]
+    console.log(`  Countries in this decade: ${uniqueCountries.slice(0, 5).join(', ')}...`)
+
     for (const squad of data.squads) {
       const matchesCountry = squad.c === countryName || squad.cn === countryName
       if (matchesCountry) {
