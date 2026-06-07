@@ -99,7 +99,7 @@ function FootballPitch({ slots, team }) {
               opacity: player || isCurrent ? 1 : 0.5,
             }}>
               {player
-                ? player.name.split(' ').slice(-1)[0]
+                ? player.name
                 : isCurrent ? '?' : pos}
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                       fontSize: isMobile ? '0.75rem' : '1rem', fontWeight: '700',
                       color: C.text, marginBottom: '0.15rem', lineHeight: 1.2,
                     }}>
-                      {player.name.split(' ').slice(-1)[0]}
+                      {player.name}
                     </div>
                     <div style={{ fontSize: '0.65rem', color: C.textDim, marginBottom: isMobile ? '0.4rem' : '1rem' }}>
                       {player.year}
