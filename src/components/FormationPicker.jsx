@@ -2,7 +2,7 @@ import React from 'react'
 import { FORMATIONS } from '../constants'
 import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
 
-const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#EF4444' }
+const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
 
 export default function FormationPicker({ country, onSelect, onNewGame }) {
   return (
@@ -32,7 +32,7 @@ export default function FormationPicker({ country, onSelect, onNewGame }) {
             onMouseLeave={cardHoverOut}
           >
             <div style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Oswald', sans-serif",
               fontSize: '2rem', fontWeight: '800',
               color: C.accent, marginBottom: '0.4rem',
               letterSpacing: '-0.02em',
@@ -57,7 +57,7 @@ export default function FormationPicker({ country, onSelect, onNewGame }) {
                   minWidth: '3rem',
                 }}>
                   <span style={{ fontSize: '0.65rem', fontWeight: '600', color: POS_COLORS[pos] || C.accent, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{pos}</span>
-                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.25rem', fontWeight: '700', color: C.text }}>{count}</span>
+                  <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: '1.25rem', fontWeight: '700', color: C.text }}>{count}</span>
                 </div>
               ))}
             </div>

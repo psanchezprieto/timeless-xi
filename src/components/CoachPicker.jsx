@@ -59,7 +59,7 @@ export default function CoachPicker({ country, onSelect, onNewGame }) {
               onMouseLeave={cardHoverOut}
             >
               <div style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Oswald', sans-serif",
                 fontSize: '1.05rem', fontWeight: '700',
                 color: C.text, marginBottom: '0.3rem',
               }}>

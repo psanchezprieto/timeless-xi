@@ -20,7 +20,7 @@ export default function App() {
           backgroundColor: C.surface, border: `1px solid ${C.danger}`,
           borderRadius: '12px', padding: '2.5rem', maxWidth: '28rem', textAlign: 'center',
         }}>
-          <p style={{ color: C.danger, fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.75rem' }}>
+          <p style={{ color: C.danger, fontFamily: "'Oswald', sans-serif", fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.75rem' }}>
             Failed to load game data
           </p>
           <p style={{ color: C.textSub, fontSize: '0.875rem' }}>{error}</p>
@@ -37,7 +37,7 @@ export default function App() {
         alignItems: 'center', justifyContent: 'center',
       }}>
         <h1 style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Oswald', sans-serif",
           color: C.text, fontSize: 'clamp(2rem, 6vw, 3.5rem)',
           fontWeight: '800', letterSpacing: '-0.04em',
           marginBottom: '0.5rem',

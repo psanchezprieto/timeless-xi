@@ -7,23 +7,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #0B0B0F;
-      --surface:     #131318;
-      --surface-hi:  #1A1A24;
-      --border:      #252530;
-      --accent:      #7C5CFC;
-      --accent-h:    #9B84FD;
-      --cyan:        #06B6D4;
-      --gold:        #F59E0B;
-      --text:        #EEEEF2;
-      --text-sub:    #8B8BA0;
-      --text-dim:    #4A4A60;
+      --bg:          #0B2D35;
+      --surface:     #0F3A44;
+      --surface-hi:  #174F5E;
+      --border:      #1E6070;
+      --accent:      #E8553E;
+      --accent-h:    #F26E59;
+      --cyan:        #1BB9C4;
+      --gold:        #F0A500;
+      --text:        #F5EEE6;
+      --text-sub:    #8AB5BE;
+      --text-dim:    #3D7080;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,18 +31,28 @@
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Source Sans 3', system-ui, sans-serif;
       font-size: 15px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      /* Subtle diagonal grid — Italia 90 broadcast feel */
+      background-image:
+        repeating-linear-gradient(
+          135deg,
+          rgba(255,255,255,0.015) 0px,
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px,
+          transparent 40px
+        );
     }
 
     h1, h2, h3, h4 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Oswald', sans-serif;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.1;
     }
 
     #app { min-height: 100vh; width: 100%; }
@@ -50,14 +60,39 @@
     /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+    /* Embossed flag */
+    .flag-emboss {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow:
+        -1px -1px 0 rgba(255,255,255,0.35),
+        2px  2px  0 rgba(0,0,0,0.55),
+        0 4px 10px rgba(0,0,0,0.45);
+      flex-shrink: 0;
+    }
+    /* Diagonal gloss: bright top-left → dark bottom-right */
+    .flag-emboss::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.18) 0%,
+        transparent            45%,
+        rgba(0,0,0,0.12)      100%
+      );
+      pointer-events: none;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .fade-in { animation: fadeIn 0.25s ease forwards; }
+    .fade-in { animation: fadeIn 0.2s ease forwards; }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
@@ -65,11 +100,12 @@
     .spinner {
       width: 20px; height: 20px;
       border: 2px solid var(--border);
-      border-top-color: var(--accent);
+      border-top-color: var(--cyan);
       border-radius: 50%;
       display: inline-block;
       animation: spin 0.7s linear infinite;
     }
+
   </style>
 </head>
 <body>

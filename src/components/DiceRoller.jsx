@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FORMATIONS } from '../constants'
 import { getRandomPlayersForPosition } from '../utils/db'
 import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
+import { useIsMobile } from '../utils/useIsMobile'
 
 function buildSlots(formation) {
   const slots = []
@@ -13,7 +14,7 @@ function buildSlots(formation) {
   return slots
 }
 
-const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#EF4444' }
+const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
 const POS_Y = { GK: 88, DEF: 68, MID: 44, FWD: 18 }
 const POS_X_MAP = {
   1: [50],
@@ -40,7 +41,7 @@ function FootballPitch({ slots, team }) {
   const coords = getSlotCoords(slots)
 
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '2/3', backgroundColor: '#0d4a1e', borderRadius: '10px', border: `1px solid #1a6b2e`, overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', aspectRatio: '2/3', backgroundColor: '#0e3d1a', borderRadius: '2px', border: `2px solid #1a5c28`, overflow: 'hidden' }}>
       {/* Pitch markings */}
       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} viewBox="0 0 200 300" preserveAspectRatio="none">
         <rect x="10" y="10" width="180" height="280" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" />
@@ -109,6 +110,7 @@ function FootballPitch({ slots, team }) {
 }
 
 export default function DiceRoller({ country, formation, team: initialTeam, rerolls, onReroll, onComplete, onNewGame }) {
+  const isMobile = useIsMobile()
   const slots = buildSlots(formation)
   const [team, setTeam] = useState(initialTeam || [])
   const [candidates, setCandidates] = useState([])
@@ -172,10 +174,22 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
         )}
       </p>
 
-      {/* Two-column layout */}
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
-        {/* Left: slot tracker + candidates */}
-        <div style={{ flex: '1 1 0', minWidth: 0 }}>
+      {/* Layout: side-by-side on desktop, stacked on mobile (pitch first) */}
+      <div style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? '1.5rem' : '2rem',
+        alignItems: 'flex-start',
+      }}>
+        {/* Mobile: pitch comes first */}
+        {isMobile && (
+          <div style={{ width: '100%', maxWidth: '200px', margin: '0 auto' }}>
+            <p style={{ ...S.label, textAlign: 'center', marginBottom: '0.75rem' }}>Your XI</p>
+            <FootballPitch slots={slots} team={team} />
+          </div>
+        )}
+        {/* Slot tracker + candidates */}
+        <div style={{ flex: '1 1 0', minWidth: 0, width: '100%' }}>
           {/* Slot tracker */}
           <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.5rem' }}>
             {slots.map((pos, i) => (
@@ -204,51 +218,53 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
             <>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '1rem',
+                gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(3, 1fr)',
+                gap: isMobile ? '0.5rem' : '1rem',
                 marginBottom: '1.5rem',
               }}>
                 {candidates.map((player, i) => (
                   <button
                     key={i}
                     onClick={() => pick(player)}
-                    style={{ ...S.card, cursor: 'pointer', textAlign: 'center', padding: '1.5rem 1rem' }}
+                    style={{ ...S.card, cursor: 'pointer', textAlign: 'center', padding: isMobile ? '0.75rem 0.4rem' : '1.5rem 1rem' }}
                     onMouseEnter={cardHoverIn}
                     onMouseLeave={cardHoverOut}
                   >
                     <span style={{
                       display: 'inline-block',
-                      fontSize: '0.62rem', fontWeight: '700',
-                      letterSpacing: '0.08em', textTransform: 'uppercase',
+                      fontSize: '0.55rem', fontWeight: '700',
+                      letterSpacing: '0.06em', textTransform: 'uppercase',
                       color: POS_COLORS[currentPos] || C.accent,
                       backgroundColor: `${POS_COLORS[currentPos] || C.accent}18`,
-                      padding: '0.18rem 0.55rem', borderRadius: '99px',
-                      marginBottom: '0.85rem',
+                      padding: '0.15rem 0.4rem', borderRadius: '2px',
+                      marginBottom: isMobile ? '0.4rem' : '0.85rem',
                     }}>
                       {currentPos}
                     </span>
 
                     <div style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: '1rem', fontWeight: '700',
-                      color: C.text, marginBottom: '0.2rem', lineHeight: 1.25,
+                      fontFamily: "'Oswald', sans-serif",
+                      fontSize: isMobile ? '0.75rem' : '1rem', fontWeight: '700',
+                      color: C.text, marginBottom: '0.15rem', lineHeight: 1.2,
                     }}>
-                      {player.name}
+                      {player.name.split(' ').slice(-1)[0]}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: C.textDim, marginBottom: '1rem' }}>
+                    <div style={{ fontSize: '0.65rem', color: C.textDim, marginBottom: isMobile ? '0.4rem' : '1rem' }}>
                       {player.year}
                     </div>
 
                     <div style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: '2.2rem', fontWeight: '800', color: C.gold,
+                      fontFamily: "'Oswald', sans-serif",
+                      fontSize: isMobile ? '1.6rem' : '2.2rem', fontWeight: '800', color: C.gold,
                       letterSpacing: '-0.02em',
                     }}>
                       {player.rating}
                     </div>
-                    <div style={{ fontSize: '0.6rem', color: C.textDim, marginTop: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      rating
-                    </div>
+                    {!isMobile && (
+                      <div style={{ fontSize: '0.6rem', color: C.textDim, marginTop: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                        rating
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -276,11 +292,13 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
           )}
         </div>
 
-        {/* Right: pitch */}
-        <div style={{ flex: '0 0 200px' }}>
-          <p style={{ ...S.label, textAlign: 'center', marginBottom: '0.75rem' }}>Your XI</p>
-          <FootballPitch slots={slots} team={team} />
-        </div>
+        {/* Desktop: pitch on right */}
+        {!isMobile && (
+          <div style={{ flex: '0 0 200px' }}>
+            <p style={{ ...S.label, textAlign: 'center', marginBottom: '0.75rem' }}>Your XI</p>
+            <FootballPitch slots={slots} team={team} />
+          </div>
+        )}
       </div>
     </div>
   )

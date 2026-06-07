@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 13">
+  <!-- Yugoslavia flag: blue / white / red horizontal stripes + red star with gold outline -->
+  <rect width="20" height="4.33" fill="#003DA5"/>
+  <rect y="4.33" width="20" height="4.34" fill="#F0F0F0"/>
+  <rect y="8.67" width="20" height="4.33" fill="#CE2028"/>
+  <!-- Red 5-pointed star with gold border, centered -->
+  <polygon points="10,1.6 10.75,4.0 13.3,4.0 11.3,5.4 12.0,7.8 10,6.4 8.0,7.8 8.7,5.4 6.7,4.0 9.25,4.0"
+           fill="#CE2028" stroke="#FFD700" stroke-width="0.55" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 13">
+  <!-- East Germany (DDR) flag: black / red / gold stripes + simplified coat of arms -->
+  <rect width="20" height="4.33" fill="#000000"/>
+  <rect y="4.33" width="20" height="4.34" fill="#DD0000"/>
+  <rect y="8.67" width="20" height="4.33" fill="#FFCC00"/>
+  <!-- DDR emblem: grain wreath circle (gold ring), hammer + compass inside -->
+  <circle cx="10" cy="6.5" r="2.6" fill="none" stroke="#FFCC00" stroke-width="0.7"/>
+  <!-- Simplified hammer (two rects) -->
+  <rect x="8.6" y="5.7" width="1.5" height="0.5" fill="#FFCC00" rx="0.1"/>
+  <rect x="9.1" y="6.1" width="0.5" height="1.5" fill="#FFCC00" rx="0.1"/>
+  <!-- Simplified compass (X shape) -->
+  <line x1="10.5" y1="5.7" x2="11.8" y2="7.3" stroke="#FFCC00" stroke-width="0.45" stroke-linecap="round"/>
+  <line x1="11.8" y1="5.7" x2="10.5" y2="7.3" stroke="#FFCC00" stroke-width="0.45" stroke-linecap="round"/>
+</svg>

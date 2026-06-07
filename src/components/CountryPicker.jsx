@@ -2,91 +2,107 @@ import React, { useState, useMemo } from 'react'
 import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
 
 const COUNTRIES_DATA = [
-  { name: 'Algeria', flag: '🇩🇿' },
-  { name: 'Angola', flag: '🇦🇴' },
-  { name: 'Argentina', flag: '🇦🇷' },
-  { name: 'Australia', flag: '🇦🇺' },
-  { name: 'Austria', flag: '🇦🇹' },
-  { name: 'Belgium', flag: '🇧🇪' },
-  { name: 'Bolivia', flag: '🇧🇴' },
-  { name: 'Bosnia and Herzegovina', flag: '🇧🇦' },
-  { name: 'Brazil', flag: '🇧🇷' },
-  { name: 'Bulgaria', flag: '🇧🇬' },
-  { name: 'Cameroon', flag: '🇨🇲' },
-  { name: 'Canada', flag: '🇨🇦' },
-  { name: 'Chile', flag: '🇨🇱' },
-  { name: 'China PR', flag: '🇨🇳' },
-  { name: 'Colombia', flag: '🇨🇴' },
-  { name: 'Costa Rica', flag: '🇨🇷' },
-  { name: 'Croatia', flag: '🇭🇷' },
-  { name: 'Czech Republic', flag: '🇨🇿' },
-  { name: 'Czechoslovakia', flag: '🇨🇿' },
-  { name: 'Denmark', flag: '🇩🇰' },
-  { name: 'East Germany', flag: '🇩🇪' },
-  { name: 'Ecuador', flag: '🇪🇨' },
-  { name: 'Egypt', flag: '🇪🇬' },
-  { name: 'El Salvador', flag: '🇸🇻' },
-  { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-  { name: 'France', flag: '🇫🇷' },
-  { name: 'Germany', flag: '🇩🇪' },
-  { name: 'Ghana', flag: '🇬🇭' },
-  { name: 'Greece', flag: '🇬🇷' },
-  { name: 'Haiti', flag: '🇭🇹' },
-  { name: 'Honduras', flag: '🇭🇳' },
-  { name: 'Hungary', flag: '🇭🇺' },
-  { name: 'Iceland', flag: '🇮🇸' },
-  { name: 'Iran', flag: '🇮🇷' },
-  { name: 'Iraq', flag: '🇮🇶' },
-  { name: 'Israel', flag: '🇮🇱' },
-  { name: 'Italy', flag: '🇮🇹' },
-  { name: 'Ivory Coast', flag: '🇨🇮' },
-  { name: 'Jamaica', flag: '🇯🇲' },
-  { name: 'Japan', flag: '🇯🇵' },
-  { name: 'Jordan', flag: '🇯🇴' },
-  { name: 'Kuwait', flag: '🇰🇼' },
-  { name: 'Mexico', flag: '🇲🇽' },
-  { name: 'Morocco', flag: '🇲🇦' },
-  { name: 'Netherlands', flag: '🇳🇱' },
-  { name: 'New Zealand', flag: '🇳🇿' },
-  { name: 'Nigeria', flag: '🇳🇬' },
-  { name: 'North Korea', flag: '🇰🇵' },
-  { name: 'Northern Ireland', flag: '🇬🇧' },
-  { name: 'Norway', flag: '🇳🇴' },
-  { name: 'Panama', flag: '🇵🇦' },
-  { name: 'Paraguay', flag: '🇵🇾' },
-  { name: 'Peru', flag: '🇵🇪' },
-  { name: 'Poland', flag: '🇵🇱' },
-  { name: 'Portugal', flag: '🇵🇹' },
-  { name: 'Qatar', flag: '🇶🇦' },
-  { name: 'Republic of Ireland', flag: '🇮🇪' },
-  { name: 'Romania', flag: '🇷🇴' },
-  { name: 'Russia', flag: '🇷🇺' },
-  { name: 'Saudi Arabia', flag: '🇸🇦' },
-  { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
-  { name: 'Senegal', flag: '🇸🇳' },
-  { name: 'Serbia', flag: '🇷🇸' },
-  { name: 'Slovakia', flag: '🇸🇰' },
-  { name: 'Slovenia', flag: '🇸🇮' },
-  { name: 'South Africa', flag: '🇿🇦' },
-  { name: 'South Korea', flag: '🇰🇷' },
-  { name: 'Spain', flag: '🇪🇸' },
-  { name: 'Soviet Union', flag: '🇷🇺' },
-  { name: 'Sweden', flag: '🇸🇪' },
-  { name: 'Switzerland', flag: '🇨🇭' },
-  { name: 'Togo', flag: '🇹🇬' },
-  { name: 'Trinidad and Tobago', flag: '🇹🇹' },
-  { name: 'Tunisia', flag: '🇹🇳' },
-  { name: 'Turkey', flag: '🇹🇷' },
-  { name: 'Ukraine', flag: '🇺🇦' },
-  { name: 'United Arab Emirates', flag: '🇦🇪' },
-  { name: 'United States', flag: '🇺🇸' },
-  { name: 'Uruguay', flag: '🇺🇾' },
-  { name: 'Uzbekistan', flag: '🇺🇿' },
-  { name: 'Wales', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
-  { name: 'West Germany', flag: '🇩🇪' },
-  { name: 'Yugoslavia', flag: '🇷🇸' },
-  { name: 'Zaire', flag: '🇨🇩' },
+  { name: 'Algeria', code: 'dz' },
+  { name: 'Angola', code: 'ao' },
+  { name: 'Argentina', code: 'ar' },
+  { name: 'Australia', code: 'au' },
+  { name: 'Austria', code: 'at' },
+  { name: 'Belgium', code: 'be' },
+  { name: 'Bolivia', code: 'bo' },
+  { name: 'Bosnia and Herzegovina', code: 'ba' },
+  { name: 'Brazil', code: 'br' },
+  { name: 'Bulgaria', code: 'bg' },
+  { name: 'Cameroon', code: 'cm' },
+  { name: 'Canada', code: 'ca' },
+  { name: 'Chile', code: 'cl' },
+  { name: 'China PR', code: 'cn' },
+  { name: 'Colombia', code: 'co' },
+  { name: 'Costa Rica', code: 'cr' },
+  { name: 'Croatia', code: 'hr' },
+  { name: 'Czech Republic', code: 'cz' },
+  { name: 'Czechoslovakia', code: 'cz' },
+  { name: 'Denmark', code: 'dk' },
+  { name: 'East Germany', flagSrc: '/flags/dd.svg' },
+  { name: 'Ecuador', code: 'ec' },
+  { name: 'Egypt', code: 'eg' },
+  { name: 'El Salvador', code: 'sv' },
+  { name: 'England', code: 'gb-eng' },
+  { name: 'France', code: 'fr' },
+  { name: 'Germany', code: 'de' },
+  { name: 'Ghana', code: 'gh' },
+  { name: 'Greece', code: 'gr' },
+  { name: 'Haiti', code: 'ht' },
+  { name: 'Honduras', code: 'hn' },
+  { name: 'Hungary', code: 'hu' },
+  { name: 'Iceland', code: 'is' },
+  { name: 'Iran', code: 'ir' },
+  { name: 'Iraq', code: 'iq' },
+  { name: 'Israel', code: 'il' },
+  { name: 'Italy', code: 'it' },
+  { name: 'Ivory Coast', code: 'ci' },
+  { name: 'Jamaica', code: 'jm' },
+  { name: 'Japan', code: 'jp' },
+  { name: 'Jordan', code: 'jo' },
+  { name: 'Kuwait', code: 'kw' },
+  { name: 'Mexico', code: 'mx' },
+  { name: 'Morocco', code: 'ma' },
+  { name: 'Netherlands', code: 'nl' },
+  { name: 'New Zealand', code: 'nz' },
+  { name: 'Nigeria', code: 'ng' },
+  { name: 'North Korea', code: 'kp' },
+  { name: 'Northern Ireland', code: 'gb-nir' },
+  { name: 'Norway', code: 'no' },
+  { name: 'Panama', code: 'pa' },
+  { name: 'Paraguay', code: 'py' },
+  { name: 'Peru', code: 'pe' },
+  { name: 'Poland', code: 'pl' },
+  { name: 'Portugal', code: 'pt' },
+  { name: 'Qatar', code: 'qa' },
+  { name: 'Republic of Ireland', code: 'ie' },
+  { name: 'Romania', code: 'ro' },
+  { name: 'Russia', code: 'ru' },
+  { name: 'Saudi Arabia', code: 'sa' },
+  { name: 'Scotland', code: 'gb-sct' },
+  { name: 'Senegal', code: 'sn' },
+  { name: 'Serbia', code: 'rs' },
+  { name: 'Slovakia', code: 'sk' },
+  { name: 'Slovenia', code: 'si' },
+  { name: 'South Africa', code: 'za' },
+  { name: 'South Korea', code: 'kr' },
+  { name: 'Soviet Union', flagSrc: '/flags/su.svg' },
+  { name: 'Spain', code: 'es' },
+  { name: 'Sweden', code: 'se' },
+  { name: 'Switzerland', code: 'ch' },
+  { name: 'Togo', code: 'tg' },
+  { name: 'Trinidad and Tobago', code: 'tt' },
+  { name: 'Tunisia', code: 'tn' },
+  { name: 'Turkey', code: 'tr' },
+  { name: 'Ukraine', code: 'ua' },
+  { name: 'United Arab Emirates', code: 'ae' },
+  { name: 'United States', code: 'us' },
+  { name: 'Uruguay', code: 'uy' },
+  { name: 'Uzbekistan', code: 'uz' },
+  { name: 'Wales', code: 'gb-wls' },
+  { name: 'West Germany', code: 'de' },
+  { name: 'Yugoslavia', flagSrc: '/flags/yu.svg' },
+  { name: 'Zaire', code: 'cd' },
 ]
+
+function getFlagUrl(country) {
+  if (country.flagSrc) return country.flagSrc
+  return `https://flagcdn.com/w80/${country.code}.png`
+}
+
+function stickerHoverIn(e) {
+  e.currentTarget.style.borderColor = C.gold
+  e.currentTarget.style.transform = 'translateY(-4px) rotate(0.6deg)'
+  e.currentTarget.style.boxShadow = `4px 6px 16px rgba(0,0,0,0.55), 0 0 0 1px ${C.gold}55`
+}
+function stickerHoverOut(e) {
+  e.currentTarget.style.borderColor = C.border
+  e.currentTarget.style.transform = 'translateY(0) rotate(0deg)'
+  e.currentTarget.style.boxShadow = '2px 3px 8px rgba(0,0,0,0.35)'
+}
 
 export default function CountryPicker({ onSelect }) {
   const [search, setSearch] = useState('')
@@ -121,27 +137,61 @@ export default function CountryPicker({ onSelect }) {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
-        gap: '0.65rem',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
+        gap: '0.9rem',
       }}>
         {filtered.map(country => (
           <button
             key={country.name}
             onClick={() => onSelect(country.name)}
             style={{
-              ...S.card,
               cursor: 'pointer',
+              padding: 0,
+              border: `2px solid ${C.border}`,
+              borderRadius: '3px',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              background: C.surface,
+              boxShadow: '2px 3px 8px rgba(0,0,0,0.35)',
+              transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
               textAlign: 'center',
-              padding: '1rem 0.75rem',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
             }}
-            onMouseEnter={cardHoverIn}
-            onMouseLeave={cardHoverOut}
+            onMouseEnter={stickerHoverIn}
+            onMouseLeave={stickerHoverOut}
           >
-            <span style={{ fontSize: '1.75rem', lineHeight: 1 }}>{country.flag}</span>
-            <span style={{ fontSize: '0.75rem', fontWeight: '600', color: C.text, lineHeight: 1.3 }}>
-              {country.name}
-            </span>
+            {/* Cream sticker backing with flag */}
+            <div style={{ padding: '5px', background: '#E8E2D6' }}>
+              <div className="flag-emboss" style={{ width: '100%' }}>
+                <img
+                  src={getFlagUrl(country)}
+                  alt={`${country.name} flag`}
+                  style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+            </div>
+            {/* Name label strip */}
+            <div style={{
+              background: C.accent,
+              padding: '0.32rem 0.4rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '2rem',
+              flex: 1,
+            }}>
+              <span style={{
+                color: '#fff',
+                fontSize: '0.58rem',
+                fontWeight: '700',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                fontFamily: "'Oswald', sans-serif",
+                lineHeight: 1.25,
+              }}>
+                {country.name}
+              </span>
+            </div>
           </button>
         ))}
       </div>
