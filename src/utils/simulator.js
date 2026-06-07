@@ -36,7 +36,7 @@ export function generateAITeams(userCountry, count = 31) {
 export function calcTeamRating(players, coach) {
   if (!players || !players.length) return 60
   const avg = players.reduce((s, p) => s + (p.rating || 60), 0) / players.length
-  const moraleBonus = (coach?.moraleBoost || 0) // morale adds direct rating points
+  const moraleBonus = (coach && coach.moraleBoost) || 0 // morale adds direct rating points
   return parseFloat((avg + moraleBonus).toFixed(1))
 }
 
@@ -66,7 +66,7 @@ function weightedPick(players) {
 }
 
 function getGoalScorers(players, count) {
-  if (!count || !players?.length) return []
+  if (!count || !players || !players.length) return []
   return Array.from({ length: count }, () => weightedPick(players))
 }
 

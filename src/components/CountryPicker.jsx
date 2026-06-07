@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react'
+import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
 
-// Country data with flags (using country codes)
 const COUNTRIES_DATA = [
+  { name: 'Algeria', flag: '🇩🇿' },
+  { name: 'Angola', flag: '🇦🇴' },
   { name: 'Argentina', flag: '🇦🇷' },
   { name: 'Australia', flag: '🇦🇺' },
   { name: 'Austria', flag: '🇦🇹' },
@@ -88,79 +90,54 @@ const COUNTRIES_DATA = [
 export default function CountryPicker({ onSelect }) {
   const [search, setSearch] = useState('')
 
-  const filteredCountries = useMemo(() => {
+  const filtered = useMemo(() => {
     if (!search) return COUNTRIES_DATA
-    return COUNTRIES_DATA.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+    const q = search.toLowerCase()
+    return COUNTRIES_DATA.filter(c => c.name.toLowerCase().includes(q))
   }, [search])
 
   return (
-    <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
-      <h1 style={{ color: '#d97fb6', fontSize: '2.5rem', fontWeight: '900', textAlign: 'center', marginBottom: '2rem', textTransform: 'uppercase' }}>
-        Select Your Team
-      </h1>
+    <div style={S.page}>
+      <h1 style={S.h1}>Select Your Team</h1>
 
       <input
         type="text"
         placeholder="Search countries..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={e => setSearch(e.target.value)}
         style={{
           width: '100%',
           padding: '0.75rem',
           marginBottom: '2rem',
-          backgroundColor: '#16213e',
-          border: '1px solid #d97fb6',
-          color: '#e0e0e0',
+          backgroundColor: C.card,
+          border: `1px solid ${C.pink}`,
+          color: C.text,
           fontSize: '1rem',
           borderRadius: '4px',
-          boxShadow: '0 0 8px rgba(217, 127, 182, 0.2)',
+          boxShadow: `0 0 8px rgba(217,127,182,0.2)`,
+          outline: 'none',
         }}
       />
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-        gap: '1rem',
-      }}>
-        {filteredCountries.map(country => (
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem' }}>
+        {filtered.map(country => (
           <button
             key={country.name}
             onClick={() => onSelect(country.name)}
-            style={{
-              backgroundColor: '#16213e',
-              border: '1px solid #5eb3c6',
-              color: '#e0e0e0',
-              padding: '1rem',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              fontSize: '1.25rem',
-              fontWeight: '600',
-              boxShadow: '0 0 8px rgba(94, 179, 198, 0.2)',
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#5eb3c6'
-              e.target.style.color = '#1a1a2e'
-              e.target.style.transform = 'scale(1.05)'
-              e.target.style.boxShadow = '0 4px 12px rgba(94, 179, 198, 0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#16213e'
-              e.target.style.color = '#e0e0e0'
-              e.target.style.transform = 'scale(1)'
-              e.target.style.boxShadow = '0 0 8px rgba(94, 179, 198, 0.2)'
-            }}
+            style={{ ...S.cardCyan, cursor: 'pointer', transition: 'all 0.2s ease', textAlign: 'center' }}
+            onMouseEnter={cardHoverIn}
+            onMouseLeave={cardHoverOut}
           >
             <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{country.flag}</div>
-            <div style={{ fontSize: '0.9rem' }}>{country.name}</div>
+            <div style={{ fontSize: '0.85rem', color: C.text, fontWeight: '600' }}>{country.name}</div>
           </button>
         ))}
       </div>
 
-      {filteredCountries.length === 0 && (
-        <div style={{ textAlign: 'center', marginTop: '2rem', color: '#a0a0a0' }}>
-          No countries found matching "{search}"
-        </div>
+      {filtered.length === 0 && (
+        <p style={{ textAlign: 'center', marginTop: '2rem', color: C.muted }}>
+          No countries found matching &ldquo;{search}&rdquo;
+        </p>
       )}
     </div>
   )

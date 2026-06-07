@@ -86,22 +86,30 @@ Track completion of each phase, blockers, and key decisions.
   
 **Design**: Softer color palette (#d97fb6, #5eb3c6, #e8c547), subtle shadows, modern Inter font, clean UI
 
-### Subphase 2b: Game Components
-- [ ] Game.jsx (main flow)
-- [ ] CountryPicker.jsx
-- [ ] FormationPicker.jsx
-- [ ] DiceRoller.jsx
-- [ ] CoachPicker.jsx
-- [ ] TournamentSim.jsx
-- [ ] MatchDetail.jsx
+### Subphase 2b: Game Components + Utils ✅
+- [x] Game.jsx (main flow orchestrator)
+- [x] CountryPicker.jsx (team selection with flags + search)
+- [x] FormationPicker.jsx (4 formation cards)
+- [x] DiceRoller.jsx (position-by-position picker with rerolls — real data)
+- [x] CoachPicker.jsx (coach selection with morale boost — real data)
+- [x] TournamentSim.jsx (full 32-team bracket: groups → R16 → QF → SF → Final)
+- [x] CampaignSummary.jsx (final stats: MVP, goals, match history)
+- [x] src/utils/db.js (pako decompression, squad + coach data loader)
+- [x] src/utils/simulator.js (match simulation, knockout, group stage)
+- [x] src/styles/theme.js (shared C constants + style helpers)
 
-**Status**: Pending
+**Status**: ✅ Complete (2026-06-07)
+**Key decisions**:
+  - Ratings: 0-100 scale (raw 1-10 × 10 from enrichment)
+  - AI teams tiered by WC history (Tier 1=70-85, Tier 2=60-75, Tier 3=50-65)
+  - Match formula: Poisson distribution on expected goals (diff/10 * 0.25 ± variance)
+  - User always plays as "home" in knockout matches (for scorer attribution)
+  - MVP computed from goal scorers across all matches
 
-### Subphase 2c: Game Logic & Utils
-- [ ] utils/db.js (data loader)
-- [ ] utils/simulator.js (match + tournament logic)
-- [ ] utils/format.js (formatting helpers)
-- [ ] constants.js (formations, positions)
+### Subphase 2c: Retro 80s Styling
+- [ ] src/styles/index.css (scanlines, neon glows, animations)
+- [ ] src/styles/animations.css (dice roll, confetti, card flips)
+- [ ] Mobile responsive polish (48px+ touch targets)
 
 **Status**: Pending
 
@@ -154,16 +162,17 @@ Track completion of each phase, blockers, and key decisions.
 
 | Issue | Impact | Status |
 |-------|--------|--------|
-| Node v12.22.9 in dev environment | `npm run dev` fails — Vite 3+ requires Node 14.18+ | 🔴 Active — needs Node upgrade before Phase 2b can be tested |
-| `public/index.html` deleted (moved to root `index.html`) | Correct for Vite; old reference in some docs | ✅ Fixed |
+| Node v12.22.9 in dev environment | `npm run dev` fails — Vite 3+ requires Node 14.18+ | 🔴 Active — upgrade Node before testing locally |
+| Phase 2b components uncommitted | 7 components + constants.js in `src/` not yet in git | 🔴 Active — need to commit before next session |
+| `public/index.html` deleted (moved to root `index.html`) | Correct for Vite; uncommitted deletion | 🟡 Stage and commit `git rm public/index.html` |
 
 ---
 
 ## Next Steps
 
-1. **Upgrade Node** to 18+ (prerequisite for running `npm run dev`)
-2. **Phase 2b**: Build React UI components (Game.jsx, CountryPicker, FormationPicker, DiceRoller, CoachPicker, TournamentSim, MatchDetail)
-3. **Phase 2c**: Implement game logic (utils/db.js, utils/simulator.js, utils/format.js, constants.js)
+1. **Commit pending work** — 7 components + constants.js in `src/` are built but uncommitted (see HANDOFF.md)
+2. **Upgrade Node** to 18+ (prerequisite for running `npm run dev` — current env has v12.22.9)
+3. **Phase 2c**: Wire real data — utils/db.js, utils/simulator.js; update DiceRoller + CoachPicker + TournamentSim
 4. **Phase 2d**: Apply retro 80s styling (src/styles/index.css, animations.css)
 5. **Phase 3**: Deploy to GitHub Pages
 
