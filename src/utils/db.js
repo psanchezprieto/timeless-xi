@@ -93,9 +93,7 @@ export async function getCoachesByCountry(countryName) {
       const res = await fetch('/data/coaches.json.gz')
       if (!res.ok) throw new Error('Failed to load coaches')
       const buffer = await res.arrayBuffer()
-      const inflated = pako.inflate(new Uint8Array(buffer))
-      const text = new TextDecoder().decode(inflated)
-      cache.coaches = JSON.parse(text)
+      cache.coaches = decodeGzBuffer(buffer)
     } catch (e) {
       console.error('Error loading coaches:', e.message)
       cache.coaches = {}
