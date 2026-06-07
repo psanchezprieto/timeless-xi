@@ -2,6 +2,8 @@
   "name": "timeless-xi",
   "version": "0.1.0",
   "description": "World Cup simulation game - build dream teams and win tournaments",
+  "license": "MIT",
+  "author": "Pablo Sanchez Prieto <psanchezprieto@gmail.com>",
   "type": "module",
   "scripts": {
     "dev": "vite",
