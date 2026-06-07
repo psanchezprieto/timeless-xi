@@ -24,8 +24,9 @@ async function loadGzFile(filename) {
       return cache[filename]
     }
 
-    const inflated = pako.inflate(new Uint8Array(buffer), { to: 'string' })
-    cache[filename] = JSON.parse(inflated)
+    const inflated = pako.inflate(new Uint8Array(buffer))
+    const text = new TextDecoder().decode(inflated)
+    cache[filename] = JSON.parse(text)
     return cache[filename]
   } catch (e) {
     console.error(`Error loading ${filename}:`, e.message)
@@ -87,11 +88,17 @@ export async function getPlayersByCountry(countryName) {
 
 export async function getCoachesByCountry(countryName) {
   if (!cache.coaches) {
-    const res = await fetch('/data/coaches.json.gz')
-    if (!res.ok) throw new Error('Failed to load coaches')
-    const buffer = await res.arrayBuffer()
-    const inflated = pako.inflate(new Uint8Array(buffer), { to: 'string' })
-    cache.coaches = JSON.parse(inflated)
+    try {
+      const res = await fetch('/data/coaches.json.gz')
+      if (!res.ok) throw new Error('Failed to load coaches')
+      const buffer = await res.arrayBuffer()
+      const inflated = pako.inflate(new Uint8Array(buffer))
+      const text = new TextDecoder().decode(inflated)
+      cache.coaches = JSON.parse(text)
+    } catch (e) {
+      console.error('Error loading coaches:', e.message)
+      cache.coaches = {}
+    }
   }
   return cache.coaches[countryName] || []
 }
