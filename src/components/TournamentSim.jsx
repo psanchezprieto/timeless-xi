@@ -7,7 +7,6 @@ import { C, S } from '../styles/theme'
 
 const ROUNDS = ['Round of 16', 'Quarterfinals', 'Semifinals', 'Final']
 
-// "Spain (1982)" for AI teams, plain "Spain" for user
 function teamLabel(team) {
   if (team.isUser) return team.country
   return team.year ? `${team.country} (${team.year})` : team.country
@@ -58,19 +57,25 @@ function Btn({ children, onClick, color = C.accent, disabled = false }) {
   )
 }
 
-function ScoreBox({ result, userCountry }) {
+function ScoreBox({ result, userCountry, isGroupStage = false }) {
   const userIsHome = result.home === userCountry
   const userGoals = userIsHome ? result.homeGoals : result.awayGoals
   const oppGoals  = userIsHome ? result.awayGoals : result.homeGoals
   const oppLabel  = userIsHome ? result.awayLabel : result.homeLabel
   const userScorers = userIsHome ? result.homeScorers : result.awayScorers
   const oppScorers  = userIsHome ? result.awayScorers : result.homeScorers
-  const won       = userGoals > oppGoals || (result.penalties && result.penHome > result.penAway)
+  const won  = userGoals > oppGoals || (result.penalties && result.penHome > result.penAway && userIsHome) || (result.penalties && result.penAway > result.penHome && !userIsHome)
+  const drew = !won && result.draw && !result.penalties
+
+  const badgeText  = won ? 'Victory' : drew ? 'Draw' : isGroupStage ? 'Defeat' : 'Eliminated'
+  const badgeColor = won ? C.gold : drew ? C.cyan : C.danger
+  const badgeBg    = won ? C.goldGlow : drew ? C.cyanGlow : C.dangerGlow
+  const borderColor = won ? C.gold : drew ? C.cyan : C.danger
 
   return (
     <div style={{
       backgroundColor: C.surface,
-      border: `1px solid ${won ? C.gold : C.danger}`,
+      border: `1px solid ${borderColor}`,
       borderRadius: '10px',
       padding: '1.5rem',
       textAlign: 'center',
@@ -103,11 +108,11 @@ function ScoreBox({ result, userCountry }) {
         display: 'inline-block',
         fontSize: '0.7rem', fontWeight: '700',
         letterSpacing: '0.08em', textTransform: 'uppercase',
-        color: won ? C.gold : C.danger,
-        backgroundColor: won ? C.goldGlow : C.dangerGlow,
+        color: badgeColor,
+        backgroundColor: badgeBg,
         padding: '0.25rem 0.75rem', borderRadius: '99px',
       }}>
-        {won ? 'Victory' : 'Eliminated'}
+        {badgeText}
       </div>
     </div>
   )
@@ -166,7 +171,6 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
     isUser: true,
   }), []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Load historical AI teams async
   const [allTeams, setAllTeams] = useState(null)
   const [loadingTeams, setLoadingTeams] = useState(true)
 
@@ -177,7 +181,6 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         setLoadingTeams(false)
       })
       .catch(() => {
-        // Fallback to tier-based AI teams
         setAllTeams([userTeam, ...generateAITeams(country, 31)])
         setLoadingTeams(false)
       })
@@ -187,6 +190,13 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
 
   const [phase, setPhase] = useState('groups')
   const [simGroups, setSimGroups] = useState(null)
+
+  // Group stage playback
+  const [groupMatches, setGroupMatches] = useState([])
+  const [groupMatchIdx, setGroupMatchIdx] = useState(0)
+  const [groupMatchResult, setGroupMatchResult] = useState(null)
+
+  // Knockout stage
   const [roundIdx, setRoundIdx] = useState(0)
   const [pendingMatch, setPendingMatch] = useState(null)
   const [matchResult, setMatchResult] = useState(null)
@@ -198,9 +208,9 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   const simulateGroupStage = () => {
     const simmed = rawGroups.map(simulateGroup)
     setSimGroups(simmed)
+
     const ug = simmed.find(g => g.teams.some(t => t.isUser))
     const userMatches = (ug.matches || []).map(m => {
-      // Attach team labels to all results for display
       const homeTeam = ug.teams.find(t => t.country === m.home)
       const awayTeam = ug.teams.find(t => t.country === m.away)
       return {
@@ -209,6 +219,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         awayLabel: awayTeam ? teamLabel(awayTeam) : m.away,
       }
     }).filter(m => m.home === country || m.away === country)
+
     let gf = 0, ga = 0, wins = 0
     for (const m of userMatches) {
       const myGoals = m.home === country ? m.homeGoals : m.awayGoals
@@ -217,7 +228,26 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
       if (myGoals > theirGoals) wins++
     }
     setCampaign(c => ({ ...c, gf: c.gf + gf, ga: c.ga + ga, wins: c.wins + wins, results: [...c.results, ...userMatches] }))
-    setPhase('group_results')
+
+    setGroupMatches(userMatches)
+    setGroupMatchIdx(0)
+    setGroupMatchResult(null)
+    setPhase('group_match_preview')
+  }
+
+  const revealGroupMatch = () => {
+    setGroupMatchResult(groupMatches[groupMatchIdx])
+    setPhase('group_match_result')
+  }
+
+  const nextGroupMatch = () => {
+    if (groupMatchIdx + 1 < groupMatches.length) {
+      setGroupMatchIdx(i => i + 1)
+      setGroupMatchResult(null)
+      setPhase('group_match_preview')
+    } else {
+      setPhase('group_results')
+    }
   }
 
   const advanceToKnockout = () => {
@@ -248,8 +278,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   }
 
   const playMatch = () => {
-    const result = simulateKnockoutMatch(pendingMatch.home, pendingMatch.away, team)
-    // Attach display labels to result for ScoreBox
+    const result = simulateKnockoutMatch(pendingMatch.home, pendingMatch.away)
     result.homeLabel = teamLabel(pendingMatch.home)
     result.awayLabel = teamLabel(pendingMatch.away)
     const userWon = result.winner.isUser
@@ -300,6 +329,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           ← Start over
         </button>
       )}
+
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
         <p style={S.label}>World Cup Tournament</p>
@@ -335,11 +365,63 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         </>
       )}
 
+      {/* ── Phase: group_match_preview ── */}
+      {phase === 'group_match_preview' && groupMatches[groupMatchIdx] && (() => {
+        const m = groupMatches[groupMatchIdx]
+        const oppLabel = m.home === country ? m.awayLabel : m.homeLabel
+        return (
+          <div style={{ textAlign: 'center' }}>
+            <p style={S.label}>Group Stage — Match {groupMatchIdx + 1} of {groupMatches.length}</p>
+            <div style={{
+              ...S.card,
+              maxWidth: '440px', margin: '1.5rem auto 2rem',
+              padding: '2.5rem 2rem',
+              borderColor: C.borderLight,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                    {country}
+                  </div>
+                  <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                    {userTeam.avgRating.toFixed(0)} rating
+                  </div>
+                </div>
+                <div style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
+                }}>vs</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                    {oppLabel}
+                  </div>
+                </div>
+              </div>
+              <Btn onClick={revealGroupMatch}>▶ Reveal Result</Btn>
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* ── Phase: group_match_result ── */}
+      {phase === 'group_match_result' && groupMatchResult && (
+        <div style={{ textAlign: 'center' }}>
+          <p style={{ ...S.label, marginBottom: '1.25rem' }}>
+            Group Stage — Match {groupMatchIdx + 1} of {groupMatches.length} — Result
+          </p>
+          <div style={{ maxWidth: '440px', margin: '0 auto 2rem' }}>
+            <ScoreBox result={groupMatchResult} userCountry={country} isGroupStage />
+          </div>
+          <Btn onClick={nextGroupMatch} color={C.gold}>
+            {groupMatchIdx + 1 < groupMatches.length ? 'Next Match →' : 'See Group Standings →'}
+          </Btn>
+        </div>
+      )}
+
       {/* ── Phase: group_results ── */}
       {phase === 'group_results' && simGroups && (() => {
         const ug = simGroups.find(g => g.teams.some(t => t.isUser))
         const qualified = ug.teams.findIndex(t => t.isUser) < 2
-        const userMatches = (ug.matches || []).filter(m => m.home === country || m.away === country)
         return (
           <>
             <div style={{
@@ -363,7 +445,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem', marginBottom: '1.75rem' }}>
-              {userMatches.map((m, i) => <ScoreBox key={i} result={m} userCountry={country} />)}
+              {groupMatches.map((m, i) => <ScoreBox key={i} result={m} userCountry={country} isGroupStage />)}
             </div>
 
             <p style={{ ...S.label, marginBottom: '0.75rem' }}>All Group Standings</p>

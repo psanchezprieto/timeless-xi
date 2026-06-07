@@ -85,13 +85,19 @@ export async function getAllHistoricalTeamStats() {
     const data = await loadGzFile(decade.filename)
     if (!data?.squads) continue
     for (const squad of data.squads) {
-      const players = squad.p || []
-      if (players.length === 0) continue
-      const avgRating = players.reduce((s, p) => s + (typeof p.r === 'number' ? p.r : 70), 0) / players.length
+      const rawPlayers = squad.p || []
+      if (rawPlayers.length === 0) continue
+      const players = rawPlayers.map(p => ({
+        name: p.n,
+        position: POSITION_MAP[p.pos] || p.pos,
+        rating: typeof p.r === 'number' ? p.r : 70,
+      }))
+      const avgRating = players.reduce((s, p) => s + p.rating, 0) / players.length
       teams.push({
         country: squad.cn || squad.c,
         year: squad.y,
         avgRating: Math.round(avgRating * 10) / 10,
+        players,
         isUser: false,
       })
     }
@@ -116,11 +122,13 @@ export async function getCoachesByCountry(countryName) {
 }
 
 // Players for a position + specific year. Falls back to any year if none found.
-export async function getRandomPlayersForPositionAndYear(countryName, position, year, count = 3) {
+// excludeNames: set of player names already picked — filters them out of the pool.
+export async function getRandomPlayersForPositionAndYear(countryName, position, year, count = 3, excludeNames = new Set()) {
   try {
     const players = await getPlayersByCountry(countryName)
-    const yearPool = players.filter(p => p.position === position && p.year === year)
-    const pool = yearPool.length ? yearPool : players.filter(p => p.position === position)
+    const yearPool = players.filter(p => p.position === position && p.year === year && !excludeNames.has(p.name))
+    const fallbackPool = players.filter(p => p.position === position && !excludeNames.has(p.name))
+    const pool = yearPool.length ? yearPool : fallbackPool
 
     if (pool.length === 0) {
       return Array.from({ length: count }, (_, i) => ({
@@ -138,9 +146,8 @@ export async function getRandomPlayersForPositionAndYear(countryName, position, 
   }
 }
 
-// Legacy — still used by CoachPicker
-export async function getRandomPlayersForPosition(countryName, position, count = 3) {
-  return getRandomPlayersForPositionAndYear(countryName, position, null, count)
+export async function getRandomPlayersForPosition(countryName, position, count = 3, excludeNames = new Set()) {
+  return getRandomPlayersForPositionAndYear(countryName, position, null, count, excludeNames)
 }
 
 export function clearCache() {

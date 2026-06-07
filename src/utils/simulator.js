@@ -82,12 +82,12 @@ export function simulateMatch(homeCountry, awayCountry, homeRating, awayRating, 
   }
 }
 
-export function simulateKnockoutMatch(homeTeam, awayTeam, homePlayers = []) {
+export function simulateKnockoutMatch(homeTeam, awayTeam) {
   const result = simulateMatch(
     homeTeam.country, awayTeam.country,
     homeTeam.avgRating, awayTeam.avgRating,
-    homePlayers,
-    [] // No away players provided, will use generic names
+    homeTeam.players || [],
+    awayTeam.players || []
   )
 
   if (result.draw) {
@@ -163,8 +163,8 @@ export function simulateGroup(group) {
       const result = simulateMatch(
         teams[i].country, teams[j].country,
         teams[i].avgRating, teams[j].avgRating,
-        teams[i].isUser ? teams[i].players : [],
-        teams[j].isUser ? teams[j].players : []
+        teams[i].players || [],
+        teams[j].players || []
       )
       matches.push(result)
       teams[i].gf += result.homeGoals; teams[i].ga += result.awayGoals
