@@ -1,206 +1,148 @@
-import { FORMATIONS, BALL_DISTRIBUTION, MATCH_PARAMS } from '../constants'
+// Ratings use the 0-100 scale stored in the squad data (passed through by db.js).
+// AI team ratings are generated in the same 0-100 range for fair comparison.
 
-/**
- * Calculate team strength (average rating adjusted for formation)
- */
-export function calculateTeamStrength(players, formation) {
-  if (!players || players.length === 0) return 50
+const TIER_1 = new Set(['Brazil', 'Germany', 'Italy', 'Argentina', 'France', 'Spain', 'Netherlands', 'West Germany'])
+const TIER_2 = new Set(['England', 'Portugal', 'Belgium', 'Uruguay', 'Croatia', 'Mexico', 'Sweden', 'Hungary', 'Russia'])
+const TIER_3 = new Set(['Poland', 'Czech Republic', 'Czechoslovakia', 'Yugoslavia', 'Romania', 'Chile', 'Switzerland', 'Denmark', 'Turkey', 'South Korea', 'Japan', 'Austria'])
 
-  const avgRating = players.reduce((sum, p) => sum + (p.rating || 70), 0) / players.length
+const AI_COUNTRY_POOL = [
+  'Algeria','Australia','Austria','Bolivia','Bulgaria','Cameroon','Canada','Chile','Colombia',
+  'Costa Rica','Czech Republic','Czechoslovakia','Denmark','Ecuador','Egypt','El Salvador',
+  'Ghana','Greece','Honduras','Hungary','Iceland','Iran','Iraq','Ivory Coast','Jamaica',
+  'Japan','Kuwait','Mexico','Morocco','Netherlands','Nigeria','Norway','Panama','Paraguay',
+  'Peru','Poland','Portugal','Qatar','Romania','Russia','Saudi Arabia','Scotland','Senegal',
+  'Serbia','Slovakia','Slovenia','South Africa','South Korea','Sweden','Switzerland','Togo',
+  'Trinidad and Tobago','Tunisia','Turkey','Ukraine','United States','Uruguay','Wales',
+  'West Germany','Yugoslavia','Zaire',
+]
 
-  // Formations have different baseline strengths (just for flavor)
-  const formationBonus = {
-    '4-4-2': 0,
-    '4-3-3': 2,
-    '3-5-2': 1,
-    '5-3-2': -1,
-  }
-
-  return Math.max(30, Math.min(99, avgRating + (formationBonus[formation] || 0)))
+function aiRating(country) {
+  if (TIER_1.has(country)) return 70 + Math.random() * 15   // 70-85
+  if (TIER_2.has(country)) return 60 + Math.random() * 15   // 60-75
+  if (TIER_3.has(country)) return 50 + Math.random() * 15   // 50-65
+  return 40 + Math.random() * 20                             // 40-60
 }
 
-/**
- * Simulate a single match
- */
-export function simulateMatch(homeTeam, awayTeam, homeCoach = null, awayCoach = null) {
-  const homeStrength = calculateTeamStrength(homeTeam.players, homeTeam.formation)
-  const awayStrength = calculateTeamStrength(awayTeam.players, awayTeam.formation)
+export function generateAITeams(userCountry, count = 31) {
+  const pool = AI_COUNTRY_POOL.filter(c => c !== userCountry)
+  const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, count)
+  return shuffled.map(country => ({
+    country,
+    avgRating: parseFloat(aiRating(country).toFixed(1)),
+    isUser: false,
+  }))
+}
 
-  // Apply coach boosts
-  const homeBoost = homeCoach ? homeCoach.moraleBoost : 0
-  const awayBoost = awayCoach ? awayCoach.moraleBoost : 0
+export function calcTeamRating(players, coach) {
+  if (!players || !players.length) return 60
+  const avg = players.reduce((s, p) => s + (p.rating || 60), 0) / players.length
+  const moraleBonus = (coach?.moraleBoost || 0) // morale adds direct rating points
+  return parseFloat((avg + moraleBonus).toFixed(1))
+}
 
-  const adjustedHome = homeStrength + homeBoost
-  const adjustedAway = awayStrength + awayBoost
+// Poisson-approximate sample capped at 8
+function poissonSample(lambda) {
+  const l = Math.exp(-Math.max(0.1, lambda))
+  let k = 0, p = Math.random()
+  while (p > l && k < 8) { k++; p *= Math.random() }
+  return k
+}
 
-  // Match simulation: base on strength difference
-  const strengthDiff = adjustedHome - adjustedAway
-  const homeWinChance = 0.5 + strengthDiff * 0.005 // Each point = 0.5% swing
+function weightedPick(players) {
+  const weights = players.map(p => {
+    if (p.position === 'FWD') return 3
+    if (p.position === 'MID') return 1.5
+    if (p.position === 'DEF') return 0.3
+    return 0
+  })
+  const total = weights.reduce((a, b) => a + b, 0)
+  if (total === 0) return players[Math.floor(Math.random() * players.length)].name
+  let r = Math.random() * total
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i]
+    if (r <= 0) return players[i].name
+  }
+  return players[players.length - 1].name
+}
 
-  // Generate goals (average 2.5 goals per team)
-  const homeGoals = Math.floor(Math.random() * 4 + (homeWinChance > 0.5 ? 1 : 0))
-  const awayGoals = Math.floor(Math.random() * 4 + (homeWinChance < 0.5 ? 1 : 0))
+function getGoalScorers(players, count) {
+  if (!count || !players?.length) return []
+  return Array.from({ length: count }, () => weightedPick(players))
+}
 
-  // Get goal scorers
-  const homeScorers = getGoalScorers(homeTeam.players, homeGoals)
-  const awayScorers = getGoalScorers(awayTeam.players, awayGoals)
+// Ratings on 0-100 scale. Returns a match result object.
+export function simulateMatch(homeCountry, awayCountry, homeRating, awayRating, homePlayers = []) {
+  const diff = (homeRating - awayRating) / 10 // normalize to ~0-3 range
+  const homeExp = Math.max(0.3, 1.3 + diff * 0.25 + (Math.random() - 0.5) * 1.5)
+  const awayExp = Math.max(0.3, 1.0 - diff * 0.25 + (Math.random() - 0.5) * 1.5)
+  const homeGoals = poissonSample(homeExp)
+  const awayGoals = poissonSample(awayExp)
 
   return {
-    homeTeam: homeTeam.country,
-    awayTeam: awayTeam.country,
+    home: homeCountry,
+    away: awayCountry,
     homeGoals,
     awayGoals,
-    homeScorers,
-    awayScorers,
-    homeWin: homeGoals > awayGoals,
-    awayWin: awayGoals > homeGoals,
+    homeScorers: getGoalScorers(homePlayers, homeGoals),
+    awayScorers: [],
     draw: homeGoals === awayGoals,
+    penalties: false,
   }
 }
 
-/**
- * Select random goal scorers based on position (forwards more likely)
- */
-function getGoalScorers(players, goalCount) {
-  if (goalCount === 0) return []
+export function simulateKnockoutMatch(homeTeam, awayTeam, homePlayers = []) {
+  const result = simulateMatch(
+    homeTeam.country, awayTeam.country,
+    homeTeam.avgRating, awayTeam.avgRating,
+    homePlayers
+  )
 
-  const scorers = []
-  for (let i = 0; i < goalCount; i++) {
-    // Weight forwards higher
-    const weights = players.map(p => {
-      if (p.position === 'FWD') return 3
-      if (p.position === 'MID') return 1.5
-      if (p.position === 'DEF') return 0.3
-      return 0
-    })
-
-    const totalWeight = weights.reduce((a, b) => a + b, 0)
-    let rand = Math.random() * totalWeight
-    let scorerIdx = 0
-
-    for (let j = 0; j < weights.length; j++) {
-      rand -= weights[j]
-      if (rand <= 0) {
-        scorerIdx = j
-        break
-      }
+  if (result.draw) {
+    result.penalties = true
+    result.penHome = Math.floor(Math.random() * 6)
+    result.penAway = Math.floor(Math.random() * 6)
+    while (result.penHome === result.penAway) {
+      result.penHome = Math.floor(Math.random() * 6)
+      result.penAway = Math.floor(Math.random() * 6)
     }
-
-    scorers.push(players[scorerIdx].name)
+    result.winner = result.penHome > result.penAway ? homeTeam : awayTeam
+  } else {
+    result.winner = result.homeGoals > result.awayGoals ? homeTeam : awayTeam
   }
 
-  return scorers
+  return result
 }
 
-/**
- * Create tournament bracket (32 teams, 8 groups)
- */
-export function createTournamentBracket(teams) {
-  // Shuffle teams into 4 groups of 4 (simplified)
+export function createGroups(teams) {
   const shuffled = [...teams].sort(() => Math.random() - 0.5)
-  const groups = {
-    A: shuffled.slice(0, 4),
-    B: shuffled.slice(4, 8),
-    C: shuffled.slice(8, 12),
-    D: shuffled.slice(12, 16),
-    E: shuffled.slice(16, 20),
-    F: shuffled.slice(20, 24),
-    G: shuffled.slice(24, 28),
-    H: shuffled.slice(28, 32),
-  }
-
-  return { groups, round: 'groups' }
+  const groupLetters = ['A','B','C','D','E','F','G','H']
+  return groupLetters.map((letter, i) => ({
+    name: letter,
+    teams: shuffled.slice(i * 4, i * 4 + 4).map(t => ({ ...t, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 })),
+    matches: [],
+  }))
 }
 
-/**
- * Simulate group stage
- */
-export function simulateGroupStage(bracket, allTeams) {
-  const results = {}
-
-  Object.entries(bracket.groups).forEach(([groupName, teams]) => {
-    const standings = teams.map(t => ({
-      name: t,
-      points: 0,
-      gf: 0,
-      ga: 0,
-      played: 0,
-    }))
-
-    // Round-robin: each team plays every other team once
-    for (let i = 0; i < teams.length; i++) {
-      for (let j = i + 1; j < teams.length; j++) {
-        const match = simulateMatch(
-          { country: teams[i], players: allTeams[teams[i]]?.players, formation: allTeams[teams[i]]?.formation },
-          { country: teams[j], players: allTeams[teams[j]]?.players, formation: allTeams[teams[j]]?.formation }
-        )
-
-        standings[i].played++
-        standings[j].played++
-        standings[i].gf += match.homeGoals
-        standings[i].ga += match.awayGoals
-        standings[j].gf += match.awayGoals
-        standings[j].ga += match.homeGoals
-
-        if (match.homeWin) {
-          standings[i].points += 3
-        } else if (match.awayWin) {
-          standings[j].points += 3
-        } else {
-          standings[i].points += 1
-          standings[j].points += 1
-        }
-      }
-    }
-
-    // Sort by points, then goal difference
-    standings.sort((a, b) => {
-      const pointDiff = b.points - a.points
-      if (pointDiff !== 0) return pointDiff
-      return (b.gf - b.ga) - (a.gf - a.ga)
-    })
-
-    results[groupName] = standings
-  })
-
-  return results
-}
-
-/**
- * Get knockout stage winners from group stage
- */
-export function getKnockoutQualifiers(groupResults) {
-  const qualifiers = []
-
-  Object.entries(groupResults).forEach(([groupName, standings]) => {
-    // Top 2 from each group advance
-    qualifiers.push(standings[0].name)
-    qualifiers.push(standings[1].name)
-  })
-
-  return qualifiers
-}
-
-/**
- * Simulate knockout stage (16 → 8 → 4 → 2 → 1)
- */
-export function simulateKnockoutStage(qualifiers, allTeams) {
+export function simulateGroup(group) {
+  const teams = group.teams.map(t => ({ ...t }))
   const matches = []
-  let remaining = qualifiers
 
-  while (remaining.length > 1) {
-    const roundMatches = []
-    for (let i = 0; i < remaining.length; i += 2) {
-      const match = simulateMatch(
-        { country: remaining[i], players: allTeams[remaining[i]]?.players, formation: allTeams[remaining[i]]?.formation },
-        { country: remaining[i + 1], players: allTeams[remaining[i + 1]]?.players, formation: allTeams[remaining[i + 1]]?.formation }
+  for (let i = 0; i < teams.length; i++) {
+    for (let j = i + 1; j < teams.length; j++) {
+      const result = simulateMatch(
+        teams[i].country, teams[j].country,
+        teams[i].avgRating, teams[j].avgRating,
+        teams[i].isUser ? teams[i].players : []
       )
-      roundMatches.push(match)
+      matches.push(result)
+      teams[i].gf += result.homeGoals; teams[i].ga += result.awayGoals
+      teams[j].gf += result.awayGoals; teams[j].ga += result.homeGoals
+      if (result.homeGoals > result.awayGoals) { teams[i].w++; teams[i].pts += 3; teams[j].l++ }
+      else if (result.awayGoals > result.homeGoals) { teams[j].w++; teams[j].pts += 3; teams[i].l++ }
+      else { teams[i].d++; teams[i].pts++; teams[j].d++; teams[j].pts++ }
     }
-
-    matches.push(roundMatches)
-    remaining = roundMatches.map(m => m.homeWin ? m.homeTeam : m.awayTeam)
   }
 
-  return { matches, champion: remaining[0] }
+  teams.sort((a, b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga))
+  return { ...group, teams, matches }
 }

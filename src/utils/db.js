@@ -10,6 +10,24 @@ export async function loadMeta() {
   return cache.meta
 }
 
+// The dev server may serve .gz files with Content-Encoding: gzip, in which case
+// the browser auto-decompresses and we receive plain JSON. In production (or when
+// served as raw bytes) we need to inflate with pako. Handle both transparently.
+function decodeGzBuffer(buffer) {
+  const bytes = new Uint8Array(buffer)
+
+  // gzip magic number is 0x1f 0x8b. If absent, it's already plain text.
+  const isGzip = bytes.length > 2 && bytes[0] === 0x1f && bytes[1] === 0x8b
+
+  if (isGzip) {
+    const inflated = pako.inflate(bytes)
+    return JSON.parse(new TextDecoder().decode(inflated))
+  }
+
+  // Already decompressed by the server/browser — parse directly.
+  return JSON.parse(new TextDecoder().decode(bytes))
+}
+
 async function loadGzFile(filename) {
   if (cache[filename]) return cache[filename]
 
@@ -18,23 +36,12 @@ async function loadGzFile(filename) {
     if (!res.ok) throw new Error(`HTTP ${res.status} loading ${filename}`)
 
     const buffer = await res.arrayBuffer()
-    console.log(`  Fetched ${filename}: ${buffer.byteLength} bytes`)
-
     if (buffer.byteLength === 0) {
-      console.warn(`Empty file: ${filename}`)
       cache[filename] = { squads: [] }
       return cache[filename]
     }
 
-    console.log(`  Decompressing with pako...`)
-    const inflated = pako.inflate(new Uint8Array(buffer))
-    console.log(`  Inflated: ${inflated.length} bytes`)
-
-    const text = new TextDecoder().decode(inflated)
-    console.log(`  Decoded text: ${text.length} chars`)
-
-    cache[filename] = JSON.parse(text)
-    console.log(`  Parsed JSON: ${cache[filename].squads?.length || 0} squads`)
+    cache[filename] = decodeGzBuffer(buffer)
     return cache[filename]
   } catch (e) {
     console.error(`Error loading ${filename}:`, e.name, e.message, e)
@@ -43,54 +50,40 @@ async function loadGzFile(filename) {
   }
 }
 
+// Map raw data position codes to the game's position groups.
+// Data uses GK/DF/MF/FW; the game (formations) uses GK/DEF/MID/FWD.
+const POSITION_MAP = { GK: 'GK', DF: 'DEF', MF: 'MID', FW: 'FWD' }
+
 // Returns all players for a country across all World Cup decades.
-// Squad data uses abbreviated keys: c=country, cn=countryName, y=year, p=players array
-// Player keys: n=name, num=number, pos=position, r=rating (1-10), conf=confidence
+// Squad data uses abbreviated keys: c=countryCode, cn=countryName, y=year, p=players array
+// Player keys: n=name, num=number, pos=position, r=rating (0-100), conf=confidence
 export async function getPlayersByCountry(countryName) {
   const meta = await loadMeta()
   const players = []
 
-  console.log(`🔍 Loading players for ${countryName}...`)
-
   for (const decade of meta.decades) {
-    if (decade.playerCount === 0) {
-      console.log(`⏭️  Skipping ${decade.name} (no players)`)
-      continue
-    }
+    if (decade.playerCount === 0) continue
 
-    console.log(`📦 Loading ${decade.filename}...`)
     const data = await loadGzFile(decade.filename)
-
-    if (!data || !data.squads) {
-      console.warn(`⚠️  No squads in ${decade.filename}`)
-      continue
-    }
-
-    console.log(`  Found ${data.squads.length} squads`)
-
-    // Debug: Show first few countries
-    const uniqueCountries = [...new Set(data.squads.map(s => s.cn || s.c))]
-    console.log(`  Countries in this decade: ${uniqueCountries.slice(0, 5).join(', ')}...`)
+    if (!data || !data.squads) continue
 
     for (const squad of data.squads) {
-      const matchesCountry = squad.c === countryName || squad.cn === countryName
-      if (matchesCountry) {
-        console.log(`  ✓ Found squad for ${squad.cn || squad.c}: ${squad.p?.length || 0} players`)
+      // Match on full country name (cn) or country code (c)
+      if (squad.c === countryName || squad.cn === countryName) {
         for (const p of squad.p || []) {
           players.push({
             name: p.n,
-            position: p.pos,
+            position: POSITION_MAP[p.pos] || p.pos,
             number: p.num,
-            rating: typeof p.r === 'number' ? Math.round(p.r * 10) : 70, // Convert 1-10 scale to 0-100
+            rating: typeof p.r === 'number' ? p.r : 70, // already 0-100
             year: squad.y,
-            country: squad.c || squad.cn,
+            country: squad.cn || squad.c,
           })
         }
       }
     }
   }
 
-  console.log(`✅ Total players for ${countryName}: ${players.length}`)
   return players
 }
 
