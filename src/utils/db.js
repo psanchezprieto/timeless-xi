@@ -18,18 +18,26 @@ async function loadGzFile(filename) {
     if (!res.ok) throw new Error(`HTTP ${res.status} loading ${filename}`)
 
     const buffer = await res.arrayBuffer()
+    console.log(`  Fetched ${filename}: ${buffer.byteLength} bytes`)
+
     if (buffer.byteLength === 0) {
       console.warn(`Empty file: ${filename}`)
       cache[filename] = { squads: [] }
       return cache[filename]
     }
 
+    console.log(`  Decompressing with pako...`)
     const inflated = pako.inflate(new Uint8Array(buffer))
+    console.log(`  Inflated: ${inflated.length} bytes`)
+
     const text = new TextDecoder().decode(inflated)
+    console.log(`  Decoded text: ${text.length} chars`)
+
     cache[filename] = JSON.parse(text)
+    console.log(`  Parsed JSON: ${cache[filename].squads?.length || 0} squads`)
     return cache[filename]
   } catch (e) {
-    console.error(`Error loading ${filename}:`, e.message)
+    console.error(`Error loading ${filename}:`, e.name, e.message, e)
     cache[filename] = { squads: [] }
     return cache[filename]
   }
