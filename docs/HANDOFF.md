@@ -6,8 +6,8 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **Current Session Status**
 
-**Last completed**: Phase 1b - Claude API Enrichment (10,437 players rated 0-100 + age penalties) (2026-06-07)  
-**Current task**: Ready for Phase 1c (JSON optimization & compression)  
+**Last completed**: Phase 1c - JSON Optimization & Compression (152KB gzipped data files) (2026-06-07)  
+**Current task**: Ready for Phase 2a (React + Vite setup)  
 **Blocker status**: None ✅
 
 ---
@@ -47,6 +47,34 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 ---
 
 ## **What Was Just Done**
+
+✅ **Phase 1c: JSON Optimization & Compression** (Complete)
+
+**Built `scripts/build-json.mjs`**:
+- Read `data/enriched-squads.json` (2.29 MB, 10,437 players)
+- Split into 5 decade-based JSON files
+- Optimized keys for compression:
+  - `country` → `c`, `year` → `y`, `players` → `p`
+  - `rating` → `r`, `confidence` → `conf`
+- Output to `data/temp/` (uncompressed for verification)
+
+**Built `scripts/compress.mjs`**:
+- Compress all decade files with gzip (80% compression ratio)
+- Output to `public/data/*.json.gz` (5 files)
+- Generate `public/data/meta.json` registry with:
+  - Decade coverage (1930-2026)
+  - Player/country counts per decade
+  - Compression statistics
+  - File sizes and overall metrics
+
+**Results**:
+- Uncompressed: 665 KB (5 files)
+- Compressed: 133 KB (0.13 MB)
+- Compression ratio: 80.0%
+- **Target achieved: <2MB** ✅
+- Ready for Phase 2 React UI to load
+
+---
 
 ✅ **Phase 1b: Claude API Enrichment & Age Penalties** (Complete)
 
@@ -98,8 +126,10 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 - `data/raw-squads.json` generated
 - `data/fetch-gaps.json` report generated
 
-**Git log** (latest commit):
+**Git log** (latest commits):
 ```
+04eb28e Phase 1c: Complete JSON optimizer and compressor
+15169ed Phase 1b: Complete Claude API enrichment with age penalties
 975d8bf Phase 1a: Complete Zafronix API data fetcher with full fetch
 ```
 
@@ -118,14 +148,14 @@ timeless-xi/
 ├── .gitignore ✅                   (Git rules)
 ├── .claude/
 │   └── settings.json ✅            (Hook: git commit reminder)
-├── scripts/                        (Phase 1b Complete)
+├── scripts/                        (Phase 1 Complete ✅)
 │   ├── fetch-squads.mjs ✅         (Zafronix fetcher - DONE)
 │   ├── test-api.mjs ✅             (API validator - DONE)
 │   ├── enrich-ratings.mjs ✅       (Claude batch enrichment - DONE)
 │   ├── apply-age-penalty.mjs ✅    (Age-based penalties - DONE)
-│   ├── README.md ✅                (Documentation - DONE)
-│   ├── build-json.mjs              (TODO: Phase 1c)
-│   └── compress.mjs                (TODO: Phase 1c)
+│   ├── build-json.mjs ✅           (JSON optimizer - DONE)
+│   ├── compress.mjs ✅             (gzip compressor - DONE)
+│   └── README.md ✅                (Documentation - DONE)
 ├── src/                            (Empty - Phase 2 to build)
 │   ├── components/                 (TODO: Game screens)
 │   ├── utils/                      (TODO: db.js, simulator.js, etc.)
@@ -142,28 +172,34 @@ timeless-xi/
 **What's ready**:
 - ✅ Phase 0: All configuration files in place
 - ✅ Phase 1a: Zafronix fetcher scripts built
-  * `fetch-squads.mjs` with full error handling
-  * `test-api.mjs` for quick validation
   * 10,437 players fetched across 457 squads
+  * 19/23 tournaments covered
 - ✅ Phase 1b: Claude API enrichment complete
-  * `enrich-ratings.mjs` using batch API (Sonnet 4.6)
-  * `apply-age-penalty.mjs` for age-based penalties
   * 10,437 players rated 0-100 (FIFA-style)
-  * Average rating: 71.3/100, 95% confidence
+  * Age-based penalties applied (35+, 38+)
+- ✅ Phase 1c: JSON optimizer & compressor complete
+  * 5 decade-split .json.gz files in `public/data/`
+  * 80% compression ratio (665KB → 133KB)
+  * `meta.json` registry with statistics
+- ✅ Data pipeline complete: fetch → enrich → compress
 - ✅ Documentation complete + handoff system
-- ✅ Git repo initialized with all artifacts
+- ✅ Git repo with 12 commits tracking all phases
 
 **What's next**:
 
-- **Phase 1c** (Next): Build JSON optimizer and compressor (`scripts/build-json.mjs` + `scripts/compress.mjs`)
-  * Read from `data/enriched-squads.json`
-  * Split by decade (1930-1950, 1950-1970, etc.)
-  * Optimize keys: `c` (country), `y` (year), `p` (players), `r` (rating)
-  * Compress with gzip to `public/data/*.json.gz`
-  * Generate `public/data/meta.json` (country/year registry)
-  * Target: <2MB total gzipped
+- **Phase 2a** (Next): Build React + Vite setup
+  * Create `src/main.jsx` (React entry point)
+  * Create `public/index.html` (Vite template)
+  * Setup Tailwind CSS via CDN
+  * Verify `npm run dev` works locally
   
-- **Phase 2**: Build React UI (forms, selection screens, game logic)
+- **Phase 2b**: Build React UI components
+  * Game.jsx (main game flow)
+  * CountryPicker, FormationPicker, DiceRoller, CoachPicker, TournamentSim, etc.
+  
+- **Phase 2c**: Implement game logic (simulator, data loader)
+- **Phase 2d**: Apply retro 80s styling
+- **Phase 3**: GitHub Pages deployment
 
 ---
 
@@ -180,67 +216,66 @@ None at this time. All key decisions made:
 
 ## **Copy-Paste Handoff Prompt for Next Chat / Agent**
 
-Paste this verbatim to resume Phase 1b work:
+Paste this verbatim to resume Phase 2a work:
 
 ```
-Build Phase 1b: Claude API enrichment for World Cup player ratings.
+Build Phase 2a: React + Vite setup for World Cup simulation game.
 
 Context:
-- Project: Timeless XI (World Cup simulation game)
-- Status: Phase 1a (Zafronix fetcher) complete. Phase 1b ready to build.
+- Project: Timeless XI (World Cup simulation game - retro 80s aesthetic)
+- Status: Phase 1 (data pipeline) complete. Phase 2a (React setup) ready to build.
 - Working directory: /home/botuser/timeless-xi
 
 Read for full context:
-- CLAUDE.md (project system prompt + tech stack)
+- CLAUDE.md (project system prompt + tech stack + retro 80s design rules)
 - docs/PROGRESS.md (phase tracking)
-- data/raw-squads.json (input: 457 squads, 10,437 players)
+- docs/TIMELESS_XI_PROJECT_BRIEF.md (product vision)
+- public/data/meta.json (data registry - 10,437 players, 5 decades)
 
 Current state:
-✅ Phase 1a: 457 squads fetched, 10,437 players from Zafronix API
-✅ data/raw-squads.json exists with schema: {squads: [{year, country, countryCode, flag, playerCount, players: [{name, number, position, country, year}]}]}
-✅ Package.json configured with scripts
-✅ dotenv support in place
-✅ Git repo ready
+✅ Phase 1: Complete data pipeline
+  - data/enriched-squads.json: 10,437 players rated 0-100
+  - public/data/: 5 decade-split .json.gz files (152KB total)
+  - public/data/meta.json: country/player registry
+✅ Package.json with Vite + React 18 + Tailwind dependencies
+✅ vite.config.js configured
+✅ .gitignore set up
 
-Task: Build scripts/enrich-ratings.mjs
+Task: Build Phase 2a - React entry point & Vite template
 
 Requirements:
-1. Read data/raw-squads.json
-2. For each player, call Claude batch API with prompt:
-   "Rate this footballer 1-10 historically (era, position, country, year). Respond ONLY with a number 1-10."
-   Input: {name, position, country, year}
-3. Parse response as integer 1-10
-4. Calculate confidence (0.0-1.0) based on response quality
-5. Add {rating: 1-10, confidence: 0-1} to each player object
-6. Output data/enriched-squads.json (same structure as input + ratings)
-7. Create data/enrichment-gaps.json report (failed/uncertain ratings)
+1. Create src/main.jsx (React entry point)
+   - Import React + ReactDOM
+   - Create root div (#app) and mount React app
+   - Export default Game component (to be built next)
 
-Implementation:
-- Use Claude API batch mode (cheaper: batch = 50% cost of regular API)
-- Add --test flag: enrich 50 players only (cost validation)
-- Add --sample flag: batch of 10 with console output
-- Implement caching: skip players already in data/enriched-squads.json
-- Read CLAUDE_API_KEY from process.env (via .env file)
-- Validate API responses, handle errors gracefully
-- Log progress and final statistics
+2. Create public/index.html (Vite template)
+   - Standard HTML5 structure
+   - <div id="app"></div> for React mount
+   - <script type="module" src="/src/main.jsx"></script>
+   - Tailwind CDN link: https://cdn.tailwindcss.com
+   - Title: "Timeless XI - World Cup Dream Team"
+   - Favicon placeholder (optional)
 
-Cost estimate: ~2,500 players × batch API = ~$20-40 USD
+3. Create src/components/Game.jsx (placeholder)
+   - Return simple div with "Game loading..." for now
+   - Will be expanded in Phase 2b
 
-Steps:
-1. Create scripts/enrich-ratings.mjs from scratch
-2. Implement full flow: read → batch API → enrich → output
-3. Test with --test flag (50 players)
-4. Review data/enrichment-gaps.json for issues
-5. Run full enrichment (all 10,437 players) — this will incur cost
-6. Verify data/enriched-squads.json quality
-7. Update PROGRESS.md: mark 1b complete with stats
-8. Commit to git with message: "Phase 1b: Complete Claude API enrichment"
+4. Verify setup
+   - Run `npm run dev` (should start Vite server on localhost:5173)
+   - Visit http://localhost:5173 in browser
+   - Verify "Game loading..." displays
+   - Verify no console errors
 
-Files to modify/create:
-- CREATE: scripts/enrich-ratings.mjs (new script)
-- CREATE: data/enriched-squads.json (output)
-- CREATE: data/enrichment-gaps.json (report)
-- MODIFY: PROGRESS.md (mark 1b complete)
+5. Update PROGRESS.md: mark 2a complete
+
+6. Commit to git with message: "Phase 2a: Setup React + Vite with initial entry point"
+
+Files to create/modify:
+- CREATE: src/main.jsx (React entry point)
+- CREATE: public/index.html (Vite template)
+- CREATE: src/components/Game.jsx (placeholder component)
+- MODIFY: PROGRESS.md (mark 2a complete)
 
 Current blockers: None
 Ready to start: Yes
@@ -293,10 +328,12 @@ This will remind you to review the handoff after every commit.
 |------|-------|-----------|---------|
 | 2026-06-07 | 0 | Environment setup | 2 |
 | 2026-06-07 | 1a | Zafronix fetcher: script + validation + full fetch | 1 |
-| — | 1b | (Ready to build: enrichment) | — |
+| 2026-06-07 | 1b | Claude API enrichment + age penalties | 1 |
+| 2026-06-07 | 1c | JSON optimizer + compressor (gzip) | 1 |
 
 ---
 
-**Last updated**: 2026-06-07 @ end of Phase 1a validation
+**Last updated**: 2026-06-07 @ end of Phase 1c compression
 
-Phase 1 data pipeline: 50% complete (fetch done, enrichment pending) 🚀
+Phase 1 data pipeline: ✅ 100% complete (fetch → enrich → compress all done) 🚀
+Phase 2 React UI: Ready to build 🎬
