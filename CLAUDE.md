@@ -242,6 +242,8 @@ This enables **seamless continuity** across Claude Code sessions without losing 
 
 ## Notes for Future Agents
 
+**⚠️ Security**: Never read `.env` files directly. The user manages secrets via `.env` (which is git-ignored). Scripts should read from `process.env` using `dotenv` to load values.
+
 1. **Test data before scaling**: Validate Zafronix response structure first (curl 1 year)
 2. **Cost tracking**: Keep tabs on Claude API usage (batch = 50% cheaper than regular)
 3. **Commit frequently**: Each phase gets a commit; each major fix gets a commit

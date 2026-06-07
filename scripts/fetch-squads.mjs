@@ -4,6 +4,9 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -11,6 +14,7 @@ const RAW_SQUADS_FILE = path.join(DATA_DIR, 'raw-squads.json');
 const GAPS_FILE = path.join(DATA_DIR, 'fetch-gaps.json');
 
 const API_BASE = 'https://api.zafronix.com/fifa/worldcup/v1/tournaments';
+const API_KEY = process.env.ZAFRONIX_API_KEY;
 const WORLD_CUP_YEARS = [
   1930, 1934, 1938, 1950, 1954, 1958, 1962, 1966, 1970,
   1974, 1978, 1982, 1986, 1990, 1994, 1998, 2002, 2006,
@@ -86,7 +90,10 @@ async function fetchTournament(year) {
     const url = `${API_BASE}/${year}`;
     const response = await axios.get(url, {
       timeout: 10000,
-      headers: { 'User-Agent': 'Timeless XI Data Fetcher' }
+      headers: {
+        'X-API-Key': API_KEY,
+        'User-Agent': 'Timeless XI Data Fetcher'
+      }
     });
     return response.data;
   } catch (error) {
@@ -100,8 +107,8 @@ function validatePlayer(player, country, year) {
   if (!player.name || typeof player.name !== 'string' || !player.name.trim()) {
     issues.push(`Missing/invalid name: ${JSON.stringify(player).substring(0, 50)}`);
   }
-  if (typeof player.number !== 'number' || player.number < 0) {
-    issues.push(`Invalid number for ${player.name}: ${player.number}`);
+  if (typeof player.jersey !== 'number' || player.jersey < 0) {
+    issues.push(`Invalid jersey for ${player.name}: ${player.jersey}`);
   }
   if (!player.position || typeof player.position !== 'string') {
     issues.push(`Missing/invalid position for ${player.name}`);
@@ -122,7 +129,7 @@ function normalizePlayers(players, country, year, gapsReporter) {
       }
       return {
         name: player.name.trim(),
-        number: player.number,
+        number: player.jersey,
         position: player.position.toUpperCase(),
         country: country.code || country.name,
         year
@@ -211,6 +218,13 @@ async function fetchAll(testMode = false) {
 }
 
 async function main() {
+  if (!API_KEY) {
+    console.error('\n❌ Error: ZAFRONIX_API_KEY not found in .env file');
+    console.error('Please create a .env file with: ZAFRONIX_API_KEY=your_key');
+    console.error('Get your free API key at: https://api.zafronix.com/\n');
+    process.exit(1);
+  }
+
   const testMode = process.argv.includes('--test');
 
   if (!fs.existsSync(DATA_DIR)) {

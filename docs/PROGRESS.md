@@ -27,8 +27,12 @@ Track completion of each phase, blockers, and key decisions.
 - [x] Create data/fetch-gaps.json report
 - [x] Test mode (--test flag for 2 years)
 - [x] Create test-api.mjs validation script
+- [x] Add dotenv support for API key authentication
+- [x] Fix player validation (jersey vs number field)
+- [x] Fetch all 23 World Cup tournaments
 
-**Status**: ✅ Complete
+**Status**: ✅ Complete (2026-06-07)
+**Results**: 457 squads, 10,437 players, 19/23 years with data
 
 ### Subphase 1b: Claude API Enrichment
 - [ ] Create scripts/enrich-ratings.mjs
