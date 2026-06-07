@@ -20,14 +20,15 @@ Track completion of each phase, blockers, and key decisions.
 ## Phase 1: Data Pipeline 🔄
 
 ### Subphase 1a: Zafronix Fetcher
-- [ ] Create scripts/fetch-squads.mjs
-- [ ] Test Zafronix API (fetch 1 year)
-- [ ] Validate data structure
-- [ ] Handle errors + rate limits
-- [ ] Output data/raw-squads.json
-- [ ] Create data/fetch-gaps.json report
+- [x] Create scripts/fetch-squads.mjs
+- [x] Validate data structure & error handling
+- [x] Handle rate limits + retries
+- [x] Output data/raw-squads.json
+- [x] Create data/fetch-gaps.json report
+- [x] Test mode (--test flag for 2 years)
+- [x] Create test-api.mjs validation script
 
-**Status**: Starting
+**Status**: ✅ Complete
 
 ### Subphase 1b: Claude API Enrichment
 - [ ] Create scripts/enrich-ratings.mjs
@@ -131,9 +132,13 @@ None yet. 🎉
 
 ## Next Steps
 
-1. **Phase 1a**: Build Zafronix fetcher script
-2. Test with 1-2 years to validate API response
-3. Iterate based on data quality findings
+1. **Run Phase 1a**: 
+   - `npm install` (one-time)
+   - `node scripts/test-api.mjs` (validate API)
+   - `npm run fetch -- --test` (fetch 2 years)
+   - Review data/raw-squads.json and gaps report
+2. **Phase 1b**: Build Claude API enrichment script (add ratings)
+3. **Phase 1c**: Build JSON optimizer and compressor
 
 ---
 
