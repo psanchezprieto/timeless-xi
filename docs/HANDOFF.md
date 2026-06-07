@@ -6,40 +6,40 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **Current Session Status**
 
-**Last completed**: Phase 0 + Handoff System (2026-06-07)  
-**Current task**: Ready to start Phase 1 (Data Pipeline)  
+**Last completed**: Phase 1a - Zafronix Fetcher Scripts (2026-06-07)  
+**Current task**: Ready to test & run Phase 1a scripts  
 **Blocker status**: None ✅
 
 ---
 
 ## **What Was Just Done**
 
-✅ **Phase 0: Environment Setup** (Complete)
-- Initialized git repo with user config
-- Created package.json with data pipeline scripts + npm scripts
-- Created .gitignore with proper rules
-- Wrote CLAUDE.md (comprehensive system prompt for agents)
-- Wrote ARCHITECTURE.md (technical deep dive)
-- Wrote PROGRESS.md (phase tracking)
-- Set up vite.config.js for React + Vite
-- Created full directory structure
-- Created README.md with quick start
+✅ **Phase 1a: Zafronix Fetcher Scripts** (Complete)
+- Built `scripts/fetch-squads.mjs`: Full Zafronix API fetcher
+  * Fetches all 23 World Cup squads (1930–2026)
+  * Validates each player: name, number, position
+  * Normalizes country codes (Brazil → BRA, etc.)
+  * Outputs `data/raw-squads.json` with all squads
+  * Creates `data/fetch-gaps.json` gap report
+  * `--test` flag for quick validation (1930 + 2022)
+  * Logs progress and final statistics
 
-✅ **Handoff System Setup** (Complete)
-- Created docs/HANDOFF.md with session tracking template
-- Created .claude/settings.json with PostToolUse hook
-  * Hook fires after `git commit` commands
-  * Reminds user to check HANDOFF.md for next steps
-  * Ensures seamless session continuity
-- Updated PROGRESS.md with handoff workflow reference
-- Updated README.md with development workflow section
-- Updated CLAUDE.md with session handoff notes
+- Built `scripts/test-api.mjs`: Quick API validation tool
+  * Tests Zafronix endpoint connectivity
+  * Shows response structure for debugging
+  * Confirms data format before full fetch
+  
+- Created `scripts/README.md`: Data pipeline documentation
+  * Quick start guide for all 4 phases
+  * Script overview + usage examples
+  * Environment variables + troubleshooting
+  * Expected coverage and data quality info
 
-**Git log** (latest 3 commits):
+- Updated `PROGRESS.md`: Mark Phase 1a complete
+
+**Git log** (latest commit):
 ```
-472f255 Add session handoff system with hook and documentation
-e0f098e Add ARCHITECTURE.md with system design and component hierarchy
-4242666 Phase 0: Project initialization, scaffolding, and system prompt
+9c2c90a Phase 1a: Build Zafronix API fetcher script
 ```
 
 ---
@@ -57,11 +57,13 @@ timeless-xi/
 ├── .gitignore ✅                   (Git rules)
 ├── .claude/
 │   └── settings.json ✅            (Hook: git commit reminder)
-├── scripts/                        (Empty - Phase 1 to build)
-│   ├── fetch-squads.mjs            (TODO: Zafronix fetcher)
-│   ├── enrich-ratings.mjs          (TODO: Claude API enrichment)
-│   ├── build-json.mjs              (TODO: JSON optimizer)
-│   └── compress.mjs                (TODO: gzip compression)
+├── scripts/                        (Phase 1a Complete)
+│   ├── fetch-squads.mjs ✅         (Zafronix fetcher - DONE)
+│   ├── test-api.mjs ✅             (API validator - DONE)
+│   ├── README.md ✅                (Documentation - DONE)
+│   ├── enrich-ratings.mjs          (TODO: Phase 1b)
+│   ├── build-json.mjs              (TODO: Phase 1c)
+│   └── compress.mjs                (TODO: Phase 1c)
 ├── src/                            (Empty - Phase 2 to build)
 │   ├── components/                 (TODO: Game screens)
 │   ├── utils/                      (TODO: db.js, simulator.js, etc.)
@@ -76,17 +78,30 @@ timeless-xi/
 ```
 
 **What's ready**:
-- ✅ All configuration files in place
-- ✅ Directory structure scaffolded
+- ✅ Phase 0: All configuration files in place
+- ✅ Phase 1a: Zafronix fetcher scripts built
+  * `fetch-squads.mjs` with full error handling
+  * `test-api.mjs` for quick validation
+  * `scripts/README.md` with complete guide
 - ✅ Documentation complete + handoff system
-- ✅ Git repo initialized with hooks
-- ✅ Handoff workflow enabled (hook fires after commits)
+- ✅ Git repo initialized with all artifacts
 
 **What's next**:
-- **Phase 1a**: Build Zafronix fetcher (`scripts/fetch-squads.mjs`)
-  * Fetch all 23 World Cup squads from API
-  * Validate data (95%+ completeness)
-  * Output `data/raw-squads.json` and `data/fetch-gaps.json`
+- **Run Phase 1a** (now):
+  1. `npm install` (install axios dependency)
+  2. `node scripts/test-api.mjs` (validate API)
+  3. `npm run fetch -- --test` (fetch 1930 + 2022)
+  4. Review `data/raw-squads.json` and `data/fetch-gaps.json`
+  5. `npm run fetch` (full fetch, all 23 years)
+
+- **Phase 1b**: Build Claude API enrichment (`scripts/enrich-ratings.mjs`)
+  * Add player ratings (1-10 scale) via batch API
+  * ~$20-40 cost, 50% cheaper than regular API
+  
+- **Phase 1c**: Build JSON optimizer and compressor
+  * Organize by decade
+  * Optimize keys (c, y, p, r)
+  * Compress to <2MB gzipped
 
 ---
 
@@ -106,28 +121,31 @@ None at this time. All key decisions made:
 Use this prompt to resume work. Paste it verbatim:
 
 ```
-I'm continuing development of Timeless XI, a World Cup simulation game. 
+I'm continuing development of Timeless XI, a World Cup simulation game.
 Check the context by reading:
 - docs/TIMELESS_XI_PROJECT_BRIEF.md (product spec)
 - CLAUDE.md (system prompt + full context)
 - docs/PROGRESS.md (current status)
 - docs/ARCHITECTURE.md (technical design)
 
-Phase 0 is complete. I'm now starting Phase 1 (Data Pipeline).
+Phase 0 is complete. Phase 1a (Zafronix Fetcher) is built. I'm ready to test & run the scripts.
 
-Next task: Build scripts/fetch-squads.mjs to fetch all 23 World Cup squads from Zafronix API.
+Current state:
+✅ Phase 1a scripts created: fetch-squads.mjs + test-api.mjs
+✅ Documentation: scripts/README.md written
+✅ Committed to git
 
-Requirements:
-- Fetch from https://api.zafronix.com/fifa/worldcup/v1/tournaments/{year} for years 1930-2026
-- For each tournament, extract country squads with player data (name, number, position)
-- Validate that each player has name, number, position, country, year
-- Save raw data to data/raw-squads.json
-- Flag any missing or incomplete data in data/fetch-gaps.json
-- Log progress and statistics
+Next task: Run Phase 1a scripts to validate Zafronix API and fetch squad data.
 
-Use scripts/fetch-squads.mjs with axios (no API key needed, free tier).
-Start with 1-2 years to validate API response, then full fetch.
-Plan before executing. Use git to commit after testing.
+Steps:
+1. npm install (install axios)
+2. node scripts/test-api.mjs (quick API validation)
+3. npm run fetch -- --test (test fetch: 1930 + 2022)
+4. Review data/raw-squads.json and data/fetch-gaps.json
+5. npm run fetch (full fetch: all 23 years)
+6. Review stats and gaps report
+
+After Phase 1a validation, I'll build Phase 1b (Claude API enrichment).
 
 Current blockers: None
 Ready to start: Yes
@@ -179,10 +197,11 @@ This will remind you to review the handoff after every commit.
 | Date | Phase | Completed | Commits |
 |------|-------|-----------|---------|
 | 2026-06-07 | 0 | Environment setup | 2 |
-| — | 1 | (In progress) | — |
+| 2026-06-07 | 1a | Zafronix fetcher scripts | 1 |
+| — | 1b | (Ready to build: enrichment) | — |
 
 ---
 
-**Last updated**: 2026-06-07 @ end of Phase 0
+**Last updated**: 2026-06-07 @ end of Phase 1a
 
 Ready for next session! 🚀
