@@ -18,21 +18,24 @@ const WORLD_CUP_YEARS = [
 ];
 
 const FLAGS = {
-  'Argentina': '🇦🇷', 'Australia': '🇦🇺', 'Austria': '🇦🇹', 'Belgium': '🇧🇪',
-  'Brazil': '🇧🇷', 'Bulgaria': '🇧🇬', 'Cameroon': '🇨🇲', 'Canada': '🇨🇦',
-  'Chile': '🇨🇱', 'China': '🇨🇳', 'Colombia': '🇨🇴', 'Costa Rica': '🇨🇷',
-  'Croatia': '🇭🇷', 'Czech Republic': '🇨🇿', 'Czechia': '🇨🇿', 'Denmark': '🇩🇰',
-  'Ecuador': '🇪🇨', 'Egypt': '🇪🇬', 'England': '🇬🇧', 'France': '🇫🇷',
-  'Germany': '🇩🇪', 'Ghana': '🇬🇭', 'Greece': '🇬🇷', 'Hungary': '🇭🇺',
-  'Iran': '🇮🇷', 'Ireland': '🇮🇪', 'Italy': '🇮🇹', 'Ivory Coast': '🇨🇮',
-  'Japan': '🇯🇵', 'South Korea': '🇰🇷', 'Korea': '🇰🇷', 'Mexico': '🇲🇽',
+  // 2026 World Cup participants (48 teams)
+  'Algeria': '🇩🇿', 'Argentina': '🇦🇷', 'Australia': '🇦🇺', 'Austria': '🇦🇹',
+  'Belgium': '🇧🇪', 'Bosnia and Herzegovina': '🇧🇦', 'Brazil': '🇧🇷', 'Cabo Verde': '🇨🇻',
+  'Canada': '🇨🇦', 'Colombia': '🇨🇴', 'Congo DR': '🇨🇩', 'Côte d\'Ivoire': '🇨🇮',
+  'Croatia': '🇭🇷', 'Curaçao': '🇨🇼', 'Czechia': '🇨🇿', 'Ecuador': '🇪🇨',
+  'Egypt': '🇪🇬', 'England': '🇬🇧', 'France': '🇫🇷', 'Germany': '🇩🇪',
+  'Ghana': '🇬🇭', 'Haiti': '🇭🇹', 'IR Iran': '🇮🇷', 'Iraq': '🇮🇶',
+  'Japan': '🇯🇵', 'Jordan': '🇯🇴', 'Korea Republic': '🇰🇷', 'Mexico': '🇲🇽',
   'Morocco': '🇲🇦', 'Netherlands': '🇳🇱', 'New Zealand': '🇳🇿', 'Norway': '🇳🇴',
-  'Poland': '🇵🇱', 'Portugal': '🇵🇹', 'Romania': '🇷🇴', 'Russia': '🇷🇺',
-  'Saudi Arabia': '🇸🇦', 'Scotland': '🇬🇧', 'Senegal': '🇸🇳', 'Serbia': '🇷🇸',
-  'Slovakia': '🇸🇰', 'Slovenia': '🇸🇮', 'South Africa': '🇿🇦', 'Spain': '🇪🇸',
-  'Sweden': '🇸🇪', 'Switzerland': '🇨🇭', 'Tunisia': '🇹🇳', 'Turkey': '🇹🇷',
-  'Ukraine': '🇺🇦', 'United States': '🇺🇸', 'USA': '🇺🇸', 'Uruguay': '🇺🇾',
-  'Wales': '🇬🇧'
+  'Panama': '🇵🇦', 'Paraguay': '🇵🇾', 'Portugal': '🇵🇹', 'Qatar': '🇶🇦',
+  'Saudi Arabia': '🇸🇦', 'Scotland': '🇬🇧', 'Senegal': '🇸🇳', 'South Africa': '🇿🇦',
+  'Spain': '🇪🇸', 'Sweden': '🇸🇪', 'Switzerland': '🇨🇭', 'Tunisia': '🇹🇳',
+  'Türkiye': '🇹🇷', 'USA': '🇺🇸', 'Uruguay': '🇺🇾', 'Uzbekistan': '🇺🇿',
+
+  // Historical aliases (for earlier World Cups)
+  'Czech Republic': '🇨🇿', 'Ivory Coast': '🇨🇮', 'Iran': '🇮🇷',
+  'South Korea': '🇰🇷', 'Korea': '🇰🇷', 'Turkey': '🇹🇷', 'Democratic Republic of the Congo': '🇨🇩',
+  'Cape Verde': '🇨🇻', 'United States': '🇺🇸'
 };
 
 class FetchGapsReporter {
@@ -130,21 +133,25 @@ function normalizePlayers(players, country, year, gapsReporter) {
 
 function extractCountryCode(countryName) {
   const codeMap = {
-    'Argentina': 'ARG', 'Australia': 'AUS', 'Austria': 'AUT', 'Belgium': 'BEL',
-    'Brazil': 'BRA', 'Bulgaria': 'BUL', 'Cameroon': 'CMR', 'Canada': 'CAN',
-    'Chile': 'CHI', 'China': 'CHN', 'Colombia': 'COL', 'Costa Rica': 'CRC',
-    'Croatia': 'CRO', 'Czech Republic': 'CZE', 'Czechia': 'CZE', 'Denmark': 'DEN',
-    'Ecuador': 'ECU', 'Egypt': 'EGY', 'England': 'ENG', 'France': 'FRA',
-    'Germany': 'GER', 'Ghana': 'GHA', 'Greece': 'GRE', 'Hungary': 'HUN',
-    'Iran': 'IRN', 'Ireland': 'IRL', 'Italy': 'ITA', 'Ivory Coast': 'CIV',
-    'Japan': 'JPN', 'South Korea': 'KOR', 'Korea': 'KOR', 'Mexico': 'MEX',
+    // 2026 participants
+    'Algeria': 'ALG', 'Argentina': 'ARG', 'Australia': 'AUS', 'Austria': 'AUT',
+    'Belgium': 'BEL', 'Bosnia and Herzegovina': 'BIH', 'Brazil': 'BRA', 'Cabo Verde': 'CPV',
+    'Canada': 'CAN', 'Colombia': 'COL', 'Congo DR': 'COD', 'Côte d\'Ivoire': 'CIV',
+    'Croatia': 'CRO', 'Curaçao': 'CUW', 'Czechia': 'CZE', 'Ecuador': 'ECU',
+    'Egypt': 'EGY', 'England': 'ENG', 'France': 'FRA', 'Germany': 'GER',
+    'Ghana': 'GHA', 'Haiti': 'HTI', 'IR Iran': 'IRN', 'Iraq': 'IRQ',
+    'Japan': 'JPN', 'Jordan': 'JOR', 'Korea Republic': 'KOR', 'Mexico': 'MEX',
     'Morocco': 'MAR', 'Netherlands': 'NED', 'New Zealand': 'NZL', 'Norway': 'NOR',
-    'Poland': 'POL', 'Portugal': 'POR', 'Romania': 'ROU', 'Russia': 'RUS',
-    'Saudi Arabia': 'KSA', 'Scotland': 'SCO', 'Senegal': 'SEN', 'Serbia': 'SRB',
-    'Slovakia': 'SVK', 'Slovenia': 'SVN', 'South Africa': 'RSA', 'Spain': 'ESP',
-    'Sweden': 'SWE', 'Switzerland': 'SUI', 'Tunisia': 'TUN', 'Turkey': 'TUR',
-    'Ukraine': 'UKR', 'United States': 'USA', 'USA': 'USA', 'Uruguay': 'URY',
-    'Wales': 'WAL'
+    'Panama': 'PAN', 'Paraguay': 'PAR', 'Portugal': 'POR', 'Qatar': 'QAT',
+    'Saudi Arabia': 'KSA', 'Scotland': 'SCO', 'Senegal': 'SEN', 'South Africa': 'RSA',
+    'Spain': 'ESP', 'Sweden': 'SWE', 'Switzerland': 'SUI', 'Tunisia': 'TUN',
+    'Türkiye': 'TUR', 'USA': 'USA', 'Uruguay': 'URY', 'Uzbekistan': 'UZB',
+
+    // Historical aliases
+    'Czech Republic': 'CZE', 'Ivory Coast': 'CIV', 'Iran': 'IRN',
+    'South Korea': 'KOR', 'Korea': 'KOR', 'Turkey': 'TUR', 'Democratic Republic of the Congo': 'COD',
+    'Cape Verde': 'CPV', 'United States': 'USA', 'Serbia': 'SRB', 'Montenegro': 'MNE',
+    'Serbia and Montenegro': 'SCG', 'Yugoslavia': 'YUG', 'East Germany': 'GDR', 'West Germany': 'FRG'
   };
   return codeMap[countryName] || countryName.substring(0, 3).toUpperCase();
 }
