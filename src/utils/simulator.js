@@ -92,12 +92,11 @@ export function simulateKnockoutMatch(homeTeam, awayTeam) {
 
   if (result.draw) {
     result.penalties = true
-    result.penHome = Math.floor(Math.random() * 6)
-    result.penAway = Math.floor(Math.random() * 6)
-    while (result.penHome === result.penAway) {
-      result.penHome = Math.floor(Math.random() * 6)
-      result.penAway = Math.floor(Math.random() * 6)
-    }
+    const winnerScore = 3 + Math.floor(Math.random() * 3)   // 3, 4, or 5
+    const loserScore  = winnerScore - (1 + Math.floor(Math.random() * 2)) // winner - 1 or 2
+    const homeWins    = Math.random() < 0.5
+    result.penHome    = homeWins ? winnerScore : loserScore
+    result.penAway    = homeWins ? loserScore  : winnerScore
     result.winner = result.penHome > result.penAway ? homeTeam : awayTeam
   } else {
     result.winner = result.homeGoals > result.awayGoals ? homeTeam : awayTeam

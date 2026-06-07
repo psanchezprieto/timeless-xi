@@ -33,30 +33,30 @@ export default function CampaignSummary({ result, team, onNewGame }) {
         )}
       </div>
 
-      {/* Stats grid */}
+      {/* Stats grid — single row */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-        gap: '0.75rem',
+        gridTemplateColumns: `repeat(${stats.length}, 1fr)`,
+        gap: '0.5rem',
         marginBottom: '2rem',
       }}>
         {stats.map(stat => (
           <div key={stat.label} style={{
             ...S.card,
             textAlign: 'center',
-            padding: '1.25rem',
+            padding: '0.75rem 0.5rem',
             borderColor: stat.accent ? C.gold : C.border,
           }}>
             <div style={{
-              fontSize: '0.68rem', fontWeight: '600',
-              letterSpacing: '0.08em', textTransform: 'uppercase',
-              color: C.textDim, marginBottom: '0.5rem',
+              fontSize: '0.6rem', fontWeight: '600',
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+              color: C.textDim, marginBottom: '0.35rem',
             }}>
               {stat.label}
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif",
-              fontSize: '1.4rem', fontWeight: '800',
+              fontSize: '1.1rem', fontWeight: '800',
               color: stat.accent ? C.gold : C.text,
               lineHeight: 1.2,
             }}>
