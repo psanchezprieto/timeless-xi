@@ -57,12 +57,15 @@ Track completion of each phase, blockers, and key decisions.
 **Results**: 5 .json.gz files, 152KB total (<2MB target), meta.json with registry
 
 ### Subphase 1d: Coach Data Generation
-- [ ] Create scripts/generate-coaches.mjs
-- [ ] Call Claude API to generate historical coaches per country
-- [ ] Output data/coaches.json
-- [ ] Validate coach structure (name, era, moraleBoost)
+- [x] Create scripts/generate-coaches.mjs
+- [x] Call Claude API to generate historical coaches per country
+- [x] Output data/coaches.json
+- [x] Validate coach structure (name, era, moraleBoost)
+- [x] Compress to coaches.json.gz (4.8 KB) in public/data/
+- [x] Integrate into `npm run pipeline`
 
-**Status**: Ready to run
+**Status**: ✅ Complete (2026-06-07)
+**Results**: 258 historical coaches (3 per country), coaches.json.gz in public/data/, metadata in meta.json
 
 ---
 
@@ -70,16 +73,18 @@ Track completion of each phase, blockers, and key decisions.
 
 ### Subphase 2a: Vite + React Setup
 - [x] Create src/main.jsx (React 18 entry point)
-- [x] Create public/index.html (Tailwind CDN + Retro 80s styling)
+- [x] Create index.html (HTML entry point for Vite)
 - [x] Create src/App.jsx (data loading + loading states)
 - [x] Verify file structure and code correctness
+- [x] Refine UI with softer color palette and cleaner aesthetics
 
 **Status**: ✅ Complete (2026-06-07)
-**Note**: Requires Node 16+ to run. Current environment has Node v12 (EOL). Code is correct; awaiting environment upgrade.
 **Files created**:
-  - public/index.html: HTML template with Tailwind CDN, Press Start 2P font, neon colors, scanline effects
+  - index.html: Root HTML template with Tailwind CDN, refined dark theme
   - src/main.jsx: React 18 entry point with ReactDOM.createRoot()
   - src/App.jsx: Main component with meta.json loader, loading spinner, error handling
+  
+**Design**: Softer color palette (#d97fb6, #5eb3c6, #e8c547), subtle shadows, modern Inter font, clean UI
 
 ### Subphase 2b: Game Components
 - [ ] Game.jsx (main flow)
@@ -147,31 +152,45 @@ Track completion of each phase, blockers, and key decisions.
 
 ## Blockers & Issues
 
-None yet. 🎉
+| Issue | Impact | Status |
+|-------|--------|--------|
+| Node v12.22.9 in dev environment | `npm run dev` fails — Vite 3+ requires Node 14.18+ | 🔴 Active — needs Node upgrade before Phase 2b can be tested |
+| `public/index.html` deleted (moved to root `index.html`) | Correct for Vite; old reference in some docs | ✅ Fixed |
 
 ---
 
 ## Next Steps
 
-1. **Phase 2a**: Vite + React setup (src/main.jsx, public/index.html)
-2. **Phase 2b**: Build React UI components (Game.jsx, CountryPicker, etc.)
-3. **Phase 2c**: Implement game logic (simulator, data loader, formatting)
-4. **Phase 2d**: Apply retro 80s styling (Tailwind + custom CSS)
+1. **Upgrade Node** to 18+ (prerequisite for running `npm run dev`)
+2. **Phase 2b**: Build React UI components (Game.jsx, CountryPicker, FormationPicker, DiceRoller, CoachPicker, TournamentSim, MatchDetail)
+3. **Phase 2c**: Implement game logic (utils/db.js, utils/simulator.js, utils/format.js, constants.js)
+4. **Phase 2d**: Apply retro 80s styling (src/styles/index.css, animations.css)
 5. **Phase 3**: Deploy to GitHub Pages
 
 ---
 
 ## Artifacts Generated
 
-- `/home/botuser/timeless-xi/CLAUDE.md` — System prompt for agents
-- `/home/botuser/timeless-xi/package.json` — Dependencies + npm scripts
-- `/home/botuser/timeless-xi/vite.config.js` — Vite build config
-- `/home/botuser/timeless-xi/.gitignore` — Git ignore rules
-- `/home/botuser/timeless-xi/docs/PROGRESS.md` — This file
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | System prompt for agents |
+| `package.json` | Dependencies + npm scripts |
+| `vite.config.js` | Vite build config |
+| `.gitignore` | Git ignore rules |
+| `index.html` | Vite HTML entry (root-level) |
+| `src/main.jsx` | React 18 entry point |
+| `src/App.jsx` | App shell with meta.json loading |
+| `scripts/fetch-squads.mjs` | Zafronix API fetcher |
+| `scripts/enrich-ratings.mjs` | Claude batch enrichment |
+| `scripts/apply-age-penalty.mjs` | Age-based rating adjustment |
+| `scripts/build-json.mjs` | JSON optimizer/decade splitter |
+| `scripts/compress.mjs` | gzip compressor |
+| `scripts/generate-coaches.mjs` | Coach data generator |
+| `public/data/` | 5 squad .json.gz files + coaches.json.gz + meta.json |
 
 ---
 
-**Last updated**: 2026-06-07
+**Last updated**: 2026-06-07 (Sonnet sweep)
 
 ---
 

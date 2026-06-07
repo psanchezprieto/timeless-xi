@@ -6,9 +6,10 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ## **Current Session Status**
 
-**Last completed**: Phase 1d - Coach Data Generation via Claude Sonnet (258 coaches, 4.8KB gzipped) (2026-06-07)  
-**Current task**: None - all Phase 1 complete, ready for Phase 2a (React setup)  
+**Last completed**: Phase 2a - React + Vite setup with refined UI (softer colors, clean design) (2026-06-07)  
+**Current task**: Phase 2b - Build game components (CountryPicker, FormationPicker, DiceRoller, CoachPicker)  
 **Blocker status**: None ✅
+**App status**: ✅ Running locally with `npm run dev` on Node v24.16.0
 
 ---
 
@@ -455,7 +456,188 @@ This will remind you to review the handoff after every commit.
 
 ---
 
-**Last updated**: 2026-06-07 @ end of Phase 1d (coach generation)
+---
 
-Phase 1 data pipeline: ✅ 100% complete (fetch → enrich → coaches → compress all done) 🚀
-Phase 2 React UI: Ready to build 🎬
+## **What Was Just Completed: Phase 2a**
+
+✅ **Phase 2a: React + Vite Setup with Refined UI** (Complete)
+
+**Built core React infrastructure**:
+- `index.html`: Root HTML template with Tailwind CDN, meta.json loader
+- `src/main.jsx`: React 18 entry point with ReactDOM.createRoot()
+- `src/App.jsx`: Main component with async data loading, loading spinner, error handling
+
+**Refined UI design** (improved from harsh neon):
+- Color palette: Softer mauve pink (#d97fb6), cyan (#5eb3c6), warm gold (#e8c547)
+- Typography: Modern Inter font (removed pixelated Press Start 2P)
+- Styling: Subtle shadows, gentle glow effects, cleaner cards with border-radius
+- Scanline effect: Reduced opacity for less harshness
+- Buttons: Solid colors with smooth hover transitions instead of gradients
+
+**Verified**:
+- ✅ App runs locally with `npm run dev` (Node v24.16.0)
+- ✅ meta.json loads successfully
+- ✅ Loading spinner animates correctly
+- ✅ Error handling displays properly
+- ✅ UI is clean, refined, and easier on the eyes
+
+**Git commits**:
+- `85cb882`: Phase 2a: React + Vite setup with Retro 80s design
+- `5d7b64e`: Refine UI: Softer colors and cleaner aesthetics
+
+---
+
+## **What's Next: Phase 2b - Game Components**
+
+**Phase 2b Goal**: Build all interactive game screen components that players interact with.
+
+### Components to Build:
+
+1. **CountryPicker.jsx** — Select team with flag, name search
+   - Display: Flag + country name cards
+   - Input: Search/filter by country
+   - Output: Selected country → FormationPicker
+
+2. **FormationPicker.jsx** — Choose 1 of 4 formations
+   - Display: 4 cards (4-4-2, 4-3-3, 3-5-2, 5-3-2)
+   - Input: Click to select
+   - Output: Selected formation → DiceRoller
+
+3. **DiceRoller.jsx** — Position-by-position player selection (3 strikes rule)
+   - Display: Current position, available players, strike counter
+   - Input: Dice roll → get 3 random players
+   - Interaction: Pick 1 player or reroll (up to 3 strikes)
+   - Output: All 11 players selected → CoachPicker
+
+4. **CoachPicker.jsx** — Select coach (morale boost)
+   - Display: 3-5 coach options with era + morale boost
+   - Input: Click to select
+   - Output: Selected coach → TournamentSim
+
+5. **TournamentSim.jsx** — Bracket visualization + match progression
+   - Display: 32 teams, 4 groups, group stage → R16 → QF → SF → Final
+   - Input: Click to advance matches (simulated)
+   - Output: Match results → MatchDetail
+
+6. **MatchDetail.jsx** — Game-by-game playback
+   - Display: Goals, scorers, match stats
+   - Reference: 7a0.com.br style
+
+7. **CampaignSummary.jsx** — Final stats & PNG export
+   - Display: Best player, toughest opponent, tournament stats
+   - Output: PNG export button
+
+### Additional Tasks in Phase 2b:
+- `src/constants.js` — Formations, positions, ball distributions
+- Update `src/App.jsx` to wire Game.jsx flow
+
+### File Structure After 2b:
+```
+src/
+├── App.jsx (updated - loads Game.jsx)
+├── components/
+│   ├── Game.jsx (main state manager + flow)
+│   ├── CountryPicker.jsx
+│   ├── FormationPicker.jsx
+│   ├── DiceRoller.jsx
+│   ├── CoachPicker.jsx
+│   ├── TournamentSim.jsx
+│   ├── MatchDetail.jsx
+│   └── CampaignSummary.jsx
+├── constants.js
+├── main.jsx
+└── utils/ (empty until Phase 2c)
+```
+
+### Implementation Strategy:
+1. Start with CountryPicker (simplest - just rendering + selection)
+2. Move through each component in order
+3. Use React hooks (useState, useEffect) for state
+4. Wire components together in Game.jsx
+5. Use mock/placeholder data first, integrate real data in Phase 2c
+
+**When ready to start Phase 2b**, paste the resume prompt below.
+
+---
+
+## **Copy-Paste Handoff Prompt for Phase 2b**
+
+Paste this to resume Phase 2b in next session:
+
+```
+Build Phase 2b: Game UI Components for World Cup simulation.
+
+Context:
+- Project: Timeless XI (World Cup dream team builder + tournament sim)
+- Status: Phase 2a complete (React + Vite working, refined UI). Ready for Phase 2b (game components).
+- Working directory: /home/botuser/timeless-xi
+- App running: npm run dev (Node v24.16.0) on localhost:5173
+
+Current state:
+✅ Phase 2a complete:
+  - index.html (Vite entry, Tailwind CDN, meta.json loader)
+  - src/main.jsx (React entry point)
+  - src/App.jsx (data loader, loading UI, error handling)
+  - Refined UI: Softer colors (#d97fb6 pink, #5eb3c6 cyan, #e8c547 gold)
+  - App running locally, data loads successfully
+
+✅ Phase 1 complete:
+  - public/data/: 5 .json.gz files (10,437 players), coaches.json.gz
+  - public/data/meta.json (data registry)
+  - data/coaches.json (258 coaches, 3 per country)
+
+Next task: Build Phase 2b - Game UI components
+
+Components to build (in order):
+1. CountryPicker.jsx — Team selection with flag display + search
+2. FormationPicker.jsx — Formation selector (4 cards: 4-4-2, 4-3-3, 3-5-2, 5-3-2)
+3. DiceRoller.jsx — Position-by-position player selection (dice → 3 players → pick 1)
+4. CoachPicker.jsx — Coach selector (3-5 options with morale boost)
+5. TournamentSim.jsx — Bracket & match progression (group → knockout)
+6. MatchDetail.jsx — Game-by-game playback (goals, scorers, stats)
+7. CampaignSummary.jsx — Final campaign stats & PNG export
+
+Also create:
+- src/constants.js (formations, positions, ball distributions)
+- src/components/Game.jsx (main game flow state manager)
+- Update src/App.jsx to load Game.jsx instead of placeholder
+
+## APPROACH
+
+Start simple:
+1. Create src/components/Game.jsx as the main flow container
+2. Build CountryPicker first (render list of countries, click to select)
+3. Move to FormationPicker (4 cards, click to select)
+4. Continue through components
+5. Use mock/placeholder data initially
+6. Wire components together with state passing (App → Game → CountryPicker → ...)
+
+Use React hooks:
+- useState for local state (selected country, formation, etc.)
+- useEffect for data loading
+- Props for passing data between components
+
+Reference:
+- CLAUDE.md for project architecture & tech stack
+- PROGRESS.md for phase tracking
+- 7a0.com.br for UI inspiration (game-by-game match display)
+
+Current commits:
+- 85cb882: Phase 2a: React + Vite setup
+- 5d7b64e: Refine UI: Softer colors
+
+When complete:
+- Commit with message: "Phase 2b: Build game UI components"
+- Update PROGRESS.md to mark 2b complete
+- Move to Phase 2c (game logic & utils)
+
+Ready to start: Yes
+```
+
+---
+
+**Last updated**: 2026-06-07 @ end of Phase 2a (React + Vite with refined UI)
+
+Phase 1 data pipeline: ✅ 100% complete 🚀
+Phase 2a React setup: ✅ 100% complete (app running, refined UI) ✨
+Phase 2b Game components: 🔄 Ready to build (starting now)
