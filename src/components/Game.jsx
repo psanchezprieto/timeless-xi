@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import Banner from './Banner'
 import CountryPicker from './CountryPicker'
 import FormationPicker from './FormationPicker'
 import DiceRoller from './DiceRoller'
@@ -77,16 +78,24 @@ export default function Game() {
     setStage('summary')
   }, [])
 
-  const onNewGame = useCallback(() => {
-    setStage('country')
-    setCountry(null)
-    setFormation(null)
-    setTeam([])
-    setCoach(null)
-    setResult(null)
-    setRerolls(3)
-    localStorage.removeItem(STORAGE_KEY)
-  }, [])
+  const onNewGame = useCallback((options = {}) => {
+    if (options.reuseSquad && team.length > 0) {
+      // Keep team, formation, and country; go to coach stage
+      setCoach(null)
+      setResult(null)
+      setStage('coach')
+    } else {
+      // Full reset
+      setStage('country')
+      setCountry(null)
+      setFormation(null)
+      setTeam([])
+      setCoach(null)
+      setResult(null)
+      setRerolls(3)
+      localStorage.removeItem(STORAGE_KEY)
+    }
+  }, [team])
 
   const onReroll = useCallback(() => {
     setRerolls(r => Math.max(0, r - 1))
@@ -99,6 +108,8 @@ export default function Game() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: C.bg, color: C.text }}>
+      <Banner />
+
       {stage !== 'summary' && (
         <div style={{ height: '2px', backgroundColor: C.border }}>
           <div style={{
@@ -126,7 +137,7 @@ export default function Game() {
         )}
         {stage === 'coach' && <CoachPicker country={country} onSelect={onCoach} onNewGame={onNewGame} />}
         {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country} onComplete={onTournament} onNewGame={onNewGame} />}
-        {stage === 'summary' && result && <CampaignSummary result={result} team={team} onNewGame={onNewGame} />}
+        {stage === 'summary' && result && <CampaignSummary result={result} team={team} country={country} onNewGame={onNewGame} />}
       </div>
     </div>
   )

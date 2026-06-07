@@ -216,6 +216,77 @@ function SquadOverlay({ team: t, onClose }) {
   )
 }
 
+function MatchLog({ results, userCountry }) {
+  if (!results || results.length === 0) return null
+  return (
+    <div style={{
+      backgroundColor: C.surface,
+      border: `1px solid ${C.border}`,
+      borderRadius: '10px',
+      overflow: 'hidden',
+      marginTop: '1.5rem',
+      maxHeight: '200px',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <div style={{
+        backgroundColor: C.surfaceHi,
+        padding: '0.6rem 1rem',
+        fontFamily: "'Oswald', sans-serif",
+        fontSize: '0.7rem',
+        fontWeight: '700',
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        color: C.textSub,
+        borderBottom: `1px solid ${C.border}`,
+      }}>
+        Match Log
+      </div>
+      <div style={{ overflowY: 'auto', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+        {results.map((m, i) => {
+          const userIsHome = m.home === userCountry
+          const userGoals = userIsHome ? m.homeGoals : m.awayGoals
+          const oppGoals = userIsHome ? m.awayGoals : m.homeGoals
+          const oppLabel = userIsHome ? m.awayLabel : m.homeLabel
+          const won = userGoals > oppGoals || (m.penalties && ((userIsHome && m.penHome > m.penAway) || (!userIsHome && m.penAway > m.penHome)))
+          const drew = !won && m.draw && !m.penalties
+          const badgeBg = won ? C.goldGlow : drew ? C.cyanGlow : C.dangerGlow
+          const badgeColor = won ? C.gold : drew ? C.cyan : C.danger
+
+          return (
+            <div key={i} style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '0.5rem 0.75rem',
+              backgroundColor: C.surfaceHi,
+              borderRadius: '6px',
+              fontSize: '0.75rem',
+              color: C.textDim,
+            }}>
+              <div style={{ flex: 1 }}>
+                <span style={{ color: C.text, fontWeight: '500' }}>{userCountry}</span>
+                <span style={{ color: C.textDim }}> vs </span>
+                <span style={{ color: C.text, fontWeight: '500' }}>{oppLabel}</span>
+              </div>
+              <div style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontWeight: '700',
+                color: badgeColor,
+                fontSize: '0.8rem',
+                minWidth: '32px',
+                textAlign: 'center',
+              }}>
+                {userGoals}–{oppGoals}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function GroupTable({ group, userCountry, onTeamClick }) {
   const isUser = t => t.isUser
   return (
@@ -485,36 +556,40 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           <div style={{ textAlign: 'center' }}>
             <p style={S.label}>Group Stage — Match {groupMatchIdx + 1} of {groupMatches.length}</p>
             <div style={{
-              ...S.card,
-              maxWidth: '440px', margin: '1.5rem auto 2rem',
-              padding: '2.5rem 2rem',
-              borderColor: C.borderLight,
+              maxWidth: '440px', margin: '1.5rem auto 0',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
-                    {country}
-                  </div>
-                  <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
-                    {userTeam.avgRating.toFixed(0)} rating
-                  </div>
-                </div>
-                <div style={{
-                  fontFamily: "'Oswald', sans-serif",
-                  fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
-                }}>vs</div>
-                <div style={{ textAlign: 'left' }}>
-                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
-                    {oppLabel}
-                  </div>
-                  {oppRating != null && (
-                    <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
-                      {oppRating.toFixed(0)} rating
+              <div style={{
+                ...S.card,
+                padding: '2.5rem 2rem',
+                borderColor: C.borderLight,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                      {country}
                     </div>
-                  )}
+                    <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                      {userTeam.avgRating.toFixed(0)} rating
+                    </div>
+                  </div>
+                  <div style={{
+                    fontFamily: "'Oswald', sans-serif",
+                    fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
+                  }}>vs</div>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                      {oppLabel}
+                    </div>
+                    {oppRating != null && (
+                      <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                        {oppRating.toFixed(0)} rating
+                      </div>
+                    )}
+                  </div>
                 </div>
+                <Btn onClick={revealGroupMatch}>▶ Reveal Result</Btn>
               </div>
-              <Btn onClick={revealGroupMatch}>▶ Reveal Result</Btn>
+              {groupMatchIdx > 0 && <MatchLog results={groupMatches.slice(0, groupMatchIdx)} userCountry={country} />}
             </div>
           </div>
         )
@@ -526,12 +601,15 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           <p style={{ ...S.label, marginBottom: '1.25rem' }}>
             Group Stage — Match {groupMatchIdx + 1} of {groupMatches.length} — Result
           </p>
-          <div style={{ maxWidth: '440px', margin: '0 auto 2rem' }}>
+          <div style={{ maxWidth: '440px', margin: '0 auto 0' }}>
             <ScoreBox result={groupMatchResult} userCountry={country} isGroupStage />
+            {groupMatchIdx > 0 && <MatchLog results={groupMatches.slice(0, groupMatchIdx)} userCountry={country} />}
           </div>
-          <Btn onClick={nextGroupMatch} color={C.gold}>
-            {groupMatchIdx + 1 < groupMatches.length ? 'Next Match →' : 'See Group Standings →'}
-          </Btn>
+          <div style={{ marginTop: '2rem' }}>
+            <Btn onClick={nextGroupMatch} color={C.gold}>
+              {groupMatchIdx + 1 < groupMatches.length ? 'Next Match →' : 'See Group Standings →'}
+            </Btn>
+          </div>
         </div>
       )}
 
@@ -579,38 +657,42 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
           <p style={S.label}>{ROUNDS[roundIdx]}</p>
 
           <div style={{
-            ...S.card,
-            maxWidth: '440px', margin: '1.5rem auto 2rem',
-            padding: '2.5rem 2rem',
-            borderColor: C.borderLight,
+            maxWidth: '440px', margin: '1.5rem auto 0',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
-                  {country}
+            <div style={{
+              ...S.card,
+              padding: '2.5rem 2rem',
+              borderColor: C.borderLight,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '800', fontSize: '1.1rem', color: C.text }}>
+                    {country}
+                  </div>
+                  <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                    {userTeam.avgRating.toFixed(0)} rating
+                  </div>
                 </div>
-                <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
-                  {userTeam.avgRating.toFixed(0)} rating
+                <div style={{
+                  fontFamily: "'Oswald', sans-serif",
+                  fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
+                }}>vs</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
+                    {teamLabel(pendingMatch.away)}
+                  </div>
+                  <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
+                    {pendingMatch.away.avgRating.toFixed(0)} rating
+                  </div>
                 </div>
               </div>
-              <div style={{
-                fontFamily: "'Oswald', sans-serif",
-                fontSize: '1.6rem', fontWeight: '800', color: C.border, letterSpacing: '-0.02em',
-              }}>vs</div>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: '700', fontSize: '1.05rem', color: C.textSub }}>
-                  {teamLabel(pendingMatch.away)}
-                </div>
-                <div style={{ fontSize: '0.73rem', color: C.textDim, marginTop: '0.2rem' }}>
-                  {pendingMatch.away.avgRating.toFixed(0)} rating
-                </div>
-              </div>
+              <Btn onClick={playMatch}>▶ Play Match</Btn>
             </div>
-            <Btn onClick={playMatch}>▶ Play Match</Btn>
+            {campaign.results.length > 0 && <MatchLog results={campaign.results} userCountry={country} />}
           </div>
 
           {pendingMatch.otherWinners.length > 0 && (
-            <p style={{ color: C.textDim, fontSize: '0.8rem' }}>
+            <p style={{ color: C.textDim, fontSize: '0.8rem', marginTop: '1.5rem' }}>
               {pendingMatch.otherWinners.length} other {ROUNDS[roundIdx].toLowerCase()} matches simulated simultaneously
             </p>
           )}
@@ -621,14 +703,17 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
       {phase === 'match_result' && matchResult && (
         <div style={{ textAlign: 'center' }}>
           <p style={{ ...S.label, marginBottom: '1.25rem' }}>{ROUNDS[roundIdx]} — Result</p>
-          <div style={{ maxWidth: '440px', margin: '0 auto 2rem' }}>
+          <div style={{ maxWidth: '440px', margin: '0 auto 0' }}>
             <ScoreBox result={matchResult} userCountry={country} />
+            {campaign.results.length > 0 && <MatchLog results={campaign.results} userCountry={country} />}
           </div>
-          <Btn onClick={afterMatch} color={matchResult.userWon ? C.gold : C.accent}>
-            {matchResult.userWon
-              ? roundIdx + 1 < ROUNDS.length ? `Continue to ${ROUNDS[roundIdx + 1]} →` : '🏆 Claim the trophy!'
-              : 'See Final Results'}
-          </Btn>
+          <div style={{ marginTop: '2rem' }}>
+            <Btn onClick={afterMatch} color={matchResult.userWon ? C.gold : C.accent}>
+              {matchResult.userWon
+                ? roundIdx + 1 < ROUNDS.length ? `Continue to ${ROUNDS[roundIdx + 1]} →` : '🏆 Claim the trophy!'
+                : 'See Final Results'}
+            </Btn>
+          </div>
         </div>
       )}
     </div>

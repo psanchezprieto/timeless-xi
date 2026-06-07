@@ -90,7 +90,12 @@ const COUNTRIES_DATA = [
 
 function getFlagUrl(country) {
   if (country.flagSrc) return country.flagSrc
-  return `https://flagcdn.com/w80/${country.code}.png`
+  // Try local copy first, then fall back to CDN
+  return `/flags/${country.code}.png`
+}
+
+function getCdnFlagUrl(country) {
+  return `https://flagcdn.com/w160/${country.code}.png`
 }
 
 function stickerHoverIn(e) {
@@ -163,9 +168,18 @@ export default function CountryPicker({ onSelect }) {
             {/* Flag edge-to-edge */}
             <div className="flag-emboss" style={{ width: '100%', borderRadius: 0 }}>
               <img
-                src={getFlagUrl(country)}
+                src={getCdnFlagUrl(country)}
                 alt={`${country.name} flag`}
-                style={{ width: '100%', aspectRatio: '3/2', objectFit: 'cover', display: 'block' }}
+                onError={(e) => {
+                  e.currentTarget.src = getFlagUrl(country)
+                }}
+                style={{
+                  width: '100%',
+                  aspectRatio: '3/2',
+                  objectFit: 'cover',
+                  display: 'block',
+                  imageRendering: 'crisp-edges',
+                }}
               />
             </div>
             {/* Name label strip */}

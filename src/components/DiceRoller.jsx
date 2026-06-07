@@ -244,27 +244,22 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
 
                     <div style={{
                       fontFamily: "'Oswald', sans-serif",
-                      fontSize: isMobile ? '0.75rem' : '1rem', fontWeight: '700',
-                      color: C.text, marginBottom: '0.15rem', lineHeight: 1.2,
+                      fontSize: isMobile ? '0.95rem' : '1.3rem', fontWeight: '800',
+                      color: C.text, marginBottom: '0.5rem', lineHeight: 1.2,
                     }}>
                       {player.name}
                     </div>
-                    <div style={{ fontSize: '0.65rem', color: C.textDim, marginBottom: isMobile ? '0.4rem' : '1rem' }}>
+                    <div style={{ fontSize: '0.65rem', color: C.textDim, marginBottom: isMobile ? '0.5rem' : '0.75rem' }}>
                       {player.year}
                     </div>
 
                     <div style={{
                       fontFamily: "'Oswald', sans-serif",
-                      fontSize: isMobile ? '1.6rem' : '2.2rem', fontWeight: '800', color: C.gold,
+                      fontSize: isMobile ? '1rem' : '1.4rem', fontWeight: '700', color: C.gold,
                       letterSpacing: '-0.02em',
                     }}>
                       {player.rating}
                     </div>
-                    {!isMobile && (
-                      <div style={{ fontSize: '0.6rem', color: C.textDim, marginTop: '0.1rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                        rating
-                      </div>
-                    )}
                   </button>
                 ))}
               </div>
@@ -285,7 +280,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                     if (rerolls > 0) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }
                   }}
                 >
-                  🎲 Reroll ({rerolls} left)
+                  ⚽ Make a Sub ({rerolls} left)
                 </button>
               </div>
             </>
