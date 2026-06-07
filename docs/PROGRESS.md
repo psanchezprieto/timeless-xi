@@ -56,6 +56,14 @@ Track completion of each phase, blockers, and key decisions.
 **Status**: ✅ Complete (2026-06-07)
 **Results**: 5 .json.gz files, 152KB total (<2MB target), meta.json with registry
 
+### Subphase 1d: Coach Data Generation
+- [ ] Create scripts/generate-coaches.mjs
+- [ ] Call Claude API to generate historical coaches per country
+- [ ] Output data/coaches.json
+- [ ] Validate coach structure (name, era, moraleBoost)
+
+**Status**: Ready to run
+
 ---
 
 ## Phase 2: React UI 🔲

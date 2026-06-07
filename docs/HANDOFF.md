@@ -7,7 +7,7 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 ## **Current Session Status**
 
 **Last completed**: Phase 1c - JSON Optimization & Compression (152KB gzipped data files) (2026-06-07)  
-**Current task**: Ready for Phase 2a (React + Vite setup)  
+**Current task**: Phase 1d - Generate coach data (ready to run)  
 **Blocker status**: None ✅
 
 ---
@@ -43,6 +43,23 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 - Test mode first with --test flag
 
 **Reference**: See `CLAUDE.md` for Claude API usage details
+
+---
+
+## **What's Currently In Progress**
+
+🔄 **Phase 1d: Coach Data Generation** (Ready to run)
+
+**Created `scripts/generate-coaches.mjs`**:
+- Uses Claude Sonnet 4.6 to generate historical coaches per country
+- Extracts country list from raw squads data
+- For each coach: name, era (years/period), moraleBoost (2-5)
+- Calls Claude API once with all countries
+- Validates coach structure and saves to `data/coaches.json`
+- Status: Script ready, execution pending
+
+**To run**: `node scripts/generate-coaches.mjs`
+**Cost**: ~1-2 API credits (single request for all countries)
 
 ---
 
@@ -148,13 +165,14 @@ timeless-xi/
 ├── .gitignore ✅                   (Git rules)
 ├── .claude/
 │   └── settings.json ✅            (Hook: git commit reminder)
-├── scripts/                        (Phase 1 Complete ✅)
+├── scripts/                        (Phase 1 ~95% Complete)
 │   ├── fetch-squads.mjs ✅         (Zafronix fetcher - DONE)
 │   ├── test-api.mjs ✅             (API validator - DONE)
 │   ├── enrich-ratings.mjs ✅       (Claude batch enrichment - DONE)
 │   ├── apply-age-penalty.mjs ✅    (Age-based penalties - DONE)
 │   ├── build-json.mjs ✅           (JSON optimizer - DONE)
 │   ├── compress.mjs ✅             (gzip compressor - DONE)
+│   ├── generate-coaches.mjs 🔄     (Coach generator - READY TO RUN)
 │   └── README.md ✅                (Documentation - DONE)
 ├── src/                            (Empty - Phase 2 to build)
 │   ├── components/                 (TODO: Game screens)
@@ -187,7 +205,12 @@ timeless-xi/
 
 **What's next**:
 
-- **Phase 2a** (Next): Build React + Vite setup
+- **Phase 1d** (Next): Generate coach data
+  * Run `npm run generate:coaches` (or `node scripts/generate-coaches.mjs`)
+  * Output: `data/coaches.json` (3-5 coaches per country)
+  * Validates coach structure (name, era, moraleBoost)
+  
+- **Phase 2a**: Build React + Vite setup
   * Create `src/main.jsx` (React entry point)
   * Create `public/index.html` (Vite template)
   * Setup Tailwind CSS via CDN
