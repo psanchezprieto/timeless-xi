@@ -256,7 +256,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a
-            href="https://forms.gle/REPLACE_WITH_ADVERTISER_FORM"
+            href="https://forms.gle/kaJLZE2fQN3KUac59"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -274,7 +274,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
             Data &amp; Partnerships
           </a>
           <a
-            href="https://forms.gle/REPLACE_WITH_CORRECTIONS_FORM"
+            href="https://forms.gle/Nk7DrqrDNJYcdvfk8"
             target="_blank"
             rel="noopener noreferrer"
             style={{
