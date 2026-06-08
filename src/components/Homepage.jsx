@@ -209,9 +209,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
             Why Timeless XI?
           </h3>
           <p style={{ fontSize: '0.95rem', color: C.textSub, lineHeight: 1.6 }}>
-            Experience the thrill of World Cup competition with players from every era—from Pelé and Maradona to
-            Ronaldo and Messi. No two games are the same. Every match is dynamically simulated with realistic odds
-            based on player ratings and team chemistry.
+            Every World Cup left players behind. Legends overshadowed by the era they lived in, cult heroes only die-hards remember. Timeless XI gives them a second chance. Mix Messi with Maradona, pair forgotten greats with modern icons, and find out if your dream squad can go all the way.
           </p>
         </section>
 
@@ -252,7 +250,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
           Get in Touch
         </h2>
         <p style={{ fontSize: '0.9rem', color: C.textSub, marginBottom: '1.5rem', maxWidth: '28rem', margin: '0 auto 1.5rem' }}>
-          Interested in data access or partnerships? Spotted a wrong score? We'd love to hear from you.
+          Want to leave some feedback? Interested in partnerships? Spotted a wrong score? We'd love to hear from you.
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a
