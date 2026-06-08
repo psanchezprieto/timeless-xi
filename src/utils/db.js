@@ -96,7 +96,7 @@ export async function getPlayersByCountry(countryName) {
         for (const p of squad.p || []) {
           const rawName = p.n || ''
           const isCaptain = /\(captain\)/i.test(rawName)
-          const name = rawName.replace(/\s*\(captain\)/i, '').replace(/\*/g, '').trim()
+          const name = rawName.replace(/\s*\(captain\)/i, '').trim()
           players.push({
             name,
             isCaptain,

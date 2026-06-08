@@ -39,9 +39,15 @@ async function classifySubposition(player) {
   const validAnswers = subPositionMap[player.position] || [];
   const prompt = `Classify this World Cup footballer into the most likely specific position.
 Position group: ${player.position} (DF=Defender, MF=Midfielder, FW=Forward)
-Valid answers for DF: CB, LB, RB
-Valid answers for MF: CM, LM, RM
-Valid answers for FW: ST, LW, RW
+Valid answers for DF: CB, LB, RB (center back, left back, right back)
+Valid answers for MF: CM, LM, RM (center mid, left mid, right mid)
+Valid answers for FW: ST, LW, RW (striker, left wing, right wing)
+
+Consider the era and playstyle:
+- Right backs (RB) typically played more defensively/wide on the right
+- Left backs (LB) typically played more defensively/wide on the left
+- Center backs (CB) are central defensive players
+- Wingers (LW/RW) are wide attacking players who play higher up the pitch
 
 Name: ${player.name}
 Country: ${player.country}
@@ -51,7 +57,7 @@ Respond with ONLY one of the valid position codes. No explanation.`;
 
   try {
     const response = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-4-6",
       max_tokens: 10,
       messages: [{ role: "user", content: prompt }],
     });

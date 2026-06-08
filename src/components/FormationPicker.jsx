@@ -37,7 +37,7 @@ export default function FormationPicker({ country, onSelect, onNewGame }) {
         </span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+      <div className="formations-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1rem' }}>
         {Object.entries(FORMATIONS).map(([key, formation]) => (
           <button
             key={key}
