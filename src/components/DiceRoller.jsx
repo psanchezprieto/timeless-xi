@@ -72,12 +72,12 @@ function FootballPitch({ slots, team }) {
             zIndex: 1,
           }}>
             <div style={{
-              width: 30, height: 30,
+              width: 34, height: 34,
               borderRadius: '50%',
               backgroundColor: player ? color : isCurrent ? `${color}22` : 'rgba(255,255,255,0.04)',
               border: `2px solid ${player ? color : isCurrent ? color : 'rgba(255,255,255,0.12)'}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '0.5rem', fontWeight: '800',
+              fontSize: '0.65rem', fontWeight: '800',
               color: player ? '#fff' : isCurrent ? color : 'rgba(255,255,255,0.25)',
               boxShadow: player ? `0 0 10px ${color}55` : isCurrent ? `0 0 6px ${color}33` : 'none',
               transition: 'all 0.25s ease',
@@ -86,12 +86,12 @@ function FootballPitch({ slots, team }) {
               {player ? (player.rating ?? '') : pos}
             </div>
             <div style={{
-              fontSize: '0.4rem',
+              fontSize: '0.52rem',
               fontWeight: '600',
-              color: player ? '#fff' : isCurrent ? color : 'rgba(255,255,255,0.2)',
+              color: player ? '#fff' : isCurrent ? color : 'rgba(255,255,255,0.3)',
               textShadow: '0 1px 4px rgba(0,0,0,0.9)',
               whiteSpace: 'nowrap',
-              maxWidth: '52px',
+              maxWidth: '60px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               textAlign: 'center',
@@ -109,7 +109,7 @@ function FootballPitch({ slots, team }) {
   )
 }
 
-export default function DiceRoller({ country, formation, team: initialTeam, rerolls, onReroll, onComplete, onNewGame }) {
+export default function DiceRoller({ country, formation, team: initialTeam, rerolls, onReroll, onComplete, onNewGame, campaignId, analytics }) {
   const isMobile = useIsMobile()
   const slots = buildSlots(formation)
   const [team, setTeam] = useState(initialTeam || [])
@@ -134,6 +134,9 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
 
   const pick = (player) => {
     const next = [...team, { ...player, position: currentPos }]
+    if (campaignId && analytics) {
+      analytics.trackPlayerPicked(player, currentPos, campaignId)
+    }
     if (next.length === slots.length) {
       onComplete(next)
     } else {
@@ -144,6 +147,9 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
   const handleReroll = async () => {
     if (rerolls <= 0) return
     onReroll()
+    if (campaignId && analytics) {
+      analytics.trackRerollUsed(rerolls - 1, campaignId)
+    }
     await rollDice()
   }
 
@@ -200,11 +206,11 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                 backgroundColor: i < team.length ? C.surfaceHi : 'transparent',
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.52rem', fontWeight: '700',
+                fontSize: '0.62rem', fontWeight: '700',
                 color: i === slotIndex ? (POS_COLORS[pos] || C.accent) : i < team.length ? C.accent : C.textDim,
               }}>
                 <span>{pos}</span>
-                {i < team.length && <span style={{ fontSize: '0.48rem', marginTop: '1px' }}>✓</span>}
+                {i < team.length && <span style={{ fontSize: '0.55rem', marginTop: '1px' }}>✓</span>}
               </div>
             ))}
           </div>
@@ -232,7 +238,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                   >
                     <span style={{
                       display: 'inline-block',
-                      fontSize: '0.55rem', fontWeight: '700',
+                      fontSize: '0.68rem', fontWeight: '700',
                       letterSpacing: '0.06em', textTransform: 'uppercase',
                       color: POS_COLORS[currentPos] || C.accent,
                       backgroundColor: `${POS_COLORS[currentPos] || C.accent}18`,
@@ -249,7 +255,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                     }}>
                       {player.name}
                     </div>
-                    <div style={{ fontSize: '0.65rem', color: C.textDim, marginBottom: isMobile ? '0.5rem' : '0.75rem' }}>
+                    <div style={{ fontSize: '0.75rem', color: C.textSub, marginBottom: isMobile ? '0.5rem' : '0.75rem' }}>
                       {player.year}
                     </div>
 

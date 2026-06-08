@@ -95,6 +95,7 @@ function getFlagUrl(country) {
 }
 
 function getCdnFlagUrl(country) {
+  if (!country.code) return getFlagUrl(country)
   return `https://flagcdn.com/w160/${country.code}.png`
 }
 

@@ -21,8 +21,8 @@ export const C = {
   success:     '#2EC97B',
 
   text:        '#F5EEE6',   // warm cream
-  textSub:     '#8AB5BE',
-  textDim:     '#3D7080',
+  textSub:     '#B8D4DA',
+  textDim:     '#6B9FAD',
 
   // Legacy aliases
   pink:        '#E8553E',
