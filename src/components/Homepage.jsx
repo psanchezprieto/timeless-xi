@@ -113,6 +113,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
               gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
               gap: '1.5rem',
             }}
+            className="how-it-works-grid"
           >
             {[
               {
@@ -145,20 +146,6 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
                   alignItems: 'center',
                   textAlign: 'center',
                   borderColor: C.cyan,
-                  transition: 'all 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = C.accent
-                  e.currentTarget.style.backgroundColor = C.surfaceHi
-                  e.currentTarget.style.boxShadow = `4px 4px 0 ${C.accent}44`
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = C.cyan
-                  e.currentTarget.style.backgroundColor = C.surface
-                  e.currentTarget.style.boxShadow = 'none'
-                  e.currentTarget.style.transform = 'translateY(0)'
                 }}
               >
                 <span style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>
@@ -318,7 +305,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
             margin: 0,
           }}
         >
-          © 2026 Timeless XI • Built with passion for football history
+          © 2026 timeless xi • Built with passion for football history
         </p>
       </footer>
     </div>
