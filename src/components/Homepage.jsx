@@ -110,7 +110,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))',
+              gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
               gap: '1.5rem',
             }}
           >
