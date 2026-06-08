@@ -1,29 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Dark retro background -->
+  <!-- Dark background -->
   <rect width="64" height="64" fill="#0B2D35"/>
 
-  <!-- Diagonal grid pattern (subtle) -->
-  <defs>
-    <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="#1BB9C4" stroke-width="0.5" opacity="0.2"/>
-    </pattern>
-  </defs>
-  <rect width="64" height="64" fill="url(#grid)"/>
+  <!-- Bold "XI" in retro style -->
+  <text x="32" y="48" font-family="Oswald, Arial, sans-serif" font-size="52" font-weight="700" fill="#1BB9C4" text-anchor="middle" dominant-baseline="middle">XI</text>
 
-  <!-- Football/soccer ball - neon cyan outline -->
-  <circle cx="32" cy="28" r="18" fill="none" stroke="#1BB9C4" stroke-width="2"/>
-
-  <!-- Pentagon pattern inside ball (simplified) -->
-  <polygon points="32,12 42,18 38,30 26,30 22,18" fill="none" stroke="#F0A500" stroke-width="1.5" opacity="0.8"/>
-  <line x1="32" y1="12" x2="32" y2="28" stroke="#F0A500" stroke-width="1" opacity="0.6"/>
-  <line x1="24" y1="20" x2="40" y2="20" stroke="#F0A500" stroke-width="1" opacity="0.6"/>
-
-  <!-- Glow effect around ball -->
-  <circle cx="32" cy="28" r="22" fill="none" stroke="#1BB9C4" stroke-width="1" opacity="0.3"/>
-
-  <!-- Trophy outline below (stylized) -->
-  <path d="M 20 40 L 22 35 L 42 35 L 44 40 Q 44 48 32 50 Q 20 48 20 40" fill="none" stroke="#FF10F0" stroke-width="1.5" stroke-linejoin="round"/>
-
-  <!-- Base of trophy -->
-  <rect x="28" y="50" width="8" height="6" fill="#FF10F0" opacity="0.8"/>
+  <!-- Neon accent underline -->
+  <line x1="8" y1="52" x2="56" y2="52" stroke="#FF10F0" stroke-width="2"/>
 </svg>
