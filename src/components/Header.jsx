@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTheme } from '../styles/theme'
+import '../styles/index.css'
 
 export default function Header({ onHome }) {
   const { C, S, dark, toggle, btnHoverIn, btnHoverOut } = useTheme()
@@ -80,7 +81,7 @@ export default function Header({ onHome }) {
           title={dark ? 'Light Mode' : 'Dark Mode'}
         >
           {dark ? '☀️' : '🌙'}
-          <span style={{ display: 'none', '@media (min-width: 640px)': { display: 'inline' } }}>
+          <span className="theme-toggle-text">
             {dark ? 'Light' : 'Dark'}
           </span>
         </button>

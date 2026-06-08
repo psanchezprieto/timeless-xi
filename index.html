@@ -3,7 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timeless XI — World Cup Dream Teams</title>
+  <title>Timeless XI — Build Your World Cup Dream Team</title>
+  <meta name="description" content="Pick any national team, roll the dice to land on a World Cup era, and build your ultimate XI from history's greatest squads. Free browser game.">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://timeless-xi.com/">
+  <meta property="og:title" content="Timeless XI — Build Your World Cup Dream Team">
+  <meta property="og:description" content="Pick any national team, roll the dice to land on a World Cup era, and build your ultimate XI from history's greatest squads.">
+  <meta property="og:image" content="https://timeless-xi.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Timeless XI — Build Your World Cup Dream Team">
+  <meta name="twitter:description" content="Pick any national team, roll the dice to land on a World Cup era, and build your ultimate XI.">
+  <meta name="twitter:image" content="https://timeless-xi.com/og-image.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,5 +144,68 @@
 <body>
   <div id="app"></div>
   <script type="module" src="/src/main.jsx"></script>
+
+  <!-- Ko-fi subtle floating widget -->
+  <style>
+    #kofi-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 6px 10px 6px 8px;
+      box-shadow: 2px 2px 0 var(--border);
+      opacity: 1;
+      transition: opacity 0.2s;
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 12px;
+      color: var(--text-sub);
+      text-decoration: none;
+    }
+    #kofi-widget:hover { opacity: 1; }
+    #kofi-widget a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: inherit;
+      text-decoration: none;
+    }
+    #kofi-close {
+      margin-left: 4px;
+      cursor: pointer;
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1;
+      padding: 0 2px;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+    #kofi-close:hover { color: var(--text); }
+  </style>
+  <div id="kofi-widget">
+    <a href="https://ko-fi.com/timelesseleven" target="_blank" rel="noopener">
+      ☕ support if you enjoyed it
+    </a>
+    <button id="kofi-close" aria-label="Dismiss">✕</button>
+  </div>
+  <script>
+    (function() {
+      var widget = document.getElementById('kofi-widget');
+      if (localStorage.getItem('kofi-dismissed')) {
+        widget.style.display = 'none';
+      }
+      document.getElementById('kofi-close').addEventListener('click', function(e) {
+        e.preventDefault();
+        widget.style.display = 'none';
+        localStorage.setItem('kofi-dismissed', '1');
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -45,17 +45,31 @@ export function useGameAnalytics() {
     })
   }
 
-  const trackCampaignCompleted = (result, campaignId) => {
+  const trackCampaignCompleted = (result, { team, country, formation, coach }, campaignId) => {
     posthog.capture('campaign_completed', {
+      campaign_id: campaignId,
+      // Outcome
       placement: result.placement,
-      matches_played: result.matches.length,
+      matches_played: result.matches?.length ?? 0,
       wins: result.wins,
       draws: result.draws,
       losses: result.losses,
       goals_for: result.goalsFor,
       goals_against: result.goalsAgainst,
       top_scorer: result.topScorer?.name || null,
-      campaign_id: campaignId,
+      // Context
+      country: country?.name || null,
+      country_code: country?.code || null,
+      formation: formation || null,
+      coach_name: coach?.name || null,
+      coach_morale_boost: coach?.moraleMod || null,
+      // Full squad snapshot for leaderboard
+      squad: (team || []).map(p => ({
+        name: p.name,
+        position: p.sp || p.position,
+        rating: p.rating,
+        year: p.year,
+      })),
     })
   }
 

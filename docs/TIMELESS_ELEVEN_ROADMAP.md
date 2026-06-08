@@ -4,6 +4,50 @@ A step-by-step guide to building the Timeless Eleven game in VS Code using Claud
 
 ---
 
+## Current Status (June 2026)
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| **Phase 0** — Environment setup | ✅ Done | Node, Vite, React, Tailwind |
+| **Phase 1** — Data pipeline | ✅ Done | 10,437 players · 85 countries · 457 squads · 258 coaches · 138 KB compressed |
+| **Phase 2** — React UI + game logic | ✅ Done | All 8 components built + integrated with real data |
+| **Phase 3** — GitHub Actions deploy | ✅ Done | Auto-deploys on push to main |
+| **Phase 4** — Performance & integration | ✅ Done | Parallel data loading, background preload, no errors |
+| **Phase 5** — Launch | 🔄 In progress | See checklist below |
+
+---
+
+## Phase 5: Launch Checklist
+
+### You need to do (external steps)
+
+- [ ] **Create Ko-fi account** at ko-fi.com → note your username → share with Claude to add the button
+- [ ] **Buy domain** — `timeless-xi.com` (check availability on Namecheap ~$10/yr)
+- [ ] **Enable GitHub Pages** in repo settings:
+  - Go to https://github.com/psanchezprieto/timeless-xi/settings/pages
+  - Source: **GitHub Actions** (not branch)
+- [ ] **Configure DNS** once GitHub Pages is enabled and domain is bought:
+  ```
+  A     @    185.199.108.153
+  A     @    185.199.109.153
+  A     @    185.199.110.153
+  A     @    185.199.111.153
+  CNAME www  psanchezprieto.github.io
+  ```
+  - Then add custom domain in GitHub Pages settings
+
+### Claude can do (code changes)
+
+- [x] SEO meta tags in index.html (Open Graph, Twitter card)
+- [x] robots.txt + sitemap.xml
+- [x] CNAME file for custom domain (update if domain name differs)
+- [ ] Ko-fi floating button — waiting on your Ko-fi username
+- [ ] Social share button ("Share my XI on Twitter")
+- [ ] og:image — create a simple 1200×630 preview image
+- [ ] End-to-end test full game flow
+
+---
+
 ## **Phase 0: Environment Setup (30 mins)**
 
 ### **Step 1: Install Prerequisites**
@@ -713,23 +757,25 @@ npm run fetch && npm run enrich && npm run build:data && git add public/data && 
 
 ## **Success Checklist**
 
-- [ ] Node.js + npm installed
-- [ ] Claude Code CLI + VS Code extension working
-- [ ] `CLAUDE.md` created (system prompt)
-- [ ] Zafronix squads fetched & validated
-- [ ] Player ratings enriched (Claude API)
-- [ ] JSON files compressed (<2MB total)
-- [ ] React game loads in browser
-- [ ] Country picker works
-- [ ] Year roller picks random year
-- [ ] Squad displays correctly
-- [ ] Player selection works (11/11)
-- [ ] Match simulation runs
-- [ ] Styling looks intentional & bold
-- [ ] Data loads from GitHub Pages
-- [ ] GitHub Actions workflows deployed
-- [ ] Custom domain configured
-- [ ] Live at yourdomain.com
+- [x] Node.js + npm installed
+- [x] Claude Code CLI + VS Code extension working
+- [x] `CLAUDE.md` created (system prompt)
+- [x] Zafronix squads fetched & validated
+- [x] Player ratings enriched (Claude API)
+- [x] JSON files compressed (<2MB total — 138 KB achieved)
+- [x] React game loads in browser
+- [x] Country picker works
+- [x] Formation selection works
+- [x] Dice roller + position selector functional
+- [x] Coach picker works
+- [x] Tournament bracket + match playback
+- [x] Styling looks intentional & bold
+- [x] GitHub Actions deploy workflow configured
+- [ ] GitHub Pages enabled in repo settings
+- [ ] Custom domain bought + DNS configured
+- [ ] Ko-fi button added
+- [ ] og:image created
+- [ ] Live at timeless-xi.com
 
 ---
 

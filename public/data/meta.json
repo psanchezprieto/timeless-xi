@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-06-07T17:27:41.673Z",
+  "format": "optimized-keys",
+  "keyMap": {
+    "country": "c",
+    "countryName": "cn",
+    "year": "y",
+    "playerCount": "pc",
+    "players": "p",
+    "name": "n",
+    "number": "num",
+    "position": "pos",
+    "rating": "r",
+    "confidence": "conf"
+  },
+  "decades": [
+    {
+      "name": "1930-1950",
+      "startYear": 1930,
+      "endYear": 1950,
+      "filename": "squads-1930-1950.json.gz",
+      "playerCount": 0,
+      "countryCount": 0,
+      "squadCount": 0,
+      "compressedSize": 109
+    },
+    {
+      "name": "1950-1970",
+      "startYear": 1950,
+      "endYear": 1970,
+      "filename": "squads-1950-1970.json.gz",
+      "playerCount": 1755,
+      "countryCount": 33,
+      "squadCount": 80,
+      "compressedSize": 21120
+    },
+    {
+      "name": "1970-1990",
+      "startYear": 1970,
+      "endYear": 1990,
+      "filename": "squads-1970-1990.json.gz",
+      "playerCount": 2288,
+      "countryCount": 49,
+      "squadCount": 104,
+      "compressedSize": 29236
+    },
+    {
+      "name": "1990-2010",
+      "startYear": 1990,
+      "endYear": 2010,
+      "filename": "squads-1990-2010.json.gz",
+      "playerCount": 3441,
+      "countryCount": 62,
+      "squadCount": 152,
+      "compressedSize": 44430
+    },
+    {
+      "name": "2010-2026",
+      "startYear": 2010,
+      "endYear": 2026,
+      "filename": "squads-2010-2026.json.gz",
+      "playerCount": 2953,
+      "countryCount": 56,
+      "squadCount": 121,
+      "compressedSize": 38597
+    }
+  ],
+  "coaches": {
+    "filename": "coaches.json.gz",
+    "compressedSize": 4871,
+    "uncompressedSize": 26179
+  },
+  "summary": {
+    "totalPlayers": 10437,
+    "totalCountries": 85,
+    "totalSquads": 457,
+    "totalDecades": 5
+  },
+  "compressionStats": {
+    "totalFiles": 6,
+    "totalUncompressed": 692012,
+    "totalCompressed": 138363,
+    "overallRatio": "80.0%"
+  }
+}

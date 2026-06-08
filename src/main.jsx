@@ -9,8 +9,14 @@ posthog.init(
   {
     api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.posthog.com',
     enabled: import.meta.env.VITE_POSTHOG_ENABLED !== 'false',
+    opt_out_capturing_by_default: true,
   }
 )
+
+// Restore consent from previous visit
+if (localStorage.getItem('analytics-consent') === 'accepted') {
+  posthog.opt_in_capturing()
+}
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <React.StrictMode>

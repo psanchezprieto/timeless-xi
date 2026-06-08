@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Game from './components/Game'
 import Homepage from './components/Homepage'
+import CookieBanner from './components/CookieBanner'
 import { LIGHT, DARK, makeS, makeHovers, ThemeContext } from './styles/theme'
 
 function ThemeProvider({ children }) {
@@ -83,6 +84,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <AppInner />
+      <CookieBanner />
     </ThemeProvider>
   )
 }

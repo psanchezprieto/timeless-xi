@@ -1,0 +1,9 @@
+.theme-toggle-text {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .theme-toggle-text {
+    display: inline;
+  }
+}

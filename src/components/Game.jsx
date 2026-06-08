@@ -91,9 +91,9 @@ export default function Game({ onBack }) {
 
   const onTournament = useCallback(r => {
     setResult(r)
-    if (campaignId) analytics.trackCampaignCompleted(r, campaignId)
+    if (campaignId) analytics.trackCampaignCompleted(r, { team, country, formation, coach }, campaignId)
     setStage('summary')
-  }, [campaignId, analytics])
+  }, [campaignId, analytics, team, country, formation, coach])
 
   const onNewGame = useCallback((options = {}) => {
     if (options.reuseSquad && team.length > 0) {
