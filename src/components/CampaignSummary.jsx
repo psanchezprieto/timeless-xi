@@ -202,7 +202,7 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
                   borderRadius: '8px',
                   fontSize: '0.8rem',
                 }}>
-                  <span style={{ color: C.textSub }}>{m.home} vs {m.away}</span>
+                  <span style={{ color: C.textSub }}>{m.homeLabel || m.home} vs {m.awayLabel || m.away}</span>
                   <span style={{
                     fontFamily: "'Oswald', sans-serif",
                     fontWeight: '700', color: C.text,
