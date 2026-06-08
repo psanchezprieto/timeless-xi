@@ -18,7 +18,6 @@ A browser-based game where you:
 ## Features
 
 - 📊 **23 World Cup squads** (1930-2026)
-- 🎲 **Dice-based selection** with strike mechanic
 - ⚽ **Realistic match simulation** based on player ratings
 - 🏆 **Full tournament progression** (32 teams, groups, knockouts)
 - 🎨 **Retro 80s aesthetic** (neon, gradients, synthwave vibes)
