@@ -33,7 +33,6 @@ jobs:
         run: npm run build
         env:
           VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
-          VITE_POSTHOG_HOST: https://us.posthog.com
           VITE_POSTHOG_ENABLED: 'true'
 
       - name: Upload artifact

@@ -7,7 +7,7 @@ import App from './App'
 posthog.init(
   import.meta.env.VITE_POSTHOG_KEY || 'placeholder_key',
   {
-    api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.posthog.com',
+    api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://eu.posthog.com',
     enabled: import.meta.env.VITE_POSTHOG_ENABLED !== 'false',
     opt_out_capturing_by_default: true,
   }
