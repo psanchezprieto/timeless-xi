@@ -91,7 +91,7 @@ export default function Game({ onBack }) {
 
   const onTournament = useCallback(r => {
     setResult(r)
-    if (campaignId) analytics.trackCampaignCompleted(r, { team, country, formation, coach }, campaignId)
+    if (campaignId) analytics.trackCampaignCompleted(r, { team, country, formation, coach, autoPlay: r.autoPlay }, campaignId)
     setStage('summary')
   }, [campaignId, analytics, team, country, formation, coach])
 
@@ -156,7 +156,7 @@ export default function Game({ onBack }) {
           />
         )}
         {stage === 'coach' && <CoachPicker country={country?.name ?? country} onSelect={onCoach} onNewGame={onNewGame} />}
-        {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country?.name ?? country} onComplete={onTournament} onNewGame={onNewGame} />}
+        {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country?.name ?? country} onComplete={onTournament} onNewGame={onNewGame} analytics={analytics} campaignId={campaignId} />}
         {stage === 'summary' && result && <CampaignSummary result={result} team={team} country={country?.name ?? country} onNewGame={onNewGame} />}
       </div>
     </div>

@@ -45,12 +45,20 @@ export function useGameAnalytics() {
     })
   }
 
-  const trackCampaignCompleted = (result, { team, country, formation, coach }, campaignId) => {
+  const trackAutoPlayToggled = (enabled, campaignId) => {
+    posthog.capture('auto_play_toggled', {
+      enabled,
+      campaign_id: campaignId,
+    })
+  }
+
+  const trackCampaignCompleted = (result, { team, country, formation, coach, autoPlay }, campaignId) => {
     posthog.capture('campaign_completed', {
       campaign_id: campaignId,
       // Outcome
       exit_stage: result.exitRound || null,
       outcome: result.champion ? 'winner' : 'eliminated',
+      auto_play: autoPlay ?? false,
       matches_played: result.matches ?? 0,
       goals_for: result.goalsFor,
       goals_against: result.goalsAgainst,
@@ -78,6 +86,7 @@ export function useGameAnalytics() {
     trackPlayerPicked,
     trackRerollUsed,
     trackCoachSelected,
+    trackAutoPlayToggled,
     trackCampaignCompleted,
   }
 }

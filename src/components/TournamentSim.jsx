@@ -12,14 +12,14 @@ function teamLabel(team) {
   return team.year ? `${team.country} (${team.year})` : team.country
 }
 
-function buildResult(campaign, champion, exitRound) {
+function buildResult(campaign, champion, exitRound, autoPlay) {
   const scorerCount = {}
   for (const s of campaign.results.flatMap(r => r.awayIsUser ? (r.awayScorers || []) : (r.homeScorers || []))) {
     scorerCount[s] = (scorerCount[s] || 0) + 1
   }
   const mvpEntry = Object.entries(scorerCount).sort((a, b) => b[1] - a[1])[0]
   return {
-    champion, exitRound,
+    champion, exitRound, autoPlay: autoPlay ?? false,
     mvp: mvpEntry ? mvpEntry[0] : '—',
     matches: campaign.results.length,
     goalsFor: campaign.gf,
@@ -345,7 +345,7 @@ function GroupTable({ group, userCountry, onTeamClick }) {
 }
 
 // ── Main component ────────────────────────────────────────────────────────
-export default function TournamentSim({ team, coach, country, onComplete, onNewGame }) {
+export default function TournamentSim({ team, coach, country, onComplete, onNewGame, analytics, campaignId }) {
   const { C, S } = useTheme()
   const userTeam = useMemo(() => ({
     country,
@@ -476,7 +476,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   const advanceToKnockout = () => {
     const qualifiers = simGroups.flatMap(g => [g.teams[0], g.teams[1]])
     if (!qualifiers.some(t => t.isUser)) {
-      onComplete(buildResult(campaign, false, 'Group Stage'))
+      onComplete(buildResult(campaign, false, 'Group Stage', autoPlay))
       return
     }
     setPhase('knockout')
@@ -518,12 +518,12 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
 
   const afterMatch = () => {
     if (!matchResult.userWon) {
-      onComplete(buildResult(campaign, false, ROUNDS[roundIdx]))
+      onComplete(buildResult(campaign, false, ROUNDS[roundIdx], autoPlay))
       return
     }
     const newRemaining = [matchResult.winner, ...pendingMatch.otherWinners]
     if (roundIdx + 1 >= ROUNDS.length) {
-      onComplete(buildResult(campaign, true, 'Final'))
+      onComplete(buildResult(campaign, true, 'Final', autoPlay))
       return
     }
     startRound(newRemaining, roundIdx + 1)
@@ -573,7 +573,11 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
 
         {/* Auto-play toggle */}
         <button
-          onClick={() => setAutoPlay(v => !v)}
+          onClick={() => setAutoPlay(v => {
+            const next = !v
+            if (analytics && campaignId) analytics.trackAutoPlayToggled(next, campaignId)
+            return next
+          })}
           style={{
             marginTop: '1rem',
             display: 'inline-flex',
