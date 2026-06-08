@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import {
   generateHistoricalAITeams, generateAITeams,
   calcTeamRating, createGroups, simulateGroup, simulateKnockoutMatch,
@@ -375,6 +375,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   const [phase, setPhase] = useState('groups')
   const [simGroups, setSimGroups] = useState(null)
   const [selectedTeam, setSelectedTeam] = useState(null)
+  const [autoPlay, setAutoPlay] = useState(false)
 
   // Group stage playback
   const [groupMatches, setGroupMatches] = useState([])
@@ -387,7 +388,42 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
   const [matchResult, setMatchResult] = useState(null)
   const [campaign, setCampaign] = useState({ gf: 0, ga: 0, results: [], wins: 0 })
 
+  // Refs to keep latest callbacks accessible inside the auto-play effect
+  const simulateGroupStageRef = useRef(null)
+  const revealGroupMatchRef    = useRef(null)
+  const nextGroupMatchRef      = useRef(null)
+  const advanceToKnockoutRef   = useRef(null)
+  const playMatchRef           = useRef(null)
+  const afterMatchRef          = useRef(null)
+
   const userGroupRaw = rawGroups?.find(g => g.teams.some(t => t.isUser))
+
+  // ── Auto-play effect ─────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!autoPlay) return
+    const PREVIEW_DELAY = 900
+    const RESULT_DELAY  = 2200
+
+    const delays = {
+      groups:              PREVIEW_DELAY,
+      group_match_preview: PREVIEW_DELAY,
+      group_match_result:  RESULT_DELAY,
+      group_results:       RESULT_DELAY,
+      match_preview:       PREVIEW_DELAY,
+      match_result:        RESULT_DELAY,
+    }
+    const actions = {
+      groups:              () => simulateGroupStageRef.current?.(),
+      group_match_preview: () => revealGroupMatchRef.current?.(),
+      group_match_result:  () => nextGroupMatchRef.current?.(),
+      group_results:       () => advanceToKnockoutRef.current?.(),
+      match_preview:       () => playMatchRef.current?.(),
+      match_result:        () => afterMatchRef.current?.(),
+    }
+    if (!actions[phase]) return
+    const id = setTimeout(actions[phase], delays[phase])
+    return () => clearTimeout(id)
+  }, [autoPlay, phase]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Group stage ──────────────────────────────────────────────────────────
   const simulateGroupStage = () => {
@@ -405,7 +441,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         homeRating: homeTeam?.avgRating,
         awayRating: awayTeam?.avgRating,
       }
-    }).filter(m => m.home === country || m.away === country)
+    }).filter(m => m.homeIsUser || m.awayIsUser)
 
     let gf = 0, ga = 0, wins = 0
     for (const m of userMatches) {
@@ -493,6 +529,14 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
     startRound(newRemaining, roundIdx + 1)
   }
 
+  // Keep refs in sync so the auto-play effect always calls the latest closures
+  simulateGroupStageRef.current = simulateGroupStage
+  revealGroupMatchRef.current   = revealGroupMatch
+  nextGroupMatchRef.current     = nextGroupMatch
+  advanceToKnockoutRef.current  = advanceToKnockout
+  playMatchRef.current          = playMatch
+  afterMatchRef.current         = afterMatch
+
   // ── Render ───────────────────────────────────────────────────────────────
   if (loadingTeams) {
     return (
@@ -526,6 +570,38 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
         <p style={{ color: C.textDim, fontSize: '0.85rem', marginTop: '0.25rem' }}>
           Team rating: <span style={{ color: C.gold, fontWeight: '700' }}>{userTeam.avgRating.toFixed(0)}</span>/100
         </p>
+
+        {/* Auto-play toggle */}
+        <button
+          onClick={() => setAutoPlay(v => !v)}
+          style={{
+            marginTop: '1rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            padding: '0.4rem 1rem',
+            borderRadius: '99px',
+            border: `1.5px solid ${autoPlay ? C.cyan : C.border}`,
+            background: autoPlay ? `${C.cyan}18` : 'transparent',
+            color: autoPlay ? C.cyan : C.textDim,
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            transition: 'all 0.15s',
+          }}
+        >
+          <span style={{
+            display: 'inline-block',
+            width: '7px', height: '7px',
+            borderRadius: '50%',
+            background: autoPlay ? C.cyan : C.textDim,
+            boxShadow: autoPlay ? `0 0 6px ${C.cyan}` : 'none',
+            transition: 'all 0.15s',
+          }} />
+          {autoPlay ? 'Auto ·  playing' : 'Auto · off'}
+        </button>
       </div>
 
       {/* ── Phase: groups ── */}

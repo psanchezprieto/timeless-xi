@@ -114,7 +114,14 @@ export function simulateKnockoutMatch(homeTeam, awayTeam) {
 // Async: pull real historical squads from data files, exclude user's own entry.
 export async function generateHistoricalAITeams(userCountry, userYear, count = 31) {
   const allTeams = await getAllHistoricalTeamStats()
-  const pool = allTeams.filter(t => !(t.country === userCountry && t.year === userYear))
+  const seen = new Set()
+  const pool = allTeams.filter(t => {
+    if (t.country === userCountry) return false
+    const key = `${t.country}|${t.year}`
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
   return pool.sort(() => Math.random() - 0.5).slice(0, count)
 }
 
@@ -169,6 +176,8 @@ export function simulateGroup(group) {
         teams[i].players || [],
         teams[j].players || []
       )
+      result.homeIsUser = !!teams[i].isUser
+      result.awayIsUser = !!teams[j].isUser
       matches.push(result)
       teams[i].gf += result.homeGoals; teams[i].ga += result.awayGoals
       teams[j].gf += result.awayGoals; teams[j].ga += result.homeGoals
