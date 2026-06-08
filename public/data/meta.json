@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T10:10:46.284Z",
+  "generatedAt": "2026-06-08T11:32:05.768Z",
   "format": "optimized-keys",
   "keyMap": {
     "country": "c",
@@ -33,7 +33,7 @@
       "playerCount": 1755,
       "countryCount": 33,
       "squadCount": 80,
-      "compressedSize": 21405
+      "compressedSize": 21607
     },
     {
       "name": "1970-1990",
@@ -43,7 +43,7 @@
       "playerCount": 2288,
       "countryCount": 49,
       "squadCount": 104,
-      "compressedSize": 29933
+      "compressedSize": 30017
     },
     {
       "name": "1990-2010",
@@ -53,7 +53,7 @@
       "playerCount": 3441,
       "countryCount": 62,
       "squadCount": 152,
-      "compressedSize": 45483
+      "compressedSize": 45608
     },
     {
       "name": "2010-2026",
@@ -63,7 +63,7 @@
       "playerCount": 2953,
       "countryCount": 56,
       "squadCount": 121,
-      "compressedSize": 39418
+      "compressedSize": 39283
     }
   ],
   "coaches": {
@@ -80,7 +80,7 @@
   "compressionStats": {
     "totalFiles": 6,
     "totalUncompressed": 796346,
-    "totalCompressed": 141168,
-    "overallRatio": "82.3%"
+    "totalCompressed": 141444,
+    "overallRatio": "82.2%"
   }
 }
