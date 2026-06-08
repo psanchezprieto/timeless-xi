@@ -85,7 +85,7 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
           ...S.h1,
           color: result.champion ? C.gold : C.text,
         }}>
-          {result.champion ? 'World Champions' : 'Tournament Complete'}
+          {result.champion ? `${country} — World Champions` : 'Tournament Complete'}
         </h1>
         {!result.champion && (
           <p style={{ color: C.textSub, marginTop: '0.5rem', fontSize: '0.9rem' }}>
