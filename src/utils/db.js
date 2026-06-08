@@ -54,6 +54,24 @@ function mapPlayerPosition(p) {
   return POSITION_MAP[p.pos] || p.pos
 }
 
+function getPositionGroup(position) {
+  if (['CB', 'LB', 'RB'].includes(position)) return ['CB', 'LB', 'RB']
+  if (['CM', 'LM', 'RM'].includes(position)) return ['CM', 'LM', 'RM']
+  if (['ST', 'LW', 'RW'].includes(position)) return ['ST', 'LW', 'RW']
+  // For legacy broad positions, also include old codes for transition period
+  if (['DEF'].includes(position)) return ['CB', 'LB', 'RB', 'DEF']
+  if (['MID'].includes(position)) return ['CM', 'LM', 'RM', 'MID']
+  if (['FWD'].includes(position)) return ['ST', 'LW', 'RW', 'FWD']
+  return [position]
+}
+
+function getBroadPosition(position) {
+  if (['CB', 'LB', 'RB'].includes(position)) return 'DEF'
+  if (['CM', 'LM', 'RM'].includes(position)) return 'MID'
+  if (['ST', 'LW', 'RW'].includes(position)) return 'FWD'
+  return position
+}
+
 // Returns all players for a country across all World Cup decades.
 // Loads only non-empty decades in parallel for speed.
 export async function getPlayersByCountry(countryName) {
@@ -145,14 +163,32 @@ export async function getCoachesByCountry(countryName) {
   return cache.coaches[countryName] || []
 }
 
-// Players for a position + specific year. Falls back to any year if none found.
+// Players for a position + specific year. Falls back gracefully through different eras and position groups.
 // excludeNames: set of player names already picked — filters them out of the pool.
 export async function getRandomPlayersForPositionAndYear(countryName, position, year, count = 3, excludeNames = new Set()) {
   try {
     const players = await getPlayersByCountry(countryName)
-    const yearPool = players.filter(p => p.position === position && p.year === year && !excludeNames.has(p.name))
-    const fallbackPool = players.filter(p => p.position === position && !excludeNames.has(p.name))
-    const pool = yearPool.length ? yearPool : fallbackPool
+
+    // Try exact position + year
+    let pool = players.filter(p => p.position === position && p.year === year && !excludeNames.has(p.name))
+
+    // Fall back to exact position, any year
+    if (pool.length === 0) {
+      pool = players.filter(p => p.position === position && !excludeNames.has(p.name))
+    }
+
+    // Fall back to other positions in the same broad group (e.g. CB→LB/RB for defenders)
+    if (pool.length === 0) {
+      const groupPositions = getPositionGroup(position)
+      if (groupPositions.length > 1) {
+        pool = players.filter(p => groupPositions.includes(p.position) && !excludeNames.has(p.name))
+      }
+    }
+
+    // Last resort: any player from the country
+    if (pool.length === 0) {
+      pool = players.filter(p => !excludeNames.has(p.name))
+    }
 
     if (pool.length === 0) {
       return Array.from({ length: count }, (_, i) => ({

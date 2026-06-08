@@ -72,6 +72,13 @@ function FootballPitch({ slots, team }) {
         const isCurrent = i === team.length
         const color = POS_COLORS[pos] || C.accent
 
+        const dotBg    = player ? color : isCurrent ? `${color}40` : 'rgba(255,255,255,0.10)'
+        const dotBorder = player ? color : isCurrent ? color : 'rgba(255,255,255,0.45)'
+        const dotColor  = player ? '#fff' : isCurrent ? '#fff' : 'rgba(255,255,255,0.85)'
+        const dotShadow = player
+          ? `0 0 10px ${color}88`
+          : isCurrent ? `0 0 0 3px ${color}40, 0 0 10px ${color}55` : 'none'
+
         return (
           <div key={i} style={{
             position: 'absolute',
@@ -79,39 +86,39 @@ function FootballPitch({ slots, team }) {
             top: `${y}%`,
             transform: 'translate(-50%, -50%)',
             display: 'flex', flexDirection: 'column', alignItems: 'center',
-            gap: '2px',
+            gap: '3px',
             zIndex: 1,
           }}>
             <div style={{
-              width: 34, height: 34,
+              width: 36, height: 36,
               borderRadius: '50%',
-              backgroundColor: player ? color : isCurrent ? `${color}22` : 'rgba(255,255,255,0.04)',
-              border: `2px solid ${player ? color : isCurrent ? color : 'rgba(255,255,255,0.12)'}`,
+              backgroundColor: dotBg,
+              border: `2px solid ${dotBorder}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '0.65rem', fontWeight: '800',
-              color: player ? '#fff' : isCurrent ? color : 'rgba(255,255,255,0.25)',
-              boxShadow: player ? `0 0 10px ${color}55` : isCurrent ? `0 0 6px ${color}33` : 'none',
+              fontSize: '0.7rem', fontWeight: '800',
+              color: dotColor,
+              boxShadow: dotShadow,
               transition: 'all 0.25s ease',
               flexShrink: 0,
             }}>
               {player ? (player.rating ?? '') : pos}
             </div>
             <div style={{
-              fontSize: '0.52rem',
-              fontWeight: '600',
-              color: player ? '#fff' : isCurrent ? color : 'rgba(255,255,255,0.3)',
-              textShadow: '0 1px 4px rgba(0,0,0,0.9)',
+              fontSize: '0.62rem',
+              fontWeight: '700',
+              color: '#fff',
+              background: 'rgba(0,0,0,0.55)',
+              padding: '1px 5px',
+              borderRadius: '2px',
               whiteSpace: 'nowrap',
-              maxWidth: '60px',
+              maxWidth: '64px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               textAlign: 'center',
-              lineHeight: 1.1,
-              opacity: player || isCurrent ? 1 : 0.5,
+              lineHeight: 1.3,
+              letterSpacing: '0.02em',
             }}>
-              {player
-                ? player.name
-                : isCurrent ? '?' : pos}
+              {player ? player.name : isCurrent ? '?' : pos}
             </div>
           </div>
         )
@@ -225,22 +232,34 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
         {/* Slot tracker + candidates */}
         <div style={{ flex: '1 1 0', minWidth: 0, width: '100%' }}>
           {/* Slot tracker */}
-          <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            {slots.map((pos, i) => (
-              <div key={i} style={{
-                width: '2.25rem', height: '2.25rem',
-                borderRadius: '6px',
-                border: `1px solid ${i === slotIndex ? (POS_COLORS[pos] || C.accent) : i < team.length ? C.borderLight : C.border}`,
-                backgroundColor: i < team.length ? C.surfaceHi : 'transparent',
-                display: 'flex', flexDirection: 'column',
-                alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.62rem', fontWeight: '700',
-                color: i === slotIndex ? (POS_COLORS[pos] || C.accent) : i < team.length ? C.accent : C.textDim,
-              }}>
-                <span>{pos}</span>
-                {i < team.length && <span style={{ fontSize: '0.55rem', marginTop: '1px' }}>✓</span>}
-              </div>
-            ))}
+          <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            {slots.map((pos, i) => {
+              const color = POS_COLORS[pos] || C.accent
+              const isFilled = i < team.length
+              const isCurrent = i === slotIndex
+
+              const bg = isFilled ? C.surfaceHi : isCurrent ? `${color}22` : C.surface
+              const border = isCurrent ? `2px solid ${color}` : isFilled ? `1px solid ${C.borderLight}` : `1px solid ${C.border}`
+              const textColor = isFilled ? C.accent : isCurrent ? color : C.textDim
+
+              return (
+                <div key={i} style={{
+                  width: '2.4rem', height: '2.4rem',
+                  borderRadius: '6px',
+                  border,
+                  backgroundColor: bg,
+                  display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.7rem', fontWeight: '700',
+                  color: textColor,
+                  boxShadow: isCurrent ? `0 0 0 2px ${color}40` : 'none',
+                  transition: 'all 0.2s ease',
+                }}>
+                  <span>{pos}</span>
+                  {isFilled && <span style={{ fontSize: '0.65rem', marginTop: '0.5px', fontWeight: '900' }}>✓</span>}
+                </div>
+              )
+            })}
           </div>
 
           {loading ? (

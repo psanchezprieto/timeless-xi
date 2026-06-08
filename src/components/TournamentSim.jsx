@@ -121,11 +121,11 @@ function ScoreBox({ result, userCountry, isGroupStage = false }) {
   )
 }
 
-const POS_COLORS_T = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
-const POS_ORDER_T  = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
+const POS_ORDER_T = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
 
 function SquadOverlay({ team: t, onClose }) {
   const { C } = useTheme()
+  const POS_COLORS_T = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: C.fwd }
   if (!t) return null
   const players = [...(t.players || [])].sort(
     (a, b) => (POS_ORDER_T[a.position] ?? 9) - (POS_ORDER_T[b.position] ?? 9)
