@@ -14,7 +14,7 @@ function teamLabel(team) {
 
 function buildResult(campaign, champion, exitRound) {
   const scorerCount = {}
-  for (const s of campaign.results.flatMap(r => r.homeScorers || [])) {
+  for (const s of campaign.results.flatMap(r => r.awayIsUser ? (r.awayScorers || []) : (r.homeScorers || []))) {
     scorerCount[s] = (scorerCount[s] || 0) + 1
   }
   const mvpEntry = Object.entries(scorerCount).sort((a, b) => b[1] - a[1])[0]
