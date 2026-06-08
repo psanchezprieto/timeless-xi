@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Dark retro background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B2D35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#174F5E;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="scanlines" width="2" height="2" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="2" stroke="rgba(27,185,196,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#scanlines)"/>
+
+  <!-- Diagonal grid accent -->
+  <g opacity="0.15">
+    <line x1="0" y1="630" x2="1200" y2="0" stroke="#1BB9C4" stroke-width="2"/>
+    <line x1="150" y1="630" x2="1200" y2="300" stroke="#1BB9C4" stroke-width="2"/>
+    <line x1="0" y1="480" x2="1200" y2="150" stroke="#1BB9C4" stroke-width="2"/>
+  </g>
+
+  <!-- Left accent block (cyan) -->
+  <rect x="0" y="0" width="120" height="630" fill="#1BB9C4" opacity="0.08"/>
+
+  <!-- Central football -->
+  <circle cx="300" cy="315" r="140" fill="none" stroke="#1BB9C4" stroke-width="4"/>
+  <circle cx="300" cy="315" r="145" fill="none" stroke="#FF10F0" stroke-width="2" opacity="0.6"/>
+
+  <!-- Ball detail -->
+  <g stroke="#F0A500" stroke-width="2" fill="none" opacity="0.8">
+    <circle cx="300" cy="315" r="100"/>
+    <path d="M 300 215 L 360 260 L 340 340 L 260 340 L 240 260 Z"/>
+    <line x1="300" y1="215" x2="300" y2="315"/>
+    <line x1="240" y1="260" x2="360" y2="260"/>
+  </g>
+
+  <!-- Glow behind ball -->
+  <circle cx="300" cy="315" r="160" fill="none" stroke="#1BB9C4" stroke-width="1" opacity="0.25"/>
+  <circle cx="300" cy="315" r="170" fill="none" stroke="#FF10F0" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Main title -->
+  <g font-family="Oswald, sans-serif" font-weight="700" text-anchor="middle" letter-spacing="3">
+    <text x="750" y="200" font-size="80" fill="#1BB9C4" text-anchor="start">TIMELESS</text>
+    <text x="750" y="290" font-size="80" fill="#FF10F0" text-anchor="start">XI</text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="750" y="340" font-family="Source Sans 3, sans-serif" font-size="28" fill="#B8D4DA" text-anchor="start">
+    Build Your Dream Team
+  </text>
+
+  <!-- Tagline -->
+  <text x="750" y="390" font-family="Source Sans 3, sans-serif" font-size="20" fill="#6B9FAD" text-anchor="start">
+    Roll the dice. Pick your era. Win the World Cup.
+  </text>
+
+  <!-- Decorative corner elements -->
+  <g stroke="#F0A500" stroke-width="2" fill="none" opacity="0.6">
+    <!-- Top right corner bracket -->
+    <path d="M 1100 50 L 1150 50 L 1150 100"/>
+    <path d="M 1100 580 L 1150 580 L 1150 530"/>
+  </g>
+
+  <!-- Small badge/seal -->
+  <circle cx="1050" cy="480" r="50" fill="none" stroke="#1BB9C4" stroke-width="2" opacity="0.7"/>
+  <circle cx="1050" cy="480" r="48" fill="none" stroke="#FF10F0" stroke-width="1" opacity="0.5"/>
+  <text x="1050" y="485" font-family="Oswald, sans-serif" font-size="18" fill="#F0A500" text-anchor="middle" dominant-baseline="middle">FREE</text>
+</svg>
