@@ -7,9 +7,9 @@ export default function FormationPicker({ country, onSelect, onNewGame }) {
   const { C, S, cardHoverIn, cardHoverOut } = useTheme()
   const POS_COLORS = {
     GK: C.gold,
-    CB: C.cyan, LB: C.cyan, RB: C.cyan,
-    CM: C.accent, LM: C.accent, RM: C.accent,
-    ST: C.fwd, LW: C.fwd, RW: C.fwd,
+    DEF: C.cyan,
+    MID: C.accent,
+    FWD: C.fwd,
   }
   return (
     <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
