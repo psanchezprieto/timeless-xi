@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Game from './components/Game'
+import Homepage from './components/Homepage'
 import { LIGHT, DARK, makeS, makeHovers, ThemeContext } from './styles/theme'
 
 function ThemeProvider({ children }) {
@@ -29,6 +30,7 @@ function ThemeProvider({ children }) {
 function AppInner() {
   const [ready, setReady] = useState(false)
   const [error, setError] = useState(null)
+  const [isPlaying, setIsPlaying] = useState(false)
   const C = React.useContext(ThemeContext).C
 
   useEffect(() => {
@@ -65,7 +67,16 @@ function AppInner() {
     )
   }
 
-  return <Game />
+  if (isPlaying) {
+    return <Game onBack={() => setIsPlaying(false)} />
+  }
+
+  return (
+    <Homepage
+      onPlayClick={() => setIsPlaying(true)}
+      onHomeClick={() => setIsPlaying(false)}
+    />
+  )
 }
 
 export default function App() {

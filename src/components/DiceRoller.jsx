@@ -144,7 +144,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
   const slotIndex = team.length
   const currentPos = slots[slotIndex]
 
-  const rollDice = async () => {
+  const selectSubstitutes = async () => {
     setLoading(true)
     const pickedNames = new Set(team.map(p => p.name))
     const players = await getRandomPlayersForPosition(country, currentPos, 3, pickedNames)
@@ -154,7 +154,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
 
   useEffect(() => {
     if (slotIndex >= slots.length) return
-    rollDice()
+    selectSubstitutes()
   }, [slotIndex]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (player) => {
@@ -175,7 +175,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
     if (campaignId && analytics) {
       analytics.trackRerollUsed(rerolls - 1, campaignId)
     }
-    await rollDice()
+    await selectSubstitutes()
   }
 
   return (
@@ -259,7 +259,7 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
           {loading ? (
             <div style={{ textAlign: 'center', padding: '3rem 0' }}>
               <div className="spinner" style={{ margin: '0 auto 1rem' }} />
-              <p style={{ color: C.textDim, fontSize: '0.875rem' }}>Rolling…</p>
+              <p style={{ color: C.textDim, fontSize: '0.875rem' }}>Finding substitutes…</p>
             </div>
           ) : (
             <>

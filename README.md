@@ -4,7 +4,7 @@
 
 A browser-based game where you:
 1. Pick your country
-2. Choose a formation (4-4-2, 4-3-3, 3-5-2, 5-3-2)
+2. Choose a formation (4-4-2, 4-3-3, 3-5-2, 5-3-2, 4-2-4)
 3. Roll the dice to get random players (with 3 strikes to re-roll)
 4. Pick a coach
 5. Simulate a full tournament (groups → knockouts → final)

@@ -10,7 +10,7 @@
 
 Timeless XI is a browser-based game that lets users:
 1. **Select a country** from the current World Cup
-2. **Choose a formation** (4-4-2, 4-3-3, 3-5-2, 5-3-2)
+2. **Choose a formation** (4-4-2, 4-3-3, 3-5-2, 5-3-2, 4-2-4)
 3. **Build their XI** by rolling dice and picking players position-by-position (with 3 "strikes" to re-roll)
 4. **Hire a coach** (name + morale/tactic boost)
 5. **Simulate a tournament** (group stage → round of 16 → quarters → semis → final)

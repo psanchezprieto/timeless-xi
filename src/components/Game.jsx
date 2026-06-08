@@ -5,14 +5,15 @@ import DiceRoller from './DiceRoller'
 import CoachPicker from './CoachPicker'
 import TournamentSim from './TournamentSim'
 import CampaignSummary from './CampaignSummary'
+import Header from './Header'
 import { useTheme } from '../styles/theme'
 import { useGameAnalytics } from '../utils/analytics'
 import { preloadTournamentData } from '../utils/db'
 
-const STAGES = ['country', 'formation', 'dice', 'coach', 'tournament', 'summary']
+const STAGES = ['country', 'formation', 'subst', 'coach', 'tournament', 'summary']
 const STORAGE_KEY = 'timeless_xi_game_state'
 
-export default function Game() {
+export default function Game({ onBack }) {
   const { C, dark, toggle } = useTheme()
   const analytics = useGameAnalytics()
 
@@ -46,6 +47,11 @@ export default function Game() {
     setHydrated(true)
   }, [])
 
+  // Scroll to top when stage changes
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [stage])
+
   // Save to localStorage whenever state changes
   useEffect(() => {
     if (!hydrated) return
@@ -69,7 +75,7 @@ export default function Game() {
     setFormation(f)
     setTeam([])
     if (campaignId) analytics.trackFormationSelected(f, campaignId)
-    setStage('dice')
+    setStage('subst')
   }, [campaignId, analytics])
 
   const onTeam = useCallback(t => {
@@ -120,24 +126,7 @@ export default function Game() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: C.bg, color: C.text }}>
-      {/* Theme toggle */}
-      <button
-        onClick={toggle}
-        title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-        style={{
-          position: 'fixed', top: '0.75rem', right: '0.75rem', zIndex: 100,
-          background: C.surface, border: `1px solid ${C.border}`,
-          borderRadius: '50%', width: '2rem', height: '2rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', fontSize: '1rem', lineHeight: 1,
-          boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
-          transition: 'border-color 0.15s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
-        onMouseLeave={e => e.currentTarget.style.borderColor = C.border}
-      >
-        {dark ? '☀' : '☾'}
-      </button>
+      <Header onHome={onBack || (() => {})} />
 
       {stage !== 'summary' && (
         <div style={{ height: '2px', backgroundColor: C.border }}>
@@ -153,7 +142,7 @@ export default function Game() {
       <div style={{ padding: '2.5rem 1.5rem' }}>
         {stage === 'country' && <CountryPicker onSelect={onCountry} />}
         {stage === 'formation' && <FormationPicker country={country} onSelect={onFormation} onNewGame={onNewGame} />}
-        {stage === 'dice' && (
+        {stage === 'subst' && (
           <DiceRoller
             country={country}
             formation={formation}
