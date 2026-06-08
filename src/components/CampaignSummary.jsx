@@ -46,8 +46,8 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
           const file = new File([blob], 'timeless-xi-campaign.png', { type: 'image/png' })
           await navigator.share({
             files: [file],
-            title: 'Timeless XI Campaign',
-            text: `Check out my ${country} campaign!`,
+            title: 'Timeless XI',
+            text: `Check my historical team of ${country} in timeless-xi.com`,
           })
         } else {
           const url = URL.createObjectURL(blob)
@@ -128,11 +128,25 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
         ))}
       </div>
 
-      {/* Play Again button */}
-      <div style={{ marginBottom: '2rem' }}>
+      {/* Row 1: Share + Play Again */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
+        <button
+          onClick={handleSharePNG}
+          style={{
+            ...S.btn,
+            padding: '0.85rem',
+            fontSize: '0.95rem',
+            background: C.accent,
+            boxShadow: `0 0 14px ${C.accentGlow}, 4px 4px 0 ${C.accent}55`,
+          }}
+          onMouseEnter={btnHoverIn}
+          onMouseLeave={btnHoverOut}
+        >
+          📸 Share my team
+        </button>
         <button
           onClick={onNewGame}
-          style={{ ...S.btn, width: '100%', padding: '0.85rem', fontSize: '0.95rem' }}
+          style={{ ...S.btn, padding: '0.85rem', fontSize: '0.95rem' }}
           onMouseEnter={btnHoverIn}
           onMouseLeave={btnHoverOut}
         >
@@ -190,27 +204,38 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
           <p style={{ ...S.label, marginBottom: '0.75rem' }}>Match Log</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             {result.results.map((m, i) => {
-              const label = m.homeLabel || m.home
-              const oppLabel = m.awayLabel || m.away
-              const isHome = m.home !== 'opponent'
+              const prevRound = i > 0 ? result.results[i - 1].round : null
+              const showRoundLabel = m.round && m.round !== prevRound
               return (
-                <div key={i} style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '0.5rem 0.85rem',
-                  backgroundColor: C.surface,
-                  border: `1px solid ${C.border}`,
-                  borderRadius: '8px',
-                  fontSize: '0.8rem',
-                }}>
-                  <span style={{ color: C.textSub }}>{m.homeLabel || m.home} vs {m.awayLabel || m.away}</span>
-                  <span style={{
-                    fontFamily: "'Oswald', sans-serif",
-                    fontWeight: '700', color: C.text,
+                <React.Fragment key={i}>
+                  {showRoundLabel && (
+                    <div style={{
+                      fontSize: '0.6rem', fontWeight: '700',
+                      letterSpacing: '0.1em', textTransform: 'uppercase',
+                      color: C.textDim,
+                      paddingTop: i > 0 ? '0.4rem' : 0,
+                    }}>
+                      {m.round}
+                    </div>
+                  )}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '0.5rem 0.85rem',
+                    backgroundColor: C.surface,
+                    border: `1px solid ${C.border}`,
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
                   }}>
-                    {m.homeGoals}–{m.awayGoals}
-                    {m.penalties && <span style={{ color: C.textDim, fontSize: '0.7rem' }}> (P)</span>}
-                  </span>
-                </div>
+                    <span style={{ color: C.textSub }}>{m.homeLabel || m.home} vs {m.awayLabel || m.away}</span>
+                    <span style={{
+                      fontFamily: "'Oswald', sans-serif",
+                      fontWeight: '700', color: C.text,
+                    }}>
+                      {m.homeGoals}–{m.awayGoals}
+                      {m.penalties && <span style={{ color: C.textDim, fontSize: '0.7rem' }}> (P)</span>}
+                    </span>
+                  </div>
+                </React.Fragment>
               )
             })}
           </div>
@@ -219,23 +244,65 @@ export default function CampaignSummary({ result, team, onNewGame, country }) {
       </div>
 
       {/* Action buttons */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-        <button
-          onClick={handleSharePNG}
-          style={{ ...S.btn, padding: '0.75rem', fontSize: '0.9rem', background: C.accent }}
-          onMouseEnter={btnHoverIn}
-          onMouseLeave={btnHoverOut}
-        >
-          📸 Share Results
-        </button>
-        <button
-          onClick={handleReplaySameSquad}
-          style={{ ...S.btn, padding: '0.75rem', fontSize: '0.9rem', background: C.gold }}
-          onMouseEnter={btnHoverIn}
-          onMouseLeave={btnHoverOut}
-        >
-          🔄 Replay Squad
-        </button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        {/* Replay + contact links */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
+          <button
+            onClick={handleReplaySameSquad}
+            style={{ ...S.btn, padding: '0.65rem 0.5rem', fontSize: '0.8rem', background: C.gold }}
+            onMouseEnter={btnHoverIn}
+            onMouseLeave={btnHoverOut}
+          >
+            🔄 Replay Squad
+          </button>
+          <a
+            href="https://forms.gle/kaJLZE2fQN3KUac59"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...S.btn,
+              padding: '0.65rem 0.5rem',
+              fontSize: '0.8rem',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+            onMouseEnter={btnHoverIn}
+            onMouseLeave={btnHoverOut}
+          >
+            Get In Touch
+          </a>
+          <a
+            href="https://forms.gle/Nk7DrqrDNJYcdvfk8"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: '0.65rem 0.5rem',
+              border: `1px solid ${C.border}`,
+              borderRadius: '2px',
+              backgroundColor: 'transparent',
+              color: C.textSub,
+              cursor: 'pointer',
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              transition: 'border-color 0.15s, color 0.15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }}
+          >
+            Submit a Correction
+          </a>
+        </div>
       </div>
     </div>
   )

@@ -436,6 +436,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
       const awayTeam = ug.teams.find(t => t.country === m.away)
       return {
         ...m,
+        round: 'Group Stage',
         homeLabel: homeTeam ? teamLabel(homeTeam) : m.home,
         awayLabel: awayTeam ? teamLabel(awayTeam) : m.away,
         homeRating: homeTeam?.avgRating,
@@ -504,6 +505,7 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
     const result = simulateKnockoutMatch(pendingMatch.home, pendingMatch.away)
     result.homeLabel = teamLabel(pendingMatch.home)
     result.awayLabel = teamLabel(pendingMatch.away)
+    result.round = ROUNDS[roundIdx]
     const userWon = result.winner.isUser
     const myGoals = result.home === country ? result.homeGoals : result.awayGoals
     const theirGoals = result.home === country ? result.awayGoals : result.homeGoals
