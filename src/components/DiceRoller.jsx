@@ -5,20 +5,16 @@ import { useTheme } from '../styles/theme'
 import { useIsMobile } from '../utils/useIsMobile'
 
 function buildSlots(formation) {
-  const slots = []
   const def = FORMATIONS[formation]
-  if (!def) return slots
-  Object.entries(def.positions).forEach(([pos, count]) => {
-    for (let i = 0; i < count; i++) slots.push(pos)
-  })
-  return slots
+  if (!def) return []
+  return def.slots || []
 }
 
 const POS_Y = {
   GK: 88,
-  DEF: 68,
-  MID: 44,
-  FWD: 18,
+  CB: 68, LB: 68, RB: 68, DEF: 68,
+  CM: 44, LM: 44, RM: 44, MID: 44,
+  ST: 18, LW: 18, RW: 18, FWD: 18,
 }
 const POS_X_MAP = {
   1: [50],
@@ -28,14 +24,25 @@ const POS_X_MAP = {
   5: [12, 30, 50, 70, 88],
 }
 
+function getPosRow(pos) {
+  if (pos === 'GK') return 'GK'
+  if (['CB', 'LB', 'RB', 'DEF'].includes(pos)) return 'DEF'
+  if (['CM', 'LM', 'RM', 'MID'].includes(pos)) return 'MID'
+  return 'FWD'
+}
+
 function getSlotCoords(slots) {
-  const countByPos = {}
-  for (const pos of slots) countByPos[pos] = (countByPos[pos] || 0) + 1
-  const idxByPos = {}
+  const countByRow = {}
+  for (const pos of slots) {
+    const row = getPosRow(pos)
+    countByRow[row] = (countByRow[row] || 0) + 1
+  }
+  const idxByRow = {}
   return slots.map(pos => {
-    const i = idxByPos[pos] || 0
-    idxByPos[pos] = i + 1
-    const n = countByPos[pos]
+    const row = getPosRow(pos)
+    const i = idxByRow[row] || 0
+    idxByRow[row] = i + 1
+    const n = countByRow[row]
     const xs = POS_X_MAP[n] || POS_X_MAP[1]
     return { x: xs[Math.min(i, xs.length - 1)], y: POS_Y[pos] ?? 50 }
   })
@@ -45,9 +52,9 @@ function FootballPitch({ slots, team }) {
   const { C } = useTheme()
   const POS_COLORS = {
     GK: C.gold,
-    DEF: C.cyan,
-    MID: C.accent,
-    FWD: C.fwd,
+    CB: C.cyan, LB: C.cyan, RB: C.cyan, DEF: C.cyan,
+    CM: C.accent, LM: C.accent, RM: C.accent, MID: C.accent,
+    ST: C.fwd, LW: C.fwd, RW: C.fwd, FWD: C.fwd,
   }
   const coords = getSlotCoords(slots)
 
@@ -131,9 +138,9 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
   const { C, S, cardHoverIn, cardHoverOut } = useTheme()
   const POS_COLORS = {
     GK: C.gold,
-    DEF: C.cyan,
-    MID: C.accent,
-    FWD: C.fwd,
+    CB: C.cyan, LB: C.cyan, RB: C.cyan, DEF: C.cyan,
+    CM: C.accent, LM: C.accent, RM: C.accent, MID: C.accent,
+    ST: C.fwd, LW: C.fwd, RW: C.fwd, FWD: C.fwd,
   }
   const isMobile = useIsMobile()
   const slots = buildSlots(formation)
@@ -200,9 +207,15 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
           <> — pick your{' '}
             <strong style={{ color: POS_COLORS[currentPos] || C.text }}>
               {currentPos === 'GK' ? 'goalkeeper'
-               : currentPos === 'DEF' ? 'defender'
-               : currentPos === 'MID' ? 'midfielder'
-               : currentPos === 'FWD' ? 'forward'
+               : currentPos === 'CB' ? 'center back'
+               : currentPos === 'LB' ? 'left back'
+               : currentPos === 'RB' ? 'right back'
+               : currentPos === 'CM' ? 'central midfielder'
+               : currentPos === 'LM' ? 'left midfielder'
+               : currentPos === 'RM' ? 'right midfielder'
+               : currentPos === 'ST' ? 'striker'
+               : currentPos === 'LW' ? 'left winger'
+               : currentPos === 'RW' ? 'right winger'
                : 'player'}
             </strong>
           </>

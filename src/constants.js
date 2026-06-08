@@ -2,26 +2,31 @@ export const FORMATIONS = {
   '4-4-2': {
     name: '4-4-2 Classic',
     positions: { GK: 1, DEF: 4, MID: 4, FWD: 2 },
+    slots: ['GK', 'CB', 'CB', 'LB', 'RB', 'LM', 'CM', 'CM', 'RM', 'ST', 'ST'],
     description: 'Balanced defense and attack',
   },
   '4-3-3': {
     name: '4-3-3 Modern',
     positions: { GK: 1, DEF: 4, MID: 3, FWD: 3 },
+    slots: ['GK', 'CB', 'CB', 'LB', 'RB', 'CM', 'CM', 'CM', 'LW', 'ST', 'RW'],
     description: 'Flexible midfield with wing play',
   },
   '3-5-2': {
     name: '3-5-2 Attacking',
     positions: { GK: 1, DEF: 3, MID: 5, FWD: 2 },
+    slots: ['GK', 'CB', 'CB', 'CB', 'LM', 'CM', 'CM', 'CM', 'RM', 'ST', 'ST'],
     description: 'Midfield dominance and width',
   },
   '5-3-2': {
     name: '5-3-2 Defensive',
     positions: { GK: 1, DEF: 5, MID: 3, FWD: 2 },
+    slots: ['GK', 'CB', 'CB', 'CB', 'LB', 'RB', 'CM', 'CM', 'CM', 'ST', 'ST'],
     description: 'Solid defense, quick counterattacks',
   },
   '4-2-4': {
     name: '4-2-4 Vintage',
     positions: { GK: 1, DEF: 4, MID: 2, FWD: 4 },
+    slots: ['GK', 'CB', 'CB', 'LB', 'RB', 'CM', 'CM', 'LW', 'ST', 'ST', 'RW'],
     description: 'Ultra-aggressive, classic 80s style',
   },
 }
