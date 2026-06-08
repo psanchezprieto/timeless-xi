@@ -31,21 +31,32 @@ function getPosRow(pos) {
   return 'FWD'
 }
 
+// L* positions left, R* right, everything else center
+function getLateralPriority(pos) {
+  if (['LB', 'LM', 'LW'].includes(pos)) return 0
+  if (['RB', 'RM', 'RW'].includes(pos)) return 2
+  return 1
+}
+
 function getSlotCoords(slots) {
-  const countByRow = {}
-  for (const pos of slots) {
+  // Group slots by row, preserving original index
+  const rows = {}
+  slots.forEach((pos, idx) => {
     const row = getPosRow(pos)
-    countByRow[row] = (countByRow[row] || 0) + 1
-  }
-  const idxByRow = {}
-  return slots.map(pos => {
-    const row = getPosRow(pos)
-    const i = idxByRow[row] || 0
-    idxByRow[row] = i + 1
-    const n = countByRow[row]
-    const xs = POS_X_MAP[n] || POS_X_MAP[1]
-    return { x: xs[Math.min(i, xs.length - 1)], y: POS_Y[pos] ?? 50 }
+    if (!rows[row]) rows[row] = []
+    rows[row].push({ pos, idx })
   })
+
+  // Within each row sort L→center→R, then assign x from POS_X_MAP
+  const result = new Array(slots.length)
+  Object.values(rows).forEach(rowSlots => {
+    const sorted = [...rowSlots].sort((a, b) => getLateralPriority(a.pos) - getLateralPriority(b.pos))
+    const xs = POS_X_MAP[sorted.length] || POS_X_MAP[1]
+    sorted.forEach(({ pos, idx }, i) => {
+      result[idx] = { x: xs[Math.min(i, xs.length - 1)], y: POS_Y[pos] ?? 50 }
+    })
+  })
+  return result
 }
 
 function FootballPitch({ slots, team }) {
