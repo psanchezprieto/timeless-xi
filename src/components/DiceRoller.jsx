@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FORMATIONS } from '../constants'
 import { getRandomPlayersForPosition } from '../utils/db'
-import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
+import { useTheme } from '../styles/theme'
 import { useIsMobile } from '../utils/useIsMobile'
 
 function buildSlots(formation) {
@@ -14,8 +14,12 @@ function buildSlots(formation) {
   return slots
 }
 
-const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
-const POS_Y = { GK: 88, DEF: 68, MID: 44, FWD: 18 }
+const POS_Y = {
+  GK: 88,
+  CB: 68, LB: 68, RB: 68,
+  CM: 44, LM: 44, RM: 44,
+  ST: 18, LW: 18, RW: 18,
+}
 const POS_X_MAP = {
   1: [50],
   2: [28, 72],
@@ -38,6 +42,13 @@ function getSlotCoords(slots) {
 }
 
 function FootballPitch({ slots, team }) {
+  const { C } = useTheme()
+  const POS_COLORS = {
+    GK: C.gold,
+    CB: C.cyan, LB: C.cyan, RB: C.cyan,
+    CM: C.accent, LM: C.accent, RM: C.accent,
+    ST: C.fwd, LW: C.fwd, RW: C.fwd,
+  }
   const coords = getSlotCoords(slots)
 
   return (
@@ -110,6 +121,13 @@ function FootballPitch({ slots, team }) {
 }
 
 export default function DiceRoller({ country, formation, team: initialTeam, rerolls, onReroll, onComplete, onNewGame, campaignId, analytics }) {
+  const { C, S, cardHoverIn, cardHoverOut } = useTheme()
+  const POS_COLORS = {
+    GK: C.gold,
+    CB: C.cyan, LB: C.cyan, RB: C.cyan,
+    CM: C.accent, LM: C.accent, RM: C.accent,
+    ST: C.fwd, LW: C.fwd, RW: C.fwd,
+  }
   const isMobile = useIsMobile()
   const slots = buildSlots(formation)
   const [team, setTeam] = useState(initialTeam || [])
@@ -174,7 +192,17 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
         {currentPos && (
           <> — pick your{' '}
             <strong style={{ color: POS_COLORS[currentPos] || C.text }}>
-              {currentPos === 'GK' ? 'goalkeeper' : currentPos === 'DEF' ? 'defender' : currentPos === 'MID' ? 'midfielder' : 'forward'}
+              {currentPos === 'GK' ? 'goalkeeper'
+               : currentPos === 'CB' ? 'center back'
+               : currentPos === 'LB' ? 'left back'
+               : currentPos === 'RB' ? 'right back'
+               : currentPos === 'CM' ? 'central midfielder'
+               : currentPos === 'LM' ? 'left midfielder'
+               : currentPos === 'RM' ? 'right midfielder'
+               : currentPos === 'ST' ? 'striker'
+               : currentPos === 'LW' ? 'left winger'
+               : currentPos === 'RW' ? 'right winger'
+               : 'player'}
             </strong>
           </>
         )}

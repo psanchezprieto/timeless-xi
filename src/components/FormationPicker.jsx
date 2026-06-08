@@ -1,10 +1,16 @@
 import React from 'react'
 import { FORMATIONS } from '../constants'
-import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
+import { useTheme } from '../styles/theme'
 
-const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
 
 export default function FormationPicker({ country, onSelect, onNewGame }) {
+  const { C, S, cardHoverIn, cardHoverOut } = useTheme()
+  const POS_COLORS = {
+    GK: C.gold,
+    CB: C.cyan, LB: C.cyan, RB: C.cyan,
+    CM: C.accent, LM: C.accent, RM: C.accent,
+    ST: C.fwd, LW: C.fwd, RW: C.fwd,
+  }
   return (
     <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
       {onNewGame && (

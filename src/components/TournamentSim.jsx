@@ -3,7 +3,7 @@ import {
   generateHistoricalAITeams, generateAITeams,
   calcTeamRating, createGroups, simulateGroup, simulateKnockoutMatch,
 } from '../utils/simulator'
-import { C, S } from '../styles/theme'
+import { C, useTheme } from '../styles/theme'
 
 const ROUNDS = ['Round of 16', 'Quarterfinals', 'Semifinals', 'Final']
 
@@ -30,14 +30,16 @@ function buildResult(campaign, champion, exitRound) {
 
 // ── Sub-components ────────────────────────────────────────────────────────
 
-function Btn({ children, onClick, color = C.accent, disabled = false }) {
+function Btn({ children, onClick, color, disabled = false }) {
+  const { C, S } = useTheme()
+  const bg = color || C.accent
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       style={{
         ...S.btn,
-        background: color,
+        background: bg,
         opacity: disabled ? 0.5 : 1,
         cursor: disabled ? 'not-allowed' : 'pointer',
       }}
@@ -58,6 +60,7 @@ function Btn({ children, onClick, color = C.accent, disabled = false }) {
 }
 
 function ScoreBox({ result, userCountry, isGroupStage = false }) {
+  const { C } = useTheme()
   const userIsHome = result.home === userCountry
   const userGoals = userIsHome ? result.homeGoals : result.awayGoals
   const oppGoals  = userIsHome ? result.awayGoals : result.homeGoals
@@ -122,6 +125,7 @@ const POS_COLORS_T = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
 const POS_ORDER_T  = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
 
 function SquadOverlay({ team: t, onClose }) {
+  const { C } = useTheme()
   if (!t) return null
   const players = [...(t.players || [])].sort(
     (a, b) => (POS_ORDER_T[a.position] ?? 9) - (POS_ORDER_T[b.position] ?? 9)
@@ -217,6 +221,7 @@ function SquadOverlay({ team: t, onClose }) {
 }
 
 function MatchLog({ results, userCountry }) {
+  const { C } = useTheme()
   if (!results || results.length === 0) return null
   return (
     <div style={{
@@ -288,6 +293,7 @@ function MatchLog({ results, userCountry }) {
 }
 
 function GroupTable({ group, userCountry, onTeamClick }) {
+  const { C, S } = useTheme()
   const isUser = t => t.isUser
   return (
     <div style={{ backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: '10px', overflow: 'hidden' }}>
@@ -340,6 +346,7 @@ function GroupTable({ group, userCountry, onTeamClick }) {
 
 // ── Main component ────────────────────────────────────────────────────────
 export default function TournamentSim({ team, coach, country, onComplete, onNewGame }) {
+  const { C, S } = useTheme()
   const userTeam = useMemo(() => ({
     country,
     year: null,

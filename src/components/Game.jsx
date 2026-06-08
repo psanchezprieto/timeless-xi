@@ -1,17 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import Banner from './Banner'
 import CountryPicker from './CountryPicker'
 import FormationPicker from './FormationPicker'
 import DiceRoller from './DiceRoller'
 import CoachPicker from './CoachPicker'
 import TournamentSim from './TournamentSim'
 import CampaignSummary from './CampaignSummary'
-import { C } from '../styles/theme'
+import { useTheme } from '../styles/theme'
+import { useGameAnalytics } from '../utils/analytics'
+import { preloadTournamentData } from '../utils/db'
 
 const STAGES = ['country', 'formation', 'dice', 'coach', 'tournament', 'summary']
 const STORAGE_KEY = 'timeless_xi_game_state'
 
 export default function Game() {
+  const { C, dark, toggle } = useTheme()
+  const analytics = useGameAnalytics()
+
   // Load persisted state on mount
   const [stage, setStage] = useState('country')
   const [country, setCountry] = useState(null)
@@ -21,6 +25,7 @@ export default function Game() {
   const [result, setResult] = useState(null)
   const [rerolls, setRerolls] = useState(3)
   const [hydrated, setHydrated] = useState(false)
+  const [campaignId, setCampaignId] = useState(null)
 
   // Restore from localStorage on mount
   useEffect(() => {
@@ -54,14 +59,18 @@ export default function Game() {
     setTeam([])
     setCoach(null)
     setRerolls(3) // Reset rerolls when starting a new squad
+    const newCampaignId = analytics.trackCampaignStart(c)
+    setCampaignId(newCampaignId)
     setStage('formation')
-  }, [])
+    preloadTournamentData() // Warm up cache while user picks formation
+  }, [analytics])
 
   const onFormation = useCallback(f => {
     setFormation(f)
     setTeam([])
+    if (campaignId) analytics.trackFormationSelected(f, campaignId)
     setStage('dice')
-  }, [])
+  }, [campaignId, analytics])
 
   const onTeam = useCallback(t => {
     setTeam(t)
@@ -70,13 +79,15 @@ export default function Game() {
 
   const onCoach = useCallback(c => {
     setCoach(c)
+    if (campaignId) analytics.trackCoachSelected(c, campaignId)
     setStage('tournament')
-  }, [])
+  }, [campaignId, analytics])
 
   const onTournament = useCallback(r => {
     setResult(r)
+    if (campaignId) analytics.trackCampaignCompleted(r, campaignId)
     setStage('summary')
-  }, [])
+  }, [campaignId, analytics])
 
   const onNewGame = useCallback((options = {}) => {
     if (options.reuseSquad && team.length > 0) {
@@ -93,6 +104,7 @@ export default function Game() {
       setCoach(null)
       setResult(null)
       setRerolls(3)
+      setCampaignId(null)
       localStorage.removeItem(STORAGE_KEY)
     }
   }, [team])
@@ -108,7 +120,24 @@ export default function Game() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: C.bg, color: C.text }}>
-      <Banner />
+      {/* Theme toggle */}
+      <button
+        onClick={toggle}
+        title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        style={{
+          position: 'fixed', top: '0.75rem', right: '0.75rem', zIndex: 100,
+          background: C.surface, border: `1px solid ${C.border}`,
+          borderRadius: '50%', width: '2rem', height: '2rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', fontSize: '1rem', lineHeight: 1,
+          boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+          transition: 'border-color 0.15s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
+        onMouseLeave={e => e.currentTarget.style.borderColor = C.border}
+      >
+        {dark ? '☀' : '☾'}
+      </button>
 
       {stage !== 'summary' && (
         <div style={{ height: '2px', backgroundColor: C.border }}>
@@ -133,6 +162,8 @@ export default function Game() {
             onReroll={onReroll}
             onComplete={onTeam}
             onNewGame={onNewGame}
+            campaignId={campaignId}
+            analytics={analytics}
           />
         )}
         {stage === 'coach' && <CoachPicker country={country} onSelect={onCoach} onNewGame={onNewGame} />}

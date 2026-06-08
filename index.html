@@ -12,7 +12,21 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
+    :root, [data-theme="light"] {
+      --bg:          #F0EBE1;
+      --surface:     #FFFFFF;
+      --surface-hi:  #F7F3EE;
+      --border:      #CBBFB0;
+      --accent:      #D44028;
+      --accent-h:    #E8553E;
+      --cyan:        #0A7A84;
+      --gold:        #B06A00;
+      --text:        #1A3840;
+      --text-sub:    #4A6B75;
+      --text-dim:    #8AA5AE;
+    }
+
+    [data-theme="dark"] {
       --bg:          #0B2D35;
       --surface:     #0F3A44;
       --surface-hi:  #174F5E;
@@ -40,8 +54,8 @@
       background-image:
         repeating-linear-gradient(
           135deg,
-          rgba(255,255,255,0.015) 0px,
-          rgba(255,255,255,0.015) 1px,
+          rgba(0,0,0,0.025) 0px,
+          rgba(0,0,0,0.025) 1px,
           transparent 1px,
           transparent 40px
         );
@@ -59,7 +73,7 @@
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-track { background: var(--surface-hi); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
     ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
 
@@ -68,6 +82,12 @@
       position: relative;
       border-radius: 2px;
       overflow: hidden;
+      box-shadow:
+        -1px -1px 0 rgba(255,255,255,0.9),
+        2px  2px  0 rgba(0,0,0,0.18),
+        0 4px 10px rgba(0,0,0,0.12);
+    }
+    [data-theme="dark"] .flag-emboss {
       box-shadow:
         -1px -1px 0 rgba(255,255,255,0.35),
         2px  2px  0 rgba(0,0,0,0.55),
@@ -80,9 +100,9 @@
       inset: 0;
       background: linear-gradient(
         135deg,
-        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.25) 0%,
         transparent            45%,
-        rgba(0,0,0,0.12)      100%
+        rgba(0,0,0,0.06)      100%
       );
       pointer-events: none;
     }

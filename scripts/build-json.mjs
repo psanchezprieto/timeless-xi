@@ -27,6 +27,7 @@ const KEY_MAP = {
   name: 'n',
   number: 'num',
   position: 'pos',
+  subPosition: 'sp',
   rating: 'r',
   confidence: 'conf',
 };
@@ -41,6 +42,7 @@ function optimizeSquad(squad) {
       n: player.name,
       num: player.number,
       pos: player.position,
+      sp: player.subPosition,
       r: player.rating,
       conf: player.confidence,
     })),

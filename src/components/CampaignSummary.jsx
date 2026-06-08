@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
-import { C, S, btnHoverIn, btnHoverOut } from '../styles/theme'
+import { useTheme } from '../styles/theme'
 
-const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: '#E8553E' }
 const POS_ORDER = { GK: 0, DEF: 1, MID: 2, FWD: 3 }
 
 export default function CampaignSummary({ result, team, onNewGame, country }) {
+  const { C, S, btnHoverIn, btnHoverOut } = useTheme()
+  const POS_COLORS = { GK: C.gold, DEF: C.cyan, MID: C.accent, FWD: C.fwd }
   const summaryRef = useRef(null)
 
   const calculateWins = () => {

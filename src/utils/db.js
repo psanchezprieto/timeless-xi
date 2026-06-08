@@ -39,22 +39,40 @@ async function loadGzFile(filename) {
   }
 }
 
+async function loadGzFilesParallel(filenames) {
+  const promises = filenames.map(fn => loadGzFile(fn))
+  return Promise.all(promises)
+}
+
+// Map raw position codes to broad game codes. If subPosition (sp) is present, use it directly.
 const POSITION_MAP = { GK: 'GK', DF: 'DEF', MF: 'MID', FW: 'FWD' }
 
+function mapPlayerPosition(p) {
+  // If subPosition is available, use it directly (CB, LB, RB, CM, LM, RM, ST, LW, RW)
+  if (p.sp) return p.sp
+  // Otherwise fall back to broad position mapping (GK, DEF, MID, FWD)
+  return POSITION_MAP[p.pos] || p.pos
+}
+
 // Returns all players for a country across all World Cup decades.
+// Loads only non-empty decades in parallel for speed.
 export async function getPlayersByCountry(countryName) {
   const meta = await loadMeta()
+  const nonEmptyDecades = meta.decades.filter(d => d.playerCount > 0)
+  const filenames = nonEmptyDecades.map(d => d.filename)
+
+  const allData = await loadGzFilesParallel(filenames)
+
   const players = []
-  for (const decade of meta.decades) {
-    if (decade.playerCount === 0) continue
-    const data = await loadGzFile(decade.filename)
+  for (let i = 0; i < allData.length; i++) {
+    const data = allData[i]
     if (!data?.squads) continue
     for (const squad of data.squads) {
       if (squad.c === countryName || squad.cn === countryName) {
         for (const p of squad.p || []) {
           players.push({
             name: p.n,
-            position: POSITION_MAP[p.pos] || p.pos,
+            position: mapPlayerPosition(p),
             number: p.num,
             rating: typeof p.r === 'number' ? p.r : 70,
             year: squad.y,
@@ -76,20 +94,26 @@ export async function getAvailableYearsForCountry(countryName) {
 
 // Returns all historical squad objects with pre-computed avgRating.
 // Used to populate AI opponents with real historical teams.
+// Loads all non-empty decades in parallel for speed.
 export async function getAllHistoricalTeamStats() {
   if (cache.__allTeamStats) return cache.__allTeamStats
+
   const meta = await loadMeta()
+  const nonEmptyDecades = meta.decades.filter(d => d.playerCount > 0)
+  const filenames = nonEmptyDecades.map(d => d.filename)
+
+  const allData = await loadGzFilesParallel(filenames)
+
   const teams = []
-  for (const decade of meta.decades) {
-    if (decade.playerCount === 0) continue
-    const data = await loadGzFile(decade.filename)
+  for (let i = 0; i < allData.length; i++) {
+    const data = allData[i]
     if (!data?.squads) continue
     for (const squad of data.squads) {
       const rawPlayers = squad.p || []
       if (rawPlayers.length === 0) continue
       const players = rawPlayers.map(p => ({
         name: p.n,
-        position: POSITION_MAP[p.pos] || p.pos,
+        position: mapPlayerPosition(p),
         rating: typeof p.r === 'number' ? p.r : 70,
       }))
       const avgRating = players.reduce((s, p) => s + p.rating, 0) / players.length
@@ -148,6 +172,19 @@ export async function getRandomPlayersForPositionAndYear(countryName, position, 
 
 export async function getRandomPlayersForPosition(countryName, position, count = 3, excludeNames = new Set()) {
   return getRandomPlayersForPositionAndYear(countryName, position, null, count, excludeNames)
+}
+
+// Start background preload of tournament data (all historical teams).
+// This is fire-and-forget — called early to warm up cache while user picks formation.
+// Does nothing if already loaded or loading.
+export function preloadTournamentData() {
+  if (cache.__allTeamStats || cache.__preloadInProgress) return
+  cache.__preloadInProgress = true
+  getAllHistoricalTeamStats()
+    .catch(e => console.error('Preload failed (non-fatal):', e))
+    .finally(() => {
+      delete cache.__preloadInProgress
+    })
 }
 
 export function clearCache() {

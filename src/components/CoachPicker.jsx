@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { getCoachesByCountry } from '../utils/db'
-import { C, S, cardHoverIn, cardHoverOut, btnHoverIn, btnHoverOut } from '../styles/theme'
+import { useTheme } from '../styles/theme'
 
 export default function CoachPicker({ country, onSelect, onNewGame }) {
+  const { C, S, cardHoverIn, cardHoverOut, btnHoverIn, btnHoverOut } = useTheme()
   const [coaches, setCoaches] = useState([])
   const [loading, setLoading] = useState(true)
 

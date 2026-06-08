@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { C, S, cardHoverIn, cardHoverOut } from '../styles/theme'
+import { useTheme } from '../styles/theme'
 
 const COUNTRIES_DATA = [
   { name: 'Algeria', code: 'dz' },
@@ -99,19 +99,20 @@ function getCdnFlagUrl(country) {
   return `https://flagcdn.com/w160/${country.code}.png`
 }
 
-function stickerHoverIn(e) {
-  e.currentTarget.style.borderColor = C.gold
-  e.currentTarget.style.transform = 'translateY(-4px) rotate(0.6deg)'
-  e.currentTarget.style.boxShadow = `4px 6px 16px rgba(0,0,0,0.55), 0 0 0 1px ${C.gold}55`
-}
-function stickerHoverOut(e) {
-  e.currentTarget.style.borderColor = C.border
-  e.currentTarget.style.transform = 'translateY(0) rotate(0deg)'
-  e.currentTarget.style.boxShadow = '2px 3px 8px rgba(0,0,0,0.35)'
-}
-
 export default function CountryPicker({ onSelect }) {
+  const { C, S } = useTheme()
   const [search, setSearch] = useState('')
+
+  const stickerHoverIn = (e) => {
+    e.currentTarget.style.borderColor = C.gold
+    e.currentTarget.style.transform = 'translateY(-4px) rotate(0.6deg)'
+    e.currentTarget.style.boxShadow = `4px 6px 16px rgba(0,0,0,0.18), 0 0 0 1px ${C.gold}88`
+  }
+  const stickerHoverOut = (e) => {
+    e.currentTarget.style.borderColor = C.border
+    e.currentTarget.style.transform = 'translateY(0) rotate(0deg)'
+    e.currentTarget.style.boxShadow = '2px 3px 8px rgba(0,0,0,0.10)'
+  }
 
   const filtered = useMemo(() => {
     if (!search) return COUNTRIES_DATA
@@ -159,7 +160,7 @@ export default function CountryPicker({ onSelect }) {
               display: 'flex',
               flexDirection: 'column',
               background: C.surface,
-              boxShadow: '2px 3px 8px rgba(0,0,0,0.35)',
+              boxShadow: '2px 3px 8px rgba(0,0,0,0.10)',
               transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
               textAlign: 'center',
             }}
