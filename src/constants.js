@@ -31,6 +31,16 @@ export const POSITIONS = {
   DEF: { name: 'Defender',    abbr: 'DEF' },
   MID: { name: 'Midfielder',  abbr: 'MID' },
   FWD: { name: 'Forward',     abbr: 'FWD' },
+  // Specific positions (used after enrichment)
+  CB:  { name: 'Center Back',  abbr: 'CB' },
+  LB:  { name: 'Left Back',    abbr: 'LB' },
+  RB:  { name: 'Right Back',   abbr: 'RB' },
+  CM:  { name: 'Central Mid',  abbr: 'CM' },
+  LM:  { name: 'Left Mid',     abbr: 'LM' },
+  RM:  { name: 'Right Mid',    abbr: 'RM' },
+  ST:  { name: 'Striker',      abbr: 'ST' },
+  LW:  { name: 'Left Wing',    abbr: 'LW' },
+  RW:  { name: 'Right Wing',   abbr: 'RW' },
 }
 
 export const TOURNAMENT_STRUCTURE = {
