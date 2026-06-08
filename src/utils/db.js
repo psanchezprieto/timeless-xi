@@ -65,6 +65,12 @@ function getPositionGroup(position) {
   return [position]
 }
 
+// Lateral mids and wingers are interchangeable roles
+const CROSS_ELIGIBLE = {
+  LM: ['LW'], LW: ['LM'],
+  RM: ['RW'], RW: ['RM'],
+}
+
 function getBroadPosition(position) {
   if (['CB', 'LB', 'RB'].includes(position)) return 'DEF'
   if (['CM', 'LM', 'RM'].includes(position)) return 'MID'
@@ -88,8 +94,12 @@ export async function getPlayersByCountry(countryName) {
     for (const squad of data.squads) {
       if (squad.c === countryName || squad.cn === countryName) {
         for (const p of squad.p || []) {
+          const rawName = p.n || ''
+          const isCaptain = /\(captain\)/i.test(rawName)
+          const name = rawName.replace(/\s*\(captain\)/i, '').replace(/\*/g, '').trim()
           players.push({
-            name: p.n,
+            name,
+            isCaptain,
             position: mapPlayerPosition(p),
             number: p.num,
             rating: typeof p.r === 'number' ? p.r : 70,
@@ -175,6 +185,15 @@ export async function getRandomPlayersForPositionAndYear(countryName, position, 
     // Fall back to exact position, any year
     if (pool.length === 0) {
       pool = players.filter(p => p.position === position && !excludeNames.has(p.name))
+    }
+
+    // Fall back to cross-eligible lateral positions (LM↔LW, RM↔RW)
+    if (pool.length < count) {
+      const crossPos = CROSS_ELIGIBLE[position]
+      if (crossPos) {
+        const crossPool = players.filter(p => crossPos.includes(p.position) && !excludeNames.has(p.name))
+        pool = [...pool, ...crossPool]
+      }
     }
 
     // Fall back to other positions in the same broad group (e.g. CB→LB/RB for defenders)

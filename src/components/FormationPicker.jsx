@@ -1,5 +1,5 @@
 import React from 'react'
-import { FORMATIONS } from '../constants'
+import { FORMATIONS, getCountryFlagUrl } from '../constants'
 import { useTheme } from '../styles/theme'
 
 
@@ -24,9 +24,18 @@ export default function FormationPicker({ country, onSelect, onNewGame }) {
         </button>
       )}
       <h1 style={S.h1}>Choose Your Formation</h1>
-      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '2.5rem', fontSize: '0.9rem' }}>
-        {country}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '2.5rem' }}>
+        {getCountryFlagUrl(country) && (
+          <img
+            src={getCountryFlagUrl(country)}
+            alt={`${country} flag`}
+            style={{ height: '20px', width: 'auto', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.25)', flexShrink: 0 }}
+          />
+        )}
+        <span style={{ color: C.text, fontSize: '0.95rem', fontWeight: '700', fontFamily: "'Oswald', sans-serif", letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          {country}
+        </span>
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         {Object.entries(FORMATIONS).map(([key, formation]) => (

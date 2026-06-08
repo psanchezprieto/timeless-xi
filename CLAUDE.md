@@ -135,6 +135,36 @@ timeless-xi/
 
 ---
 
+## Analytics: Tracking Requirements
+
+**Rule**: Every meaningful user interaction must be tracked via `posthog.capture()` by default. Do not add a UI action without also wiring up an analytics call.
+
+### Currently tracked (src/utils/analytics.js + index.html)
+| Event | Trigger |
+|-------|---------|
+| `campaign_started` | Country selected |
+| `formation_selected` | Formation clicked |
+| `player_picked` | Player card selected in DiceRoller |
+| `reroll_used` | Re-roll button clicked |
+| `coach_selected` | Coach card selected |
+| `campaign_completed` | Tournament finishes (includes full squad snapshot) |
+| `kofi_clicked` | Ko-fi support link clicked |
+| `kofi_dismissed` | Ko-fi widget closed |
+
+### Missing / future events to add
+- `page_view` (homepage vs game) — low priority, posthog autocapture covers it
+- `cookie_accepted` / `cookie_declined` — add to CookieBanner
+- `stats_page_viewed` — when stats page ships
+
+### Credentials policy
+| Secret | Frontend? | Where |
+|--------|-----------|-------|
+| PostHog write key (`phc_...`) | ✅ Safe (write-only) | VITE_POSTHOG_KEY in .env |
+| PostHog personal API key (for stats queries) | ❌ Never | GitHub Secret → GH Actions only |
+| Anthropic API key | ❌ Never | GitHub Secret → GH Actions only |
+
+---
+
 ## Claude API Usage
 
 ### Batch Enrichment (Phase 1)

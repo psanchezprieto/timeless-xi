@@ -1,37 +1,37 @@
 import React from 'react'
 
 export const LIGHT = {
-  bg:          '#F0EBE1',
+  bg:          '#F5F7FA',
   surface:     '#FFFFFF',
-  surfaceHi:   '#F7F3EE',
-  border:      '#CBBFB0',
-  borderLight: '#DDD5C8',
+  surfaceHi:   '#EEF1F6',
+  border:      '#C8D0DC',
+  borderLight: '#DDE2EB',
 
-  accent:      '#D44028',
-  accentHover: '#E8553E',
-  accentGlow:  'rgba(212,64,40,0.15)',
+  accent:      '#C8211A',
+  accentHover: '#E02B23',
+  accentGlow:  'rgba(200,33,26,0.15)',
 
-  cyan:        '#0A7A84',
-  cyanGlow:    'rgba(10,122,132,0.15)',
+  cyan:        '#1A5FA0',
+  cyanGlow:    'rgba(26,95,160,0.15)',
 
-  gold:        '#B06A00',
-  goldGlow:    'rgba(176,106,0,0.15)',
+  gold:        '#C8820A',
+  goldGlow:    'rgba(200,130,10,0.15)',
 
   fwd:         '#16A34A',
 
-  danger:      '#D44028',
-  dangerGlow:  'rgba(212,64,40,0.15)',
+  danger:      '#C8211A',
+  dangerGlow:  'rgba(200,33,26,0.15)',
   success:     '#1A7A4A',
 
-  text:        '#1A3840',
-  textSub:     '#4A6B75',
-  textDim:     '#8AA5AE',
+  text:        '#0F1923',
+  textSub:     '#3D5168',
+  textDim:     '#8A9BB0',
 
-  pink:        '#D44028',
-  muted:       '#4A6B75',
+  pink:        '#C8211A',
+  muted:       '#3D5168',
   card:        '#FFFFFF',
-  cardHover:   '#F7F3EE',
-  deep:        '#F0EBE1',
+  cardHover:   '#EEF1F6',
+  deep:        '#F5F7FA',
 }
 
 export const DARK = {

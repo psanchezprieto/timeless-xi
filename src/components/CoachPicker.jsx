@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getCoachesByCountry } from '../utils/db'
+import { getCountryFlagUrl } from '../constants'
 import { useTheme } from '../styles/theme'
 
 export default function CoachPicker({ country, onSelect, onNewGame }) {
@@ -29,9 +30,18 @@ export default function CoachPicker({ country, onSelect, onNewGame }) {
       )}
       <p style={{ ...S.label, textAlign: 'center', marginBottom: '0.75rem' }}>Manager</p>
       <h1 style={S.h1}>Choose Your Coach</h1>
-      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '2.5rem', fontSize: '0.9rem' }}>
-        {country}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '2.5rem' }}>
+        {getCountryFlagUrl(country) && (
+          <img
+            src={getCountryFlagUrl(country)}
+            alt={`${country} flag`}
+            style={{ height: '20px', width: 'auto', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.25)', flexShrink: 0 }}
+          />
+        )}
+        <span style={{ color: C.text, fontSize: '0.95rem', fontWeight: '700', fontFamily: "'Oswald', sans-serif", letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          {country}
+        </span>
+      </div>
 
       {loading && (
         <div style={{ textAlign: 'center', padding: '3rem 0' }}>

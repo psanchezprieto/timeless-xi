@@ -232,6 +232,77 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
         </div>
       </main>
 
+      {/* Contact Section */}
+      <section
+        style={{
+          borderTop: `1px solid ${C.border}`,
+          paddingTop: '2.5rem',
+          marginTop: '1rem',
+          marginBottom: '2rem',
+          textAlign: 'center',
+        }}
+      >
+        <h2
+          style={{
+            ...S.h1,
+            fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+            marginBottom: '0.75rem',
+          }}
+        >
+          Get in Touch
+        </h2>
+        <p style={{ fontSize: '0.9rem', color: C.textSub, marginBottom: '1.5rem', maxWidth: '28rem', margin: '0 auto 1.5rem' }}>
+          Interested in data access or partnerships? Spotted a wrong score? We'd love to hear from you.
+        </p>
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a
+            href="https://forms.gle/REPLACE_WITH_ADVERTISER_FORM"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...S.btn,
+              fontSize: '0.85rem',
+              padding: '0.6rem 1.5rem',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+            }}
+            onMouseEnter={btnHoverIn}
+            onMouseLeave={btnHoverOut}
+          >
+            Data &amp; Partnerships
+          </a>
+          <a
+            href="https://forms.gle/REPLACE_WITH_CORRECTIONS_FORM"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: '0.6rem 1.5rem',
+              border: `1px solid ${C.border}`,
+              borderRadius: '2px',
+              backgroundColor: 'transparent',
+              color: C.textSub,
+              cursor: 'pointer',
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              transition: 'border-color 0.15s, color 0.15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.text }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textSub }}
+          >
+            Submit a Correction
+          </a>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer
         style={{
@@ -239,7 +310,7 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
           backgroundColor: C.surface,
           padding: '1.5rem',
           textAlign: 'center',
-          marginTop: '3rem',
+          marginTop: '1rem',
         }}
       >
         <p

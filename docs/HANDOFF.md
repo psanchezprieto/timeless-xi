@@ -4,6 +4,35 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ---
 
+## Session: 2026-06-08 — UI Polish
+
+### Completed
+- Player last name only shown on football pitch (fixes Polish/long name overflow)
+- Country flag + bold name shown in FormationPicker, DiceRoller, CoachPicker headers
+- Ko-fi `kofi_clicked` + `kofi_dismissed` events tracked via `window.posthog` in index.html
+- CLAUDE.md: added analytics tracking requirement section + credentials policy table
+- Roadmap: Phase 6 (Stats page) documented with full architecture plan
+- Contact section added to Homepage with two Google Form placeholder links
+
+### User must replace these placeholders
+| File | Placeholder | Replace with |
+|------|-------------|-------------|
+| `src/components/Homepage.jsx` | `https://forms.gle/REPLACE_WITH_ADVERTISER_FORM` | Real Google Form URL for advertiser/data inquiries |
+| `src/components/Homepage.jsx` | `https://forms.gle/REPLACE_WITH_CORRECTIONS_FORM` | Real Google Form URL for score corrections |
+
+### Certificate issue
+Not a code fix — go to GitHub repo → Settings → Pages → enable **Enforce HTTPS**.
+If greyed out: wait for DNS propagation (~1h after CNAME is set).
+
+### Next priorities
+1. Create the two Google Forms and update the placeholder URLs
+2. Fix certificate (GitHub Pages settings)
+3. Build Stats Page (Phase 6) — needs PostHog personal API key as GitHub Secret
+
+---
+
+---
+
 ## **Current Session Status**
 
 **Last completed**: Phase 2b — game component scaffolding (CountryPicker, FormationPicker, DiceRoller, CoachPicker, TournamentSim, CampaignSummary, Game.jsx, constants.js) — built but **NOT YET COMMITTED**

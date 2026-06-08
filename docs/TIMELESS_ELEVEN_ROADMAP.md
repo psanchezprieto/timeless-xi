@@ -48,6 +48,50 @@ A step-by-step guide to building the Timeless Eleven game in VS Code using Claud
 
 ---
 
+## Phase 6: Stats Page (post-launch)
+
+**Goal**: A public `/stats` route showing community-wide leaderboards from real player data.
+
+### Desired stats
+- Top scores (tournament placement + full squad snapshot)
+- Most picked players per position overall
+- Most picked players per nation
+- Most popular countries
+
+### Architecture
+
+```
+GitHub Actions (daily cron)
+  └─ query PostHog Events API (personal API key — GitHub Secret)
+  └─ compute aggregates
+  └─ write public/data/stats.json → commit → push
+     ↓
+React StatsPage component
+  └─ fetch('/data/stats.json')
+  └─ renders leaderboards
+```
+
+### Implementation plan
+1. **GH Actions job** (`update-stats.yml`): runs daily at 06:00 UTC
+   - Calls PostHog `/api/event` or `/api/query` with personal API key (GitHub Secret `POSTHOG_PERSONAL_KEY`)
+   - Aggregates `player_picked` events → top players per position + per country
+   - Aggregates `campaign_completed` events → top scores (placement + squad snapshot)
+   - Writes `public/data/stats.json` and commits directly to main
+2. **React StatsPage** (`src/components/StatsPage.jsx`):
+   - Route: click "Stats" link in Header
+   - Sections: Top Scores · Most Picked by Position · Most Picked by Country
+   - Falls back gracefully if stats.json is empty/stale
+3. **Header**: add "Stats" nav link
+4. **Cookie note**: only counts events from users who accepted analytics
+
+### Dependencies
+- PostHog personal API key → GitHub Secret (never in frontend)
+- `public/data/stats.json` seeded with empty structure before first run
+
+### Estimated effort: 1–2 sessions
+
+---
+
 ## **Phase 0: Environment Setup (30 mins)**
 
 ### **Step 1: Install Prerequisites**

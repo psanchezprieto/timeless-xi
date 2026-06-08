@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FORMATIONS } from '../constants'
+import { FORMATIONS, getCountryFlagUrl } from '../constants'
 import { getRandomPlayersForPosition } from '../utils/db'
 import { useTheme } from '../styles/theme'
 import { useIsMobile } from '../utils/useIsMobile'
@@ -57,6 +57,12 @@ function getSlotCoords(slots) {
     })
   })
   return result
+}
+
+function lastName(fullName) {
+  if (!fullName) return ''
+  const parts = fullName.trim().split(/\s+/)
+  return parts[parts.length - 1]
 }
 
 function FootballPitch({ slots, team }) {
@@ -122,21 +128,33 @@ function FootballPitch({ slots, team }) {
               {player ? (player.rating ?? '') : pos}
             </div>
             <div style={{
-              fontSize: '0.62rem',
+              fontSize: '0.6rem',
               fontWeight: '700',
               color: '#fff',
               background: 'rgba(0,0,0,0.55)',
               padding: '1px 5px',
               borderRadius: '2px',
               whiteSpace: 'nowrap',
-              maxWidth: '64px',
+              maxWidth: '68px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               textAlign: 'center',
               lineHeight: 1.3,
               letterSpacing: '0.02em',
             }}>
-              {player ? player.name : isCurrent ? '?' : pos}
+              {player ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }}>
+                  {lastName(player.name)}
+                  {player.isCaptain && (
+                    <span style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: '0.75rem', height: '0.75rem', borderRadius: '50%',
+                      background: C.gold, color: '#000',
+                      fontSize: '0.45rem', fontWeight: '900', flexShrink: 0,
+                    }}>C</span>
+                  )}
+                </span>
+              ) : isCurrent ? '?' : pos}
             </div>
           </div>
         )
@@ -209,9 +227,20 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
         </button>
       )}
       <h1 style={S.h1}>Build Your Squad</h1>
-      <p style={{ color: C.textSub, textAlign: 'center', marginBottom: '0.4rem', fontSize: '0.9rem' }}>
-        {country} <span style={{ color: C.textDim }}>·</span> {formation}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+        {getCountryFlagUrl(country) && (
+          <img
+            src={getCountryFlagUrl(country)}
+            alt={`${country} flag`}
+            style={{ height: '20px', width: 'auto', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.25)', flexShrink: 0 }}
+          />
+        )}
+        <p style={{ color: C.text, fontSize: '0.95rem', fontWeight: '700', fontFamily: "'Oswald', sans-serif", letterSpacing: '0.06em', textTransform: 'uppercase', margin: 0 }}>
+          {country}
+        </p>
+        <span style={{ color: C.textDim }}>·</span>
+        <p style={{ color: C.textSub, fontSize: '0.9rem', margin: 0 }}>{formation}</p>
+      </div>
       <p style={{ color: C.textDim, textAlign: 'center', marginBottom: '2rem', fontSize: '0.82rem' }}>
         Slot {Math.min(slotIndex + 1, slots.length)} of {slots.length}
         {currentPos && (
@@ -317,8 +346,18 @@ export default function DiceRoller({ country, formation, team: initialTeam, rero
                       fontFamily: "'Oswald', sans-serif",
                       fontSize: isMobile ? '0.95rem' : '1.3rem', fontWeight: '800',
                       color: C.text, marginBottom: '0.5rem', lineHeight: 1.2,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
                     }}>
                       {player.name}
+                      {player.isCaptain && (
+                        <span title="Captain" style={{
+                          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                          width: '1.1rem', height: '1.1rem', borderRadius: '50%',
+                          background: C.gold, color: '#000',
+                          fontSize: '0.6rem', fontWeight: '900',
+                          flexShrink: 0, lineHeight: 1,
+                        }}>C</span>
+                      )}
                     </div>
                     <div style={{ fontSize: '0.75rem', color: C.textSub, marginBottom: isMobile ? '0.5rem' : '0.75rem' }}>
                       {player.year}

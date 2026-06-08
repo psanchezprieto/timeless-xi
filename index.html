@@ -27,17 +27,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root, [data-theme="light"] {
-      --bg:          #F0EBE1;
+      --bg:          #F5F7FA;
       --surface:     #FFFFFF;
-      --surface-hi:  #F7F3EE;
-      --border:      #CBBFB0;
-      --accent:      #D44028;
-      --accent-h:    #E8553E;
-      --cyan:        #0A7A84;
-      --gold:        #B06A00;
-      --text:        #1A3840;
-      --text-sub:    #4A6B75;
-      --text-dim:    #8AA5AE;
+      --surface-hi:  #EEF1F6;
+      --border:      #C8D0DC;
+      --accent:      #C8211A;
+      --accent-h:    #E02B23;
+      --cyan:        #1A5FA0;
+      --gold:        #C8820A;
+      --text:        #0F1923;
+      --text-sub:    #3D5168;
+      --text-dim:    #8A9BB0;
     }
 
     [data-theme="dark"] {
@@ -68,8 +68,8 @@
       background-image:
         repeating-linear-gradient(
           135deg,
-          rgba(0,0,0,0.025) 0px,
-          rgba(0,0,0,0.025) 1px,
+          rgba(26,95,160,0.04) 0px,
+          rgba(26,95,160,0.04) 1px,
           transparent 1px,
           transparent 40px
         );
@@ -204,6 +204,10 @@
         e.preventDefault();
         widget.style.display = 'none';
         localStorage.setItem('kofi-dismissed', '1');
+        if (window.posthog) window.posthog.capture('kofi_dismissed');
+      });
+      document.querySelector('#kofi-widget a').addEventListener('click', function() {
+        if (window.posthog) window.posthog.capture('kofi_clicked');
       });
     })();
   </script>
