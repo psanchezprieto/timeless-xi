@@ -150,7 +150,7 @@ export default function CountryPicker({ onSelect }) {
         {filtered.map(country => (
           <button
             key={country.name}
-            onClick={() => onSelect(country.name)}
+            onClick={() => onSelect(country)}
             style={{
               cursor: 'pointer',
               padding: 0,

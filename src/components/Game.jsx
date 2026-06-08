@@ -141,10 +141,10 @@ export default function Game({ onBack }) {
 
       <div style={{ padding: '2.5rem 1.5rem' }}>
         {stage === 'country' && <CountryPicker onSelect={onCountry} />}
-        {stage === 'formation' && <FormationPicker country={country} onSelect={onFormation} onNewGame={onNewGame} />}
+        {stage === 'formation' && <FormationPicker country={country?.name ?? country} onSelect={onFormation} onNewGame={onNewGame} />}
         {stage === 'subst' && (
           <DiceRoller
-            country={country}
+            country={country?.name ?? country}
             formation={formation}
             team={team}
             rerolls={rerolls}
@@ -155,9 +155,9 @@ export default function Game({ onBack }) {
             analytics={analytics}
           />
         )}
-        {stage === 'coach' && <CoachPicker country={country} onSelect={onCoach} onNewGame={onNewGame} />}
-        {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country} onComplete={onTournament} onNewGame={onNewGame} />}
-        {stage === 'summary' && result && <CampaignSummary result={result} team={team} country={country} onNewGame={onNewGame} />}
+        {stage === 'coach' && <CoachPicker country={country?.name ?? country} onSelect={onCoach} onNewGame={onNewGame} />}
+        {stage === 'tournament' && <TournamentSim team={team} coach={coach} country={country?.name ?? country} onComplete={onTournament} onNewGame={onNewGame} />}
+        {stage === 'summary' && result && <CampaignSummary result={result} team={team} country={country?.name ?? country} onNewGame={onNewGame} />}
       </div>
     </div>
   )

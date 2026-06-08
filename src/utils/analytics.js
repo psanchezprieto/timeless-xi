@@ -49,14 +49,12 @@ export function useGameAnalytics() {
     posthog.capture('campaign_completed', {
       campaign_id: campaignId,
       // Outcome
-      placement: result.placement,
-      matches_played: result.matches?.length ?? 0,
-      wins: result.wins,
-      draws: result.draws,
-      losses: result.losses,
+      exit_stage: result.exitRound || null,
+      outcome: result.champion ? 'winner' : 'eliminated',
+      matches_played: result.matches ?? 0,
       goals_for: result.goalsFor,
       goals_against: result.goalsAgainst,
-      top_scorer: result.topScorer?.name || null,
+      top_scorer: result.mvp || null,
       // Context
       country: country?.name || null,
       country_code: country?.code || null,
