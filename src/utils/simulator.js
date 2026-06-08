@@ -29,17 +29,21 @@ const GENERIC_PLAYER_NAMES = [
   'Hazard', 'De Bruyne', 'Kompany', 'Verhoeven', 'Pastore', 'Cavani',
 ]
 
+const SCORER_WEIGHT = {
+  // Broad legacy positions
+  FWD: 3, MID: 1.5, DEF: 0.3, GK: 0.02,
+  // Granular positions (used after the 10-position refactor)
+  ST: 3, LW: 2.5, RW: 2.5,
+  CM: 1.5, LM: 1.2, RM: 1.2, CAM: 2, CDM: 0.5,
+  CB: 0.25, LB: 0.3, RB: 0.3,
+}
+
 function weightedPick(players) {
-  const weights = players.map(p => {
-    if (p.position === 'FWD') return 3
-    if (p.position === 'MID') return 1.5
-    if (p.position === 'DEF') return 0.3
-    return 0
-  })
+  const weights = players.map(p => SCORER_WEIGHT[p.position] ?? 0.5)
   const total = weights.reduce((a, b) => a + b, 0)
   if (total === 0) return players[Math.floor(Math.random() * players.length)].name
   let r = Math.random() * total
-  for (let i = 0; i < weights.length; i++) {
+  for (let i = 0; i < players.length; i++) {
     r -= weights[i]
     if (r <= 0) return players[i].name
   }
