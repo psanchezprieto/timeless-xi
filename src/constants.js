@@ -75,7 +75,7 @@ const COUNTRY_CODES = {
 export function getCountryFlagUrl(countryName) {
   const code = COUNTRY_CODES[countryName]
   if (!code) return null
-  return `https://flagcdn.com/w80/${code}.png`
+  return `/flags/${code}.png`
 }
 
 export const TOURNAMENT_STRUCTURE = {

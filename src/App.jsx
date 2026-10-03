@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Game from './components/Game'
 import Homepage from './components/Homepage'
+import StatsPage from './components/StatsPage'
 import CookieBanner from './components/CookieBanner'
 import { LIGHT, DARK, makeS, makeHovers, ThemeContext } from './styles/theme'
 
@@ -32,7 +33,35 @@ function AppInner() {
   const [ready, setReady] = useState(false)
   const [error, setError] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window === 'undefined') return 'home'
+    return window.location.hash === '#stats' ? 'stats' : 'home'
+  })
   const C = React.useContext(ThemeContext).C
+
+  const syncUrlForView = (nextView) => {
+    if (typeof window === 'undefined') return
+
+    const url = new URL(window.location.href)
+    url.hash = nextView === 'stats' ? '#stats' : ''
+    window.history.pushState({ view: nextView }, '', url)
+  }
+
+  useEffect(() => {
+    const onHistoryChange = () => {
+      const nextView = window.location.hash === '#stats' ? 'stats' : 'home'
+      setCurrentView(nextView)
+      if (nextView !== 'stats') setIsPlaying(false)
+    }
+
+    window.addEventListener('popstate', onHistoryChange)
+    window.addEventListener('hashchange', onHistoryChange)
+
+    return () => {
+      window.removeEventListener('popstate', onHistoryChange)
+      window.removeEventListener('hashchange', onHistoryChange)
+    }
+  }, [])
 
   useEffect(() => {
     fetch('/data/meta.json')
@@ -69,13 +98,28 @@ function AppInner() {
   }
 
   if (isPlaying) {
-    return <Game onBack={() => setIsPlaying(false)} />
+    return <Game onBack={() => { setIsPlaying(false); syncUrlForView('home') }} />
+  }
+
+  if (currentView === 'stats') {
+    return <StatsPage onHome={() => { setCurrentView('home'); syncUrlForView('home') }} />
   }
 
   return (
     <Homepage
-      onPlayClick={() => setIsPlaying(true)}
-      onHomeClick={() => setIsPlaying(false)}
+      onPlayClick={() => {
+        setIsPlaying(true)
+        setCurrentView('home')
+      }}
+      onHomeClick={() => {
+        setIsPlaying(false)
+        setCurrentView('home')
+        syncUrlForView('home')
+      }}
+      onViewStats={() => {
+        setCurrentView('stats')
+        syncUrlForView('stats')
+      }}
     />
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { useTheme } from '../styles/theme'
 import '../styles/index.css'
 
-export default function Header({ onHome }) {
+export default function Header({ onHome, onStats }) {
   const { C, S, dark, toggle, btnHoverIn, btnHoverOut } = useTheme()
 
   return (
@@ -64,27 +64,51 @@ export default function Header({ onHome }) {
         {/* Spacer */}
         <div style={{ flex: 1 }} />
 
-        {/* Theme Toggle */}
-        <button
-          onClick={toggle}
-          style={{
-            ...S.btn,
-            background: dark ? C.cyan : C.gold,
-            padding: '0.5rem 1rem',
-            fontSize: '0.8rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-          }}
-          onMouseEnter={btnHoverIn}
-          onMouseLeave={btnHoverOut}
-          title={dark ? 'Light Mode' : 'Dark Mode'}
-        >
-          {dark ? '☀️' : '🌙'}
-          <span className="theme-toggle-text">
-            {dark ? 'Light' : 'Dark'}
-          </span>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {onStats && (
+            <button
+              onClick={onStats}
+              style={{
+                ...S.btnGhost,
+                padding: '0.5rem 0.9rem',
+                fontSize: '0.75rem',
+                background: 'transparent',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = C.accent
+                e.currentTarget.style.color = C.accent
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = C.border
+                e.currentTarget.style.color = C.textSub
+              }}
+            >
+              Stats
+            </button>
+          )}
+
+          {/* Theme Toggle */}
+          <button
+            onClick={toggle}
+            style={{
+              ...S.btn,
+              background: dark ? C.cyan : C.gold,
+              padding: '0.5rem 1rem',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+            }}
+            onMouseEnter={btnHoverIn}
+            onMouseLeave={btnHoverOut}
+            title={dark ? 'Light Mode' : 'Dark Mode'}
+          >
+            {dark ? '☀️' : '🌙'}
+            <span className="theme-toggle-text">
+              {dark ? 'Light' : 'Dark'}
+            </span>
+          </button>
+        </div>
       </div>
     </header>
   )

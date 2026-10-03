@@ -1,0 +1,40 @@
+name: Update community stats
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-community-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate community data from PostHog
+        env:
+          POSTHOG_PROJECT_ID: ${{ secrets.POSTHOG_PROJECT_ID }}
+          POSTHOG_PERSONAL_KEY: ${{ secrets.POSTHOG_PERSONAL_KEY }}
+          POSTHOG_API_HOST: ${{ vars.POSTHOG_API_HOST || 'https://eu.i.posthog.com' }}
+          POSTHOG_LOOKBACK_DAYS: '90'
+          COMMUNITY_STATS_OUTPUT_PATH: public/data/community-stats.json
+        run: npm run stats:update
+
+      - name: Commit generated stats
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Update community stats from PostHog'
+          file_pattern: public/data/community-stats.json

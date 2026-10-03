@@ -1,13 +1,14 @@
 import React from 'react'
 import { useTheme } from '../styles/theme'
 import Header from './Header'
+import CommunityLeaderboard from './CommunityLeaderboard'
 
-export default function Homepage({ onPlayClick, onHomeClick }) {
+export default function Homepage({ onPlayClick, onHomeClick, onViewStats }) {
   const { C, S, btnHoverIn, btnHoverOut } = useTheme()
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: C.bg }}>
-      <Header onHome={onHomeClick} />
+      <Header onHome={onHomeClick} onStats={onViewStats} />
 
       <main style={{ maxWidth: '72rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
         {/* Hero Section */}
@@ -71,28 +72,49 @@ export default function Homepage({ onPlayClick, onHomeClick }) {
             Select your country, pick your formation, and compete in a simulated tournament against historical rivals.
           </p>
 
-          {/* CTA Button */}
-          <button
-            onClick={onPlayClick}
-            style={{
-              ...S.btn,
-              padding: '1rem 2.5rem',
-              fontSize: '1.1rem',
-              boxShadow: `6px 6px 0 ${C.accent}55`,
-              transform: 'none',
-            }}
-            onMouseEnter={e => {
-              btnHoverIn(e)
-              e.currentTarget.style.boxShadow = `6px 6px 0 ${C.accent}88`
-              e.currentTarget.style.transform = 'translateY(-3px)'
-            }}
-            onMouseLeave={e => {
-              btnHoverOut(e)
-              e.currentTarget.style.boxShadow = `6px 6px 0 ${C.accent}55`
-            }}
-          >
-            Play Now
-          </button>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={onPlayClick}
+              style={{
+                ...S.btn,
+                padding: '1rem 2.5rem',
+                fontSize: '1.1rem',
+                boxShadow: `6px 6px 0 ${C.accent}55`,
+                transform: 'none',
+              }}
+              onMouseEnter={e => {
+                btnHoverIn(e)
+                e.currentTarget.style.boxShadow = `6px 6px 0 ${C.accent}88`
+                e.currentTarget.style.transform = 'translateY(-3px)'
+              }}
+              onMouseLeave={e => {
+                btnHoverOut(e)
+                e.currentTarget.style.boxShadow = `6px 6px 0 ${C.accent}55`
+              }}
+            >
+              Play Now
+            </button>
+
+            <button
+              onClick={onViewStats}
+              style={{
+                ...S.btnGhost,
+                padding: '1rem 2rem',
+                fontSize: '1rem',
+                background: 'transparent',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = C.accent
+                e.currentTarget.style.color = C.accent
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = C.border
+                e.currentTarget.style.color = C.textSub
+              }}
+            >
+              Community Stats
+            </button>
+          </div>
         </section>
 
         {/* Features Grid */}

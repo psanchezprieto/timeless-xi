@@ -48,47 +48,69 @@ A step-by-step guide to building the Timeless Eleven game in VS Code using Claud
 
 ---
 
-## Phase 6: Stats Page (post-launch)
+## Phase 6: Community stats + leaderboard (post-launch)
 
-**Goal**: A public `/stats` route showing community-wide leaderboards from real player data.
+**Goal**: Surface a public community snapshot built from real PostHog data: the most popular nations and a formation-aware top XI chosen by players.
 
 ### Desired stats
-- Top scores (tournament placement + full squad snapshot)
-- Most picked players per position overall
-- Most picked players per nation
-- Most popular countries
+- Top nations picked across campaigns (`campaign_started`)
+- Formation-aware top XI for each popular setup (`4-4-2`, `4-3-3`, `3-5-2`, `5-3-2`, `4-2-4`)
+- Most picked players by position within each formation
+- Daily refresh via GitHub Action so the page stays current without a backend
 
 ### Architecture
 
 ```
 GitHub Actions (daily cron)
-  └─ query PostHog Events API (personal API key — GitHub Secret)
-  └─ compute aggregates
-  └─ write public/data/stats.json → commit → push
+  └─ query PostHog Events API (GitHub Secret: POSTHOG_PERSONAL_KEY + POSTHOG_PROJECT_ID)
+  └─ join campaign_started + formation_selected + player_picked events
+  └─ compute formation-aware top XI + top nations
+  └─ write public/data/community-stats.json → commit → push
      ↓
-React StatsPage component
-  └─ fetch('/data/stats.json')
-  └─ renders leaderboards
+React CommunityLeaderboard component
+  └─ fetch('/data/community-stats.json')
+  └─ render top nations + top team by formation
 ```
 
 ### Implementation plan
-1. **GH Actions job** (`update-stats.yml`): runs daily at 06:00 UTC
-   - Calls PostHog `/api/event` or `/api/query` with personal API key (GitHub Secret `POSTHOG_PERSONAL_KEY`)
-   - Aggregates `player_picked` events → top players per position + per country
-   - Aggregates `campaign_completed` events → top scores (placement + squad snapshot)
-   - Writes `public/data/stats.json` and commits directly to main
-2. **React StatsPage** (`src/components/StatsPage.jsx`):
-   - Route: click "Stats" link in Header
-   - Sections: Top Scores · Most Picked by Position · Most Picked by Country
-   - Falls back gracefully if stats.json is empty/stale
-3. **Header**: add "Stats" nav link
+1. **GH Actions job** (`.github/workflows/update-community-stats.yml`): runs daily at 06:00 UTC and allows manual trigger
+   - Calls PostHog Events API with personal API key and project ID
+   - Aggregates `campaign_started` → top nations by campaign count
+   - Aggregates `player_picked` + `formation_selected` → top players per position per formation
+   - Writes `public/data/community-stats.json` and commits to main
+2. **React section** (`src/components/CommunityLeaderboard.jsx`):
+   - Renders top nations list
+   - Renders formation-aware team cards for the most common setups
+   - Falls back gracefully if the JSON file is empty or stale
+3. **Homepage integration**: add the section just below the hero or feature deck
 4. **Cookie note**: only counts events from users who accepted analytics
 
-### Dependencies
-- PostHog personal API key → GitHub Secret (never in frontend)
-- `public/data/stats.json` seeded with empty structure before first run
+### Data contract
+```json
+{
+  "updatedAt": "2026-10-03T00:00:00.000Z",
+  "periodDays": 90,
+  "topNations": [
+    { "rank": 1, "country": "Brazil", "count": 247 }
+  ],
+  "topFormations": [
+    {
+      "formation": "4-3-3",
+      "totalVotes": 124,
+      "team": [
+        { "position": "GK", "name": "Iker Casillas", "count": 19, "country": "Spain" }
+      ]
+    }
+  ]
+}
+```
 
-### Estimated effort: 1–2 sessions
+### Dependencies
+- PostHog personal API key → GitHub Secret `POSTHOG_PERSONAL_KEY`
+- PostHog project ID → GitHub Secret `POSTHOG_PROJECT_ID`
+- `public/data/community-stats.json` seeded with empty structure before the first successful sync
+
+### Estimated effort: 1 session
 
 ---
 

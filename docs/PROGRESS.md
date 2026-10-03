@@ -146,6 +146,17 @@ Track completion of each phase, blockers, and key decisions.
 
 ---
 
+## Phase 6: Community stats + PostHog leaderboard ✅
+
+- [x] Define leaderboard format: top nations and formation-aware top XI
+- [x] Add daily PostHog sync workflow to refresh `public/data/community-stats.json`
+- [x] Add frontend chart section to display the data on the homepage
+- [x] Document GitHub secret requirements and daily update flow in the roadmap
+
+**Status**: Implemented (2026-10-03)
+
+---
+
 ## Key Decisions
 
 | Decision | Status | Notes |

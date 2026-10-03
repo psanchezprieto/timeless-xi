@@ -81,7 +81,18 @@ npm run preview
 # Deploy to GitHub Pages
 git push origin main  # Workflow auto-deploys
 ```
+### Community leaderboard data
 
+The site also includes a community leaderboard fed by PostHog analytics:
+
+```bash
+# Generate /public/data/community-stats.json from the latest PostHog events
+POSTHOG_PROJECT_ID=... \
+POSTHOG_PERSONAL_KEY=... \
+npm run stats:update
+```
+
+This workflow is scheduled daily via GitHub Actions and updates the public JSON file used by the homepage leaderboard. It aggregates the most-picked nations and the formation-aware top XI built from `campaign_started`, `formation_selected`, and `player_picked` events.
 ---
 
 ## Architecture

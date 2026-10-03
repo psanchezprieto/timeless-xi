@@ -4,15 +4,20 @@ Use this file to **resume work in the next Claude Code session**. Copy the promp
 
 ---
 
-## Session: 2026-06-08 — UI Polish
+## Session: 2026-10-03 — Community stats + PostHog feed
 
 ### Completed
-- Player last name only shown on football pitch (fixes Polish/long name overflow)
-- Country flag + bold name shown in FormationPicker, DiceRoller, CoachPicker headers
-- Ko-fi `kofi_clicked` + `kofi_dismissed` events tracked via `window.posthog` in index.html
-- CLAUDE.md: added analytics tracking requirement section + credentials policy table
-- Roadmap: Phase 6 (Stats page) documented with full architecture plan
-- Contact section added to Homepage with two Google Form placeholder links
+- Added a homepage community leaderboard section that renders the latest nation picks and a formation-aware top XI
+- Added `scripts/update-community-stats.mjs` to aggregate `campaign_started`, `formation_selected`, and `player_picked` events from PostHog
+- Added daily GitHub Action at `.github/workflows/update-community-stats.yml` to refresh `public/data/community-stats.json`
+- Seeded `public/data/community-stats.json` with a safe empty-state payload before the first live sync
+- Updated the roadmap and README to describe the PostHog analytics data flow for top nations and top teams
+- Documented the required GitHub secrets: `POSTHOG_PROJECT_ID` and `POSTHOG_PERSONAL_KEY`
+
+### Next priorities
+1. Add the real PostHog project ID and personal key to GitHub Secrets
+2. Trigger the workflow once to confirm data generation and file commit behavior
+3. Decide whether the leaderboard should live on the homepage or as a dedicated `/stats` route once traffic grows
 
 ### User must replace these placeholders
 | File | Placeholder | Replace with |
