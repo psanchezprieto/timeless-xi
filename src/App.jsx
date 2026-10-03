@@ -3,6 +3,7 @@ import Game from './components/Game'
 import Homepage from './components/Homepage'
 import StatsPage from './components/StatsPage'
 import CookieBanner from './components/CookieBanner'
+import KofiWidget from './components/KofiWidget'
 import { LIGHT, DARK, makeS, makeHovers, ThemeContext } from './styles/theme'
 
 function ThemeProvider({ children }) {
@@ -129,6 +130,7 @@ export default function App() {
     <ThemeProvider>
       <AppInner />
       <CookieBanner />
+      <KofiWidget />
     </ThemeProvider>
   )
 }

@@ -11,7 +11,7 @@ A browser-based game where you:
 6. See game-by-game results with goal scorers
 7. Share your campaign as a retro-styled image
 
-**[Play now](https://timelessxi.com)** (Coming soon)
+**[Play now](https://timeless-xi.com)**
 
 ---
 
@@ -20,8 +20,9 @@ A browser-based game where you:
 - 📊 **23 World Cup squads** (1930-2026)
 - ⚽ **Realistic match simulation** based on player ratings
 - 🏆 **Full tournament progression** (32 teams, groups, knockouts)
-- 🎨 **Retro 80s aesthetic** (neon, gradients, synthwave vibes)
-- 📸 **Shareable campaign images** (PNG download)
+- 🎨 **Retro match-day aesthetic** (Italia 90 broadcast-inspired grid, light/dark themes)
+- 📸 **Shareable campaign images** (PNG download / native share)
+- 📈 **Community stats page** fed by a daily PostHog data pull
 - 📱 **Mobile responsive**
 
 ---
@@ -35,7 +36,7 @@ A browser-based game where you:
 ### Setup
 ```bash
 # Clone repo
-git clone https://github.com/pablosanchezprieto/timeless-xi.git
+git clone https://github.com/psanchezprieto/timeless-xi.git
 cd timeless-xi
 
 # Install dependencies
@@ -110,7 +111,7 @@ Key files:
 
 ## Status
 
-🔄 **In Development**
+✅ **Live** at [timeless-xi.com](https://timeless-xi.com)
 
 - [x] Phase 0: Environment setup
 - [x] Phase 1: Data pipeline (fetch → enrich → compress)

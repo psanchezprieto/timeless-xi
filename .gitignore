@@ -8,3 +8,6 @@ dist/
 .idea/
 *.log
 /data/
+.claude/agents/
+docs/timeless-xi-posthog-talking-points.md
+docs/linkedin-post.md

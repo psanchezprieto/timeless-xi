@@ -1,5 +1,13 @@
 import posthog from 'posthog-js'
 
+export function trackKofiClicked() {
+  posthog.capture('kofi_clicked')
+}
+
+export function trackKofiDismissed() {
+  posthog.capture('kofi_dismissed')
+}
+
 export function useGameAnalytics() {
   const generateCampaignId = () => `campaign_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
