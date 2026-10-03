@@ -13,6 +13,28 @@ import { preloadTournamentData } from '../utils/db'
 const STAGES = ['country', 'formation', 'subst', 'coach', 'tournament', 'summary']
 const STORAGE_KEY = 'timeless_xi_game_state'
 
+// Each stage requires the data of every stage before it to have been persisted.
+// If a stage is restored without its prerequisites (e.g. 'summary' with no
+// result because a past session didn't persist it, or data simply got
+// corrupted), the game would render blank instead of crashing or recovering.
+const STAGE_REQUIREMENTS = {
+  country: () => true,
+  formation: s => !!s.country,
+  subst: s => !!s.country && !!s.formation,
+  coach: s => !!s.country && !!s.formation && s.team?.length > 0,
+  tournament: s => !!s.country && !!s.formation && s.team?.length > 0 && !!s.coach,
+  summary: s => !!s.country && !!s.formation && s.team?.length > 0 && !!s.coach && !!s.result,
+}
+
+function resolveStage(requestedStage, state) {
+  const idx = STAGES.indexOf(requestedStage)
+  for (let i = idx; i >= 0; i--) {
+    const s = STAGES[i]
+    if (STAGE_REQUIREMENTS[s](state)) return s
+  }
+  return 'country'
+}
+
 export default function Game({ onBack }) {
   const { C, dark, toggle } = useTheme()
   const analytics = useGameAnalytics()
@@ -34,11 +56,19 @@ export default function Game({ onBack }) {
     if (saved) {
       try {
         const state = JSON.parse(saved)
-        setStage(state.stage || 'country')
-        setCountry(state.country || null)
-        setFormation(state.formation || null)
-        setTeam(state.team || [])
-        setCoach(state.coach || null)
+        const safeState = {
+          country: state.country || null,
+          formation: state.formation || null,
+          team: state.team || [],
+          coach: state.coach || null,
+          result: state.result || null,
+        }
+        setStage(resolveStage(state.stage || 'country', safeState))
+        setCountry(safeState.country)
+        setFormation(safeState.formation)
+        setTeam(safeState.team)
+        setCoach(safeState.coach)
+        setResult(safeState.result)
         setRerolls(state.rerolls !== undefined ? state.rerolls : 3)
       } catch (e) {
         console.warn('Failed to restore game state:', e)
@@ -55,15 +85,16 @@ export default function Game({ onBack }) {
   // Save to localStorage whenever state changes
   useEffect(() => {
     if (!hydrated) return
-    const state = { stage, country, formation, team, coach, rerolls }
+    const state = { stage, country, formation, team, coach, result, rerolls }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-  }, [stage, country, formation, team, coach, rerolls, hydrated])
+  }, [stage, country, formation, team, coach, result, rerolls, hydrated])
 
   const onCountry = useCallback(c => {
     setCountry(c)
     setFormation(null)
     setTeam([])
     setCoach(null)
+    setResult(null)
     setRerolls(3) // Reset rerolls when starting a new squad
     const newCampaignId = analytics.trackCampaignStart(c)
     setCampaignId(newCampaignId)

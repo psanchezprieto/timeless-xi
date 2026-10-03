@@ -4,6 +4,7 @@ import Homepage from './components/Homepage'
 import StatsPage from './components/StatsPage'
 import CookieBanner from './components/CookieBanner'
 import KofiWidget from './components/KofiWidget'
+import ErrorBoundary from './components/ErrorBoundary'
 import { LIGHT, DARK, makeS, makeHovers, ThemeContext } from './styles/theme'
 
 function ThemeProvider({ children }) {
@@ -128,9 +129,11 @@ function AppInner() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppInner />
-      <CookieBanner />
-      <KofiWidget />
+      <ErrorBoundary>
+        <AppInner />
+        <CookieBanner />
+        <KofiWidget />
+      </ErrorBoundary>
     </ThemeProvider>
   )
 }

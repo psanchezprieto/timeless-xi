@@ -416,9 +416,23 @@ export default function TournamentSim({ team, coach, country, onComplete, onNewG
       groups:              () => simulateGroupStageRef.current?.(),
       group_match_preview: () => revealGroupMatchRef.current?.(),
       group_match_result:  () => nextGroupMatchRef.current?.(),
-      group_results:       () => advanceToKnockoutRef.current?.(),
+      group_results:       () => {
+        // Eliminated in the group stage — this would jump straight to the
+        // share screen. Stop auto-play here and let the user click through.
+        const ug = simGroups?.find(g => g.teams.some(t => t.isUser))
+        const qualified = ug ? ug.teams.findIndex(t => t.isUser) < 2 : true
+        if (!qualified) return
+        advanceToKnockoutRef.current?.()
+      },
       match_preview:       () => playMatchRef.current?.(),
-      match_result:        () => afterMatchRef.current?.(),
+      match_result:        () => {
+        // Tournament is over (eliminated, or just won the final) — this
+        // would jump straight to the share screen. Stop auto-play here and
+        // let the user click through.
+        const isTournamentOver = !matchResult?.userWon || roundIdx + 1 >= ROUNDS.length
+        if (isTournamentOver) return
+        afterMatchRef.current?.()
+      },
     }
     if (!actions[phase]) return
     const id = setTimeout(actions[phase], delays[phase])
