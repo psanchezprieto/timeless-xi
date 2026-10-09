@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-10-08T12:50:52.874Z",
+  "updatedAt": "2026-10-09T12:36:19.208Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-10T12:50:50.522Z",
+  "sinceDate": "2026-07-11T12:36:17.727Z",
   "totalStarts": 618,
   "totalWins": 171,
   "winRate": 27.7,
@@ -664,7 +664,7 @@
     },
     {
       "coach": "Luis Aragonés",
-      "count": 74,
+      "count": 75,
       "country": "Spain"
     },
     {
