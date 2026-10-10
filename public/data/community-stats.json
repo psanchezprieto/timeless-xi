@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-10-09T12:36:19.208Z",
+  "updatedAt": "2026-10-10T11:56:41.904Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-11T12:36:17.727Z",
-  "totalStarts": 618,
-  "totalWins": 171,
+  "sinceDate": "2026-07-12T11:56:40.687Z",
+  "totalStarts": 622,
+  "totalWins": 172,
   "winRate": 27.7,
   "topCountriesPlaying": [
     {
@@ -519,7 +519,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 514
+      "count": 518
     },
     {
       "rank": 2,
@@ -649,7 +649,7 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 148
+    "count": 149
   },
   "topCoaches": [
     {
