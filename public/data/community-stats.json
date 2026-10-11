@@ -1,30 +1,30 @@
 {
-  "updatedAt": "2026-10-10T11:56:41.904Z",
+  "updatedAt": "2026-10-11T12:08:17.835Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-12T11:56:40.687Z",
-  "totalStarts": 622,
-  "totalWins": 172,
-  "winRate": 27.7,
+  "sinceDate": "2026-07-13T12:08:12.783Z",
+  "totalStarts": 611,
+  "totalWins": 170,
+  "winRate": 27.8,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 69
+      "count": 68
     },
     {
       "rank": 2,
       "country": "Spain",
-      "count": 45
+      "count": 44
     },
     {
       "rank": 3,
       "country": "Argentina",
-      "count": 43
+      "count": 42
     },
     {
       "rank": 4,
       "country": "France",
-      "count": 42
+      "count": 41
     },
     {
       "rank": 5,
@@ -41,22 +41,22 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 69
+      "count": 68
     },
     {
       "rank": 2,
       "country": "Spain",
-      "count": 45
+      "count": 44
     },
     {
       "rank": 3,
       "country": "Argentina",
-      "count": 43
+      "count": 42
     },
     {
       "rank": 4,
       "country": "France",
-      "count": 42
+      "count": 41
     },
     {
       "rank": 5,
@@ -220,12 +220,12 @@
     },
     {
       "formation": "4-3-3",
-      "totalVotes": 67,
+      "totalVotes": 63,
       "team": [
         {
           "position": "GK",
           "name": "Hugo Lloris",
-          "count": 6,
+          "count": 5,
           "country": "France",
           "positions": [
             "GK"
@@ -251,9 +251,9 @@
         },
         {
           "position": "CB",
-          "name": "Gerard Piqué",
-          "count": 4,
-          "country": "Spain",
+          "name": "Elie Onana",
+          "count": 3,
+          "country": "Cameroon",
           "positions": [
             "CB"
           ]
@@ -288,7 +288,7 @@
         {
           "position": "RW",
           "name": "Ousmane Dembélé",
-          "count": 13,
+          "count": 12,
           "country": "France",
           "positions": [
             "RW"
@@ -315,7 +315,7 @@
         {
           "name": "Benjamin Pavard",
           "position": "CB",
-          "count": 7,
+          "count": 6,
           "country": "France",
           "positions": [
             "CB",
@@ -326,7 +326,7 @@
       "topPlayers": [
         {
           "name": "Ousmane Dembélé",
-          "count": 13,
+          "count": 12,
           "country": "France",
           "positions": [
             "RW"
@@ -342,19 +342,11 @@
         },
         {
           "name": "Benjamin Pavard",
-          "count": 7,
+          "count": 6,
           "country": "France",
           "positions": [
             "CB",
             "RB"
-          ]
-        },
-        {
-          "name": "Hugo Lloris",
-          "count": 6,
-          "country": "France",
-          "positions": [
-            "GK"
           ]
         },
         {
@@ -364,152 +356,160 @@
           "positions": [
             "LW"
           ]
+        },
+        {
+          "name": "Manuel Amoros",
+          "count": 6,
+          "country": "France",
+          "positions": [
+            "RB"
+          ]
         }
       ]
     },
     {
-      "formation": "5-3-2",
-      "totalVotes": 22,
+      "formation": "3-5-2",
+      "totalVotes": 15,
       "team": [
         {
           "position": "GK",
-          "name": "Dino Zoff",
+          "name": "Iker Casillas",
           "count": 2,
-          "country": "Italy",
+          "country": "Spain",
           "positions": [
             "GK"
           ]
         },
         {
-          "position": "LB",
-          "name": "Giacinto Facchetti",
-          "count": 2,
-          "country": "Italy",
-          "positions": [
-            "LB"
-          ]
-        },
-        {
           "position": "CB",
-          "name": "Franco Baresi",
-          "count": 4,
-          "country": "Italy",
+          "name": "Gerard Piqué",
+          "count": 2,
+          "country": "Spain",
           "positions": [
             "CB"
           ]
         },
         {
           "position": "CB",
-          "name": "Pietro Vierchowod",
-          "count": 2,
-          "country": "Italy",
+          "name": "Aldair",
+          "count": 1,
+          "country": "Brazil",
           "positions": [
             "CB"
           ]
         },
         {
           "position": "CB",
-          "name": "Terry Butcher",
-          "count": 2,
-          "country": "England",
+          "name": "Andoni Goikoetxea",
+          "count": 1,
+          "country": "Spain",
           "positions": [
             "CB"
-          ]
-        },
-        {
-          "position": "RB",
-          "name": "George Cohen",
-          "count": 2,
-          "country": "England",
-          "positions": [
-            "RB"
           ]
         },
         {
           "position": "CM",
-          "name": "Gianni Rivera",
-          "count": 3,
-          "country": "Italy",
+          "name": "Alan Ball",
+          "count": 1,
+          "country": "England",
           "positions": [
             "CM"
           ]
         },
         {
           "position": "CM",
-          "name": "Alex Oxlade-Chamberlain",
+          "name": "Antonio Rattín",
           "count": 1,
-          "country": "Unknown",
+          "country": "Argentina",
           "positions": [
             "CM"
           ]
         },
         {
           "position": "CM",
-          "name": "Andrea Pirlo",
+          "name": "Benny Feilhaber",
           "count": 1,
-          "country": "Italy",
+          "country": "United States",
           "positions": [
             "CM"
           ]
         },
         {
           "position": "ST",
-          "name": "Roberto Baggio",
-          "count": 2,
-          "country": "Italy",
+          "name": "Álvaro Morata",
+          "count": 1,
+          "country": "Spain",
           "positions": [
             "ST"
           ]
         },
         {
           "position": "ST",
-          "name": "Alberto Gilardino",
+          "name": "Ángel Labruna",
           "count": 1,
-          "country": "Italy",
+          "country": "Argentina",
           "positions": [
             "ST"
+          ]
+        },
+        {
+          "name": "Claudio López",
+          "position": "MID",
+          "count": 2,
+          "country": "Argentina",
+          "positions": [
+            "MID"
+          ]
+        },
+        {
+          "name": "Gaizka Mendieta",
+          "position": "MID",
+          "count": 2,
+          "country": "Spain",
+          "positions": [
+            "MID"
           ]
         }
       ],
       "topPlayers": [
         {
-          "name": "Franco Baresi",
-          "count": 4,
-          "country": "Italy",
+          "name": "Claudio López",
+          "count": 2,
+          "country": "Argentina",
+          "positions": [
+            "MID"
+          ]
+        },
+        {
+          "name": "Gaizka Mendieta",
+          "count": 2,
+          "country": "Spain",
+          "positions": [
+            "MID"
+          ]
+        },
+        {
+          "name": "Gerard Piqué",
+          "count": 2,
+          "country": "Spain",
           "positions": [
             "CB"
           ]
         },
         {
-          "name": "Gianni Rivera",
-          "count": 3,
-          "country": "Italy",
-          "positions": [
-            "CM"
-          ]
-        },
-        {
-          "name": "Dino Zoff",
+          "name": "Iker Casillas",
           "count": 2,
-          "country": "Italy",
+          "country": "Spain",
           "positions": [
             "GK"
           ]
         },
         {
-          "name": "George Cohen",
+          "name": "Paco Gento",
           "count": 2,
-          "country": "England",
+          "country": "Spain",
           "positions": [
-            "RB"
-          ]
-        },
-        {
-          "name": "Giacinto Facchetti",
-          "count": 2,
-          "country": "Italy",
-          "positions": [
-            "LB"
+            "MID"
           ]
         }
       ]
@@ -519,33 +519,33 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 518
+      "count": 516
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 66
+      "count": 62
     },
     {
       "rank": 3,
       "formation": "3-5-2",
-      "count": 13
+      "count": 12
     },
     {
       "rank": 4,
       "formation": "5-3-2",
-      "count": 11
+      "count": 8
     },
     {
       "rank": 5,
       "formation": "4-2-4",
-      "count": 5
+      "count": 4
     }
   ],
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 41,
+      "count": 40,
       "country": "France",
       "positions": [
         "MID",
@@ -570,7 +570,7 @@
     },
     {
       "name": "Nílton Santos",
-      "count": 31,
+      "count": 30,
       "country": "Brazil",
       "positions": [
         "CB",
@@ -579,7 +579,7 @@
     },
     {
       "name": "Garrincha",
-      "count": 30,
+      "count": 29,
       "country": "Brazil",
       "positions": [
         "MID",
@@ -614,15 +614,6 @@
       ]
     },
     {
-      "name": "Silvio Marzolini",
-      "count": 26,
-      "country": "Argentina",
-      "positions": [
-        "CB",
-        "LB"
-      ]
-    },
-    {
       "name": "Cristiano Ronaldo",
       "count": 25,
       "country": "Portugal",
@@ -633,13 +624,22 @@
       ]
     },
     {
-      "name": "Claudio Caniggia",
-      "count": 24,
+      "name": "Silvio Marzolini",
+      "count": 25,
       "country": "Argentina",
       "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
+      "name": "Jairzinho",
+      "count": 24,
+      "country": "Brazil",
+      "positions": [
+        "CM",
         "MID",
-        "RW",
-        "ST"
+        "RW"
       ]
     }
   ],
@@ -659,7 +659,7 @@
     },
     {
       "coach": "Vicente Feola",
-      "count": 94,
+      "count": 92,
       "country": "Brazil"
     },
     {
@@ -669,7 +669,7 @@
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 70,
+      "count": 68,
       "country": "France"
     },
     {
