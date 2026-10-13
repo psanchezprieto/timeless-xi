@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-10-12T14:28:23.914Z",
+  "updatedAt": "2026-10-13T13:36:12.761Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-14T14:28:22.601Z",
+  "sinceDate": "2026-07-15T13:36:10.702Z",
   "totalStarts": 611,
   "totalWins": 170,
   "winRate": 27.8,
@@ -675,7 +675,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 66,
-      "country": "China PR"
+      "country": "United States"
     }
   ]
 }
