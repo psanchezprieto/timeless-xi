@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-10-14T11:13:40.055Z",
+  "updatedAt": "2026-10-15T10:53:27.829Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-16T11:13:38.410Z",
-  "totalStarts": 611,
-  "totalWins": 170,
-  "winRate": 27.8,
+  "sinceDate": "2026-07-17T10:53:26.295Z",
+  "totalStarts": 612,
+  "totalWins": 171,
+  "winRate": 27.9,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 68
+      "count": 69
     },
     {
       "rank": 2,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 68
+      "count": 69
     },
     {
       "rank": 2,
@@ -278,9 +278,9 @@
         },
         {
           "position": "CM",
-          "name": "Zinedine Zidane",
+          "name": "Dunga",
           "count": 4,
-          "country": "France",
+          "country": "Brazil",
           "positions": [
             "CM"
           ]
@@ -524,7 +524,7 @@
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 62
+      "count": 63
     },
     {
       "rank": 3,
@@ -624,6 +624,16 @@
       ]
     },
     {
+      "name": "Jairzinho",
+      "count": 25,
+      "country": "Brazil",
+      "positions": [
+        "CM",
+        "MID",
+        "RW"
+      ]
+    },
+    {
       "name": "Silvio Marzolini",
       "count": 25,
       "country": "Argentina",
@@ -631,21 +641,11 @@
         "CB",
         "LB"
       ]
-    },
-    {
-      "name": "Jairzinho",
-      "count": 24,
-      "country": "Brazil",
-      "positions": [
-        "CM",
-        "MID",
-        "RW"
-      ]
     }
   ],
   "topWinningTeam": {
     "country": "Brazil",
-    "count": 41
+    "count": 42
   },
   "topWinningFormation": {
     "formation": "4-4-2",
@@ -655,7 +655,7 @@
     {
       "coach": "Luiz Felipe Scolari",
       "count": 99,
-      "country": "Brazil"
+      "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
@@ -675,7 +675,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 66,
-      "country": "Mexico"
+      "country": "United States"
     }
   ]
 }
