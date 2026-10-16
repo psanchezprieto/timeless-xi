@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-10-15T10:53:27.829Z",
+  "updatedAt": "2026-10-16T10:44:30.757Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-17T10:53:26.295Z",
-  "totalStarts": 612,
+  "sinceDate": "2026-07-18T10:44:28.549Z",
+  "totalStarts": 614,
   "totalWins": 171,
   "winRate": 27.9,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 69
+      "count": 70
     },
     {
       "rank": 2,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 69
+      "count": 70
     },
     {
       "rank": 2,
@@ -72,7 +72,7 @@
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 218,
+      "totalVotes": 219,
       "team": [
         {
           "position": "GK",
@@ -95,7 +95,7 @@
         {
           "position": "CB",
           "name": "Djalma Santos",
-          "count": 16,
+          "count": 17,
           "country": "Brazil",
           "positions": [
             "CB"
@@ -148,7 +148,7 @@
         },
         {
           "position": "ST",
-          "name": "Ronaldo",
+          "name": "Bebeto",
           "count": 14,
           "country": "Brazil",
           "positions": [
@@ -519,7 +519,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 516
+      "count": 518
     },
     {
       "rank": 2,
@@ -534,7 +534,7 @@
     {
       "rank": 4,
       "formation": "5-3-2",
-      "count": 8
+      "count": 7
     },
     {
       "rank": 5,
@@ -569,22 +569,22 @@
       ]
     },
     {
+      "name": "Garrincha",
+      "count": 30,
+      "country": "Brazil",
+      "positions": [
+        "MID",
+        "RW",
+        "ST"
+      ]
+    },
+    {
       "name": "Nílton Santos",
       "count": 30,
       "country": "Brazil",
       "positions": [
         "CB",
         "LB"
-      ]
-    },
-    {
-      "name": "Garrincha",
-      "count": 29,
-      "country": "Brazil",
-      "positions": [
-        "MID",
-        "RW",
-        "ST"
       ]
     },
     {
@@ -654,12 +654,12 @@
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 99,
+      "count": 101,
       "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
-      "count": 92,
+      "count": 94,
       "country": "Brazil"
     },
     {
