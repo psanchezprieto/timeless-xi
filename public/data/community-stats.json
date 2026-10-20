@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-19T12:11:13.130Z",
+  "updatedAt": "2026-10-20T10:57:25.988Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-21T12:11:09.515Z",
-  "totalStarts": 589,
+  "sinceDate": "2026-07-22T10:57:23.403Z",
+  "totalStarts": 588,
   "totalWins": 159,
   "winRate": 27,
   "topCountriesPlaying": [
@@ -520,7 +520,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 497
+      "count": 496
     },
     {
       "rank": 2,
@@ -676,7 +676,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 66,
-      "country": "United States"
+      "country": "China PR"
     }
   ]
 }
