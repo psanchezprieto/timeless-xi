@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-21T11:12:26.125Z",
+  "updatedAt": "2026-10-22T11:11:06.769Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-23T11:12:24.654Z",
-  "totalStarts": 588,
-  "totalWins": 159,
-  "winRate": 27,
+  "sinceDate": "2026-07-24T11:11:05.182Z",
+  "totalStarts": 580,
+  "totalWins": 158,
+  "winRate": 27.2,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -520,7 +520,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 496
+      "count": 488
     },
     {
       "rank": 2,
@@ -650,13 +650,13 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 138
+    "count": 137
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
       "count": 93,
-      "country": "Brazil"
+      "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
