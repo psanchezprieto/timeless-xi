@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-10-22T11:11:06.769Z",
+  "updatedAt": "2026-10-23T11:02:39.311Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-24T11:11:05.182Z",
-  "totalStarts": 580,
+  "sinceDate": "2026-07-25T11:02:37.928Z",
+  "totalStarts": 581,
   "totalWins": 158,
   "winRate": 27.2,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 55
+      "count": 56
     },
     {
       "rank": 2,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 55
+      "count": 56
     },
     {
       "rank": 2,
@@ -525,7 +525,7 @@
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 61
+      "count": 62
     },
     {
       "rank": 3,
@@ -570,21 +570,21 @@
       ]
     },
     {
+      "name": "Nílton Santos",
+      "count": 27,
+      "country": "Brazil",
+      "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
       "name": "Bernardo Silva",
       "count": 26,
       "country": "Portugal",
       "positions": [
         "MID",
         "RW"
-      ]
-    },
-    {
-      "name": "Nílton Santos",
-      "count": 26,
-      "country": "Brazil",
-      "positions": [
-        "CB",
-        "LB"
       ]
     },
     {
@@ -625,22 +625,21 @@
       ]
     },
     {
+      "name": "Rivellino",
+      "count": 23,
+      "country": "Brazil",
+      "positions": [
+        "CM",
+        "MID"
+      ]
+    },
+    {
       "name": "Timothy Weah",
       "count": 23,
       "country": "United States",
       "positions": [
         "MID",
         "RW"
-      ]
-    },
-    {
-      "name": "Claudio Caniggia",
-      "count": 22,
-      "country": "Argentina",
-      "positions": [
-        "MID",
-        "RW",
-        "ST"
       ]
     }
   ],
@@ -676,7 +675,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 66,
-      "country": "United States"
+      "country": "Mexico"
     }
   ]
 }
