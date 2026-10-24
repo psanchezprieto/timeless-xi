@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-23T11:02:39.311Z",
+  "updatedAt": "2026-10-24T10:19:01.342Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-25T11:02:37.928Z",
-  "totalStarts": 581,
-  "totalWins": 158,
-  "winRate": 27.2,
+  "sinceDate": "2026-07-26T10:18:59.643Z",
+  "totalStarts": 591,
+  "totalWins": 160,
+  "winRate": 27.1,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -13,18 +13,18 @@
     },
     {
       "rank": 2,
-      "country": "Spain",
+      "country": "France",
       "count": 43
     },
     {
       "rank": 3,
-      "country": "France",
-      "count": 40
+      "country": "Spain",
+      "count": 43
     },
     {
       "rank": 4,
       "country": "Argentina",
-      "count": 39
+      "count": 40
     },
     {
       "rank": 5,
@@ -45,18 +45,18 @@
     },
     {
       "rank": 2,
-      "country": "Spain",
+      "country": "France",
       "count": 43
     },
     {
       "rank": 3,
-      "country": "France",
-      "count": 40
+      "country": "Spain",
+      "count": 43
     },
     {
       "rank": 4,
       "country": "Argentina",
-      "count": 39
+      "count": 40
     },
     {
       "rank": 5,
@@ -72,12 +72,12 @@
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 197,
+      "totalVotes": 203,
       "team": [
         {
           "position": "GK",
           "name": "Kasey Keller",
-          "count": 12,
+          "count": 13,
           "country": "United States",
           "positions": [
             "GK"
@@ -86,7 +86,7 @@
         {
           "position": "RB",
           "name": "Javier Zanetti",
-          "count": 25,
+          "count": 26,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -130,9 +130,9 @@
         },
         {
           "position": "CM",
-          "name": "Andrés Iniesta",
-          "count": 10,
-          "country": "Spain",
+          "name": "Zinedine Zidane",
+          "count": 11,
+          "country": "France",
           "positions": [
             "CM"
           ]
@@ -167,7 +167,7 @@
         {
           "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 27,
+          "count": 30,
           "country": "France",
           "positions": [
             "MID"
@@ -185,7 +185,7 @@
         },
         {
           "name": "Ousmane Dembélé",
-          "count": 27,
+          "count": 30,
           "country": "France",
           "positions": [
             "MID"
@@ -193,7 +193,7 @@
         },
         {
           "name": "Javier Zanetti",
-          "count": 25,
+          "count": 26,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -520,7 +520,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 488
+      "count": 498
     },
     {
       "rank": 2,
@@ -546,7 +546,7 @@
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 39,
+      "count": 42,
       "country": "France",
       "positions": [
         "MID",
@@ -563,7 +563,7 @@
     },
     {
       "name": "Javier Zanetti",
-      "count": 27,
+      "count": 28,
       "country": "Argentina",
       "positions": [
         "RB"
@@ -625,21 +625,22 @@
       ]
     },
     {
-      "name": "Rivellino",
-      "count": 23,
-      "country": "Brazil",
-      "positions": [
-        "CM",
-        "MID"
-      ]
-    },
-    {
       "name": "Timothy Weah",
-      "count": 23,
+      "count": 24,
       "country": "United States",
       "positions": [
         "MID",
         "RW"
+      ]
+    },
+    {
+      "name": "Claudio Caniggia",
+      "count": 23,
+      "country": "Argentina",
+      "positions": [
+        "MID",
+        "RW",
+        "ST"
       ]
     }
   ],
@@ -649,7 +650,7 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 137
+    "count": 139
   },
   "topCoaches": [
     {
@@ -663,19 +664,19 @@
       "country": "Brazil"
     },
     {
+      "coach": "Michel Hidalgo",
+      "count": 74,
+      "country": "France"
+    },
+    {
       "coach": "Luis Aragonés",
       "count": 73,
       "country": "Spain"
     },
     {
-      "coach": "Michel Hidalgo",
-      "count": 68,
-      "country": "France"
-    },
-    {
       "coach": "Bora Milutinovic",
-      "count": 66,
-      "country": "Mexico"
+      "count": 68,
+      "country": "United States"
     }
   ]
 }
