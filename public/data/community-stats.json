@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-24T10:19:01.342Z",
+  "updatedAt": "2026-10-25T10:45:54.379Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-26T10:18:59.643Z",
-  "totalStarts": 591,
-  "totalWins": 160,
-  "winRate": 27.1,
+  "sinceDate": "2026-07-27T10:45:52.920Z",
+  "totalStarts": 596,
+  "totalWins": 164,
+  "winRate": 27.5,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -14,12 +14,12 @@
     {
       "rank": 2,
       "country": "France",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 4,
@@ -46,12 +46,12 @@
     {
       "rank": 2,
       "country": "France",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 4,
@@ -72,7 +72,7 @@
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 203,
+      "totalVotes": 205,
       "team": [
         {
           "position": "GK",
@@ -158,7 +158,7 @@
         {
           "name": "Gaizka Mendieta",
           "position": "MID",
-          "count": 34,
+          "count": 35,
           "country": "Spain",
           "positions": [
             "MID"
@@ -167,7 +167,7 @@
         {
           "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 30,
+          "count": 31,
           "country": "France",
           "positions": [
             "MID"
@@ -177,7 +177,7 @@
       "topPlayers": [
         {
           "name": "Gaizka Mendieta",
-          "count": 34,
+          "count": 35,
           "country": "Spain",
           "positions": [
             "MID"
@@ -185,7 +185,7 @@
         },
         {
           "name": "Ousmane Dembélé",
-          "count": 30,
+          "count": 31,
           "country": "France",
           "positions": [
             "MID"
@@ -520,7 +520,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 498
+      "count": 503
     },
     {
       "rank": 2,
@@ -546,7 +546,7 @@
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 42,
+      "count": 43,
       "country": "France",
       "positions": [
         "MID",
@@ -555,7 +555,7 @@
     },
     {
       "name": "Gaizka Mendieta",
-      "count": 36,
+      "count": 37,
       "country": "Spain",
       "positions": [
         "MID"
@@ -650,7 +650,7 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 139
+    "count": 143
   },
   "topCoaches": [
     {
@@ -665,12 +665,12 @@
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 74,
+      "count": 76,
       "country": "France"
     },
     {
       "coach": "Luis Aragonés",
-      "count": 73,
+      "count": 75,
       "country": "Spain"
     },
     {
