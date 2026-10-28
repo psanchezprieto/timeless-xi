@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-27T11:37:56.533Z",
+  "updatedAt": "2026-10-28T12:09:09.677Z",
   "periodDays": 90,
-  "sinceDate": "2026-07-29T11:37:55.029Z",
-  "totalStarts": 628,
+  "sinceDate": "2026-07-30T12:09:08.597Z",
+  "totalStarts": 629,
   "totalWins": 174,
   "winRate": 27.7,
   "topCountriesPlaying": [
@@ -519,7 +519,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 531
+      "count": 532
     },
     {
       "rank": 2,
@@ -604,6 +604,15 @@
       ]
     },
     {
+      "name": "Timothy Weah",
+      "count": 26,
+      "country": "United States",
+      "positions": [
+        "MID",
+        "RW"
+      ]
+    },
+    {
       "name": "Cristiano Ronaldo",
       "count": 25,
       "country": "Portugal",
@@ -611,15 +620,6 @@
         "LW",
         "MID",
         "ST"
-      ]
-    },
-    {
-      "name": "Timothy Weah",
-      "count": 25,
-      "country": "United States",
-      "positions": [
-        "MID",
-        "RW"
       ]
     },
     {
@@ -655,7 +655,7 @@
     {
       "coach": "Luiz Felipe Scolari",
       "count": 97,
-      "country": "Brazil"
+      "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
@@ -674,7 +674,7 @@
     },
     {
       "coach": "Bora Milutinovic",
-      "count": 70,
+      "count": 72,
       "country": "United States"
     }
   ]
