@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-10-30T12:10:44.295Z",
+  "updatedAt": "2026-10-31T11:42:45.289Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-01T12:10:42.266Z",
-  "totalStarts": 629,
+  "sinceDate": "2026-08-02T11:42:44.042Z",
+  "totalStarts": 638,
   "totalWins": 174,
-  "winRate": 27.7,
+  "winRate": 27.3,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 59
+      "count": 62
     },
     {
       "rank": 2,
@@ -24,7 +24,7 @@
     {
       "rank": 4,
       "country": "Argentina",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 5,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 59
+      "count": 62
     },
     {
       "rank": 2,
@@ -56,7 +56,7 @@
     {
       "rank": 4,
       "country": "Argentina",
-      "count": 43
+      "count": 44
     },
     {
       "rank": 5,
@@ -224,9 +224,9 @@
       "team": [
         {
           "position": "GK",
-          "name": "Hugo Lloris",
+          "name": "Gilmar",
           "count": 5,
-          "country": "France",
+          "country": "Brazil",
           "positions": [
             "GK"
           ]
@@ -278,9 +278,9 @@
         },
         {
           "position": "CM",
-          "name": "Zinedine Zidane",
+          "name": "Didi",
           "count": 4,
-          "country": "France",
+          "country": "Brazil",
           "positions": [
             "CM"
           ]
@@ -519,12 +519,12 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 532
+      "count": 535
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 62
+      "count": 67
     },
     {
       "rank": 3,
@@ -539,7 +539,7 @@
     {
       "rank": 5,
       "formation": "4-2-4",
-      "count": 4
+      "count": 5
     }
   ],
   "topPlayersOverall": [
@@ -570,7 +570,7 @@
     },
     {
       "name": "Roberto Carlos",
-      "count": 29,
+      "count": 30,
       "country": "Brazil",
       "positions": [
         "LB"
@@ -578,7 +578,7 @@
     },
     {
       "name": "Nílton Santos",
-      "count": 27,
+      "count": 28,
       "country": "Brazil",
       "positions": [
         "CB",
@@ -592,6 +592,16 @@
       "positions": [
         "MID",
         "RW"
+      ]
+    },
+    {
+      "name": "Garrincha",
+      "count": 26,
+      "country": "Brazil",
+      "positions": [
+        "MID",
+        "RW",
+        "ST"
       ]
     },
     {
@@ -631,16 +641,6 @@
         "RW",
         "ST"
       ]
-    },
-    {
-      "name": "Garrincha",
-      "count": 24,
-      "country": "Brazil",
-      "positions": [
-        "MID",
-        "RW",
-        "ST"
-      ]
     }
   ],
   "topWinningTeam": {
@@ -654,7 +654,7 @@
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 97,
+      "count": 101,
       "country": "Brazil"
     },
     {
@@ -675,7 +675,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 72,
-      "country": "China PR"
+      "country": "United States"
     }
   ]
 }
