@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-02T14:48:57.566Z",
+  "updatedAt": "2026-11-03T13:39:54.591Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-04T14:48:56.163Z",
-  "totalStarts": 638,
+  "sinceDate": "2026-08-05T13:39:53.063Z",
+  "totalStarts": 636,
   "totalWins": 174,
-  "winRate": 27.3,
+  "winRate": 27.4,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 62
+      "count": 61
     },
     {
       "rank": 2,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 62
+      "count": 61
     },
     {
       "rank": 2,
@@ -524,7 +524,7 @@
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 67
+      "count": 66
     },
     {
       "rank": 3,
@@ -675,7 +675,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 72,
-      "country": "United States"
+      "country": "China PR"
     }
   ]
 }
