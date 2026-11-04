@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-03T13:39:54.591Z",
+  "updatedAt": "2026-11-04T13:48:23.733Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-05T13:39:53.063Z",
-  "totalStarts": 636,
-  "totalWins": 174,
-  "winRate": 27.4,
+  "sinceDate": "2026-08-06T13:48:22.228Z",
+  "totalStarts": 617,
+  "totalWins": 171,
+  "winRate": 27.7,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -18,18 +18,18 @@
     },
     {
       "rank": 3,
-      "country": "France",
-      "count": 47
+      "country": "Argentina",
+      "count": 43
     },
     {
       "rank": 4,
-      "country": "Argentina",
-      "count": 44
+      "country": "France",
+      "count": 41
     },
     {
       "rank": 5,
       "country": "Portugal",
-      "count": 38
+      "count": 37
     },
     {
       "rank": 6,
@@ -50,18 +50,18 @@
     },
     {
       "rank": 3,
-      "country": "France",
-      "count": 47
+      "country": "Argentina",
+      "count": 43
     },
     {
       "rank": 4,
-      "country": "Argentina",
-      "count": 44
+      "country": "France",
+      "count": 41
     },
     {
       "rank": 5,
       "country": "Portugal",
-      "count": 38
+      "count": 37
     },
     {
       "rank": 6,
@@ -220,7 +220,7 @@
     },
     {
       "formation": "4-3-3",
-      "totalVotes": 63,
+      "totalVotes": 41,
       "team": [
         {
           "position": "GK",
@@ -233,8 +233,8 @@
         },
         {
           "position": "RB",
-          "name": "Manuel Amoros",
-          "count": 6,
+          "name": "Benjamin Pavard",
+          "count": 3,
           "country": "France",
           "positions": [
             "RB"
@@ -242,38 +242,29 @@
         },
         {
           "position": "CB",
-          "name": "Aurélien Chedjou",
-          "count": 4,
-          "country": "Cameroon",
+          "name": "Gerard Piqué",
+          "count": 3,
+          "country": "Spain",
           "positions": [
             "CB"
           ]
         },
         {
           "position": "CB",
-          "name": "Elie Onana",
+          "name": "Hilderaldo Bellini",
           "count": 3,
-          "country": "Cameroon",
+          "country": "Brazil",
           "positions": [
             "CB"
           ]
         },
         {
           "position": "LB",
-          "name": "Benoît Assou-Ekotto",
-          "count": 8,
-          "country": "Cameroon",
+          "name": "Roberto Carlos",
+          "count": 4,
+          "country": "Brazil",
           "positions": [
             "LB"
-          ]
-        },
-        {
-          "position": "CM",
-          "name": "Charles Toubé",
-          "count": 4,
-          "country": "Cameroon",
-          "positions": [
-            "CM"
           ]
         },
         {
@@ -286,9 +277,18 @@
           ]
         },
         {
+          "position": "CM",
+          "name": "Dunga",
+          "count": 4,
+          "country": "Brazil",
+          "positions": [
+            "CM"
+          ]
+        },
+        {
           "position": "RW",
           "name": "Ousmane Dembélé",
-          "count": 12,
+          "count": 6,
           "country": "France",
           "positions": [
             "RW"
@@ -297,7 +297,7 @@
         {
           "position": "ST",
           "name": "Kylian Mbappé",
-          "count": 5,
+          "count": 3,
           "country": "France",
           "positions": [
             "ST"
@@ -305,64 +305,62 @@
         },
         {
           "position": "LW",
-          "name": "Louis-Paul M'Fédé",
-          "count": 6,
-          "country": "Cameroon",
+          "name": "Cristiano Ronaldo",
+          "count": 2,
+          "country": "Portugal",
           "positions": [
             "LW"
           ]
         },
         {
-          "name": "Benjamin Pavard",
-          "position": "CB",
-          "count": 6,
-          "country": "France",
+          "name": "Amancio",
+          "position": "RW",
+          "count": 4,
+          "country": "Spain",
           "positions": [
-            "CB",
-            "RB"
+            "RW"
           ]
         }
       ],
       "topPlayers": [
         {
           "name": "Ousmane Dembélé",
-          "count": 12,
+          "count": 6,
           "country": "France",
           "positions": [
             "RW"
           ]
         },
         {
-          "name": "Benoît Assou-Ekotto",
-          "count": 8,
-          "country": "Cameroon",
+          "name": "Gilmar",
+          "count": 5,
+          "country": "Brazil",
           "positions": [
-            "LB"
+            "GK"
           ]
         },
         {
-          "name": "Benjamin Pavard",
-          "count": 6,
-          "country": "France",
+          "name": "Amancio",
+          "count": 4,
+          "country": "Spain",
           "positions": [
-            "CB",
-            "RB"
+            "RW"
           ]
         },
         {
-          "name": "Louis-Paul M'Fédé",
-          "count": 6,
-          "country": "Cameroon",
+          "name": "Didi",
+          "count": 4,
+          "country": "Brazil",
           "positions": [
-            "LW"
+            "CM"
           ]
         },
         {
-          "name": "Manuel Amoros",
-          "count": 6,
-          "country": "France",
+          "name": "Dunga",
+          "count": 4,
+          "country": "Brazil",
           "positions": [
-            "RB"
+            "CM"
           ]
         }
       ]
@@ -524,7 +522,7 @@
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 66
+      "count": 47
     },
     {
       "rank": 3,
@@ -544,20 +542,20 @@
   ],
   "topPlayersOverall": [
     {
-      "name": "Ousmane Dembélé",
-      "count": 46,
-      "country": "France",
-      "positions": [
-        "MID",
-        "RW"
-      ]
-    },
-    {
       "name": "Gaizka Mendieta",
       "count": 41,
       "country": "Spain",
       "positions": [
         "MID"
+      ]
+    },
+    {
+      "name": "Ousmane Dembélé",
+      "count": 40,
+      "country": "France",
+      "positions": [
+        "MID",
+        "RW"
       ]
     },
     {
@@ -586,15 +584,6 @@
       ]
     },
     {
-      "name": "Bernardo Silva",
-      "count": 26,
-      "country": "Portugal",
-      "positions": [
-        "MID",
-        "RW"
-      ]
-    },
-    {
       "name": "Garrincha",
       "count": 26,
       "country": "Brazil",
@@ -602,15 +591,6 @@
         "MID",
         "RW",
         "ST"
-      ]
-    },
-    {
-      "name": "Silvio Marzolini",
-      "count": 26,
-      "country": "Argentina",
-      "positions": [
-        "CB",
-        "LB"
       ]
     },
     {
@@ -623,8 +603,26 @@
       ]
     },
     {
-      "name": "Cristiano Ronaldo",
+      "name": "Bernardo Silva",
       "count": 25,
+      "country": "Portugal",
+      "positions": [
+        "MID",
+        "RW"
+      ]
+    },
+    {
+      "name": "Silvio Marzolini",
+      "count": 25,
+      "country": "Argentina",
+      "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
+      "name": "Cristiano Ronaldo",
+      "count": 24,
       "country": "Portugal",
       "positions": [
         "LW",
@@ -634,7 +632,7 @@
     },
     {
       "name": "Claudio Caniggia",
-      "count": 24,
+      "count": 23,
       "country": "Argentina",
       "positions": [
         "MID",
@@ -654,7 +652,7 @@
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 101,
+      "count": 99,
       "country": "Portugal"
     },
     {
@@ -669,13 +667,13 @@
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 82,
+      "count": 78,
       "country": "France"
     },
     {
       "coach": "Bora Milutinovic",
       "count": 72,
-      "country": "China PR"
+      "country": "United States"
     }
   ]
 }
