@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-08T12:47:24.100Z",
+  "updatedAt": "2026-11-09T15:14:24.825Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-10T12:47:22.446Z",
+  "sinceDate": "2026-08-11T15:14:23.457Z",
   "totalStarts": 617,
   "totalWins": 171,
   "winRate": 27.7,
@@ -653,7 +653,7 @@
     {
       "coach": "Luiz Felipe Scolari",
       "count": 99,
-      "country": "Portugal"
+      "country": "Brazil"
     },
     {
       "coach": "Vicente Feola",
@@ -673,7 +673,7 @@
     {
       "coach": "Bora Milutinovic",
       "count": 72,
-      "country": "United States"
+      "country": "Mexico"
     }
   ]
 }
