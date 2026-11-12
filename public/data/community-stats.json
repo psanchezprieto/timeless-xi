@@ -1,84 +1,84 @@
 {
-  "updatedAt": "2026-11-11T13:35:55.299Z",
+  "updatedAt": "2026-11-12T14:39:12.271Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-13T13:35:54.084Z",
-  "totalStarts": 548,
-  "totalWins": 166,
-  "winRate": 30.3,
+  "sinceDate": "2026-08-14T14:39:11.059Z",
+  "totalStarts": 444,
+  "totalWins": 140,
+  "winRate": 31.5,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 53
+      "count": 48
     },
     {
       "rank": 2,
       "country": "Spain",
-      "count": 42
+      "count": 34
     },
     {
       "rank": 3,
       "country": "Argentina",
-      "count": 38
+      "count": 34
     },
     {
       "rank": 4,
-      "country": "Portugal",
-      "count": 36
+      "country": "France",
+      "count": 32
     },
     {
       "rank": 5,
-      "country": "France",
-      "count": 35
+      "country": "Portugal",
+      "count": 31
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 29
+      "count": 25
     }
   ],
   "topNations": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 53
+      "count": 48
     },
     {
       "rank": 2,
       "country": "Spain",
-      "count": 42
+      "count": 34
     },
     {
       "rank": 3,
       "country": "Argentina",
-      "count": 38
+      "count": 34
     },
     {
       "rank": 4,
-      "country": "Portugal",
-      "count": 36
+      "country": "France",
+      "count": 32
     },
     {
       "rank": 5,
-      "country": "France",
-      "count": 35
+      "country": "Portugal",
+      "count": 31
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 29
+      "count": 25
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 196,
+      "totalVotes": 164,
       "team": [
         {
           "position": "GK",
-          "name": "Ricardo",
-          "count": 12,
-          "country": "Portugal",
+          "name": "Gilmar",
+          "count": 10,
+          "country": "Brazil",
           "positions": [
             "GK"
           ]
@@ -86,7 +86,7 @@
         {
           "position": "RB",
           "name": "Javier Zanetti",
-          "count": 27,
+          "count": 24,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -95,7 +95,7 @@
         {
           "position": "CB",
           "name": "Djalma Santos",
-          "count": 14,
+          "count": 12,
           "country": "Brazil",
           "positions": [
             "CB"
@@ -103,9 +103,9 @@
         },
         {
           "position": "CB",
-          "name": "Ricardo Carvalho",
-          "count": 14,
-          "country": "Portugal",
+          "name": "Raphaël Varane",
+          "count": 11,
+          "country": "France",
           "positions": [
             "CB"
           ]
@@ -113,7 +113,7 @@
         {
           "position": "LB",
           "name": "Roberto Carlos",
-          "count": 22,
+          "count": 18,
           "country": "Brazil",
           "positions": [
             "LB"
@@ -121,17 +121,17 @@
         },
         {
           "position": "CM",
-          "name": "Didi",
-          "count": 10,
-          "country": "Brazil",
+          "name": "Zinedine Zidane",
+          "count": 8,
+          "country": "France",
           "positions": [
             "CM"
           ]
         },
         {
           "position": "CM",
-          "name": "Luis Suárez",
-          "count": 10,
+          "name": "Andrés Iniesta",
+          "count": 7,
           "country": "Spain",
           "positions": [
             "CM"
@@ -140,7 +140,7 @@
         {
           "position": "ST",
           "name": "Pelé",
-          "count": 12,
+          "count": 11,
           "country": "Brazil",
           "positions": [
             "ST"
@@ -148,27 +148,27 @@
         },
         {
           "position": "ST",
-          "name": "Eusébio",
-          "count": 11,
-          "country": "Portugal",
+          "name": "David Villa",
+          "count": 10,
+          "country": "Spain",
           "positions": [
             "ST"
           ]
         },
         {
-          "name": "Gaizka Mendieta",
+          "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 34,
-          "country": "Spain",
+          "count": 27,
+          "country": "France",
           "positions": [
             "MID"
           ]
         },
         {
-          "name": "Ousmane Dembélé",
+          "name": "Gaizka Mendieta",
           "position": "MID",
-          "count": 30,
-          "country": "France",
+          "count": 26,
+          "country": "Spain",
           "positions": [
             "MID"
           ]
@@ -176,43 +176,44 @@
       ],
       "topPlayers": [
         {
-          "name": "Gaizka Mendieta",
-          "count": 34,
-          "country": "Spain",
-          "positions": [
-            "MID"
-          ]
-        },
-        {
           "name": "Ousmane Dembélé",
-          "count": 30,
+          "count": 27,
           "country": "France",
           "positions": [
             "MID"
           ]
         },
         {
+          "name": "Gaizka Mendieta",
+          "count": 26,
+          "country": "Spain",
+          "positions": [
+            "MID"
+          ]
+        },
+        {
           "name": "Javier Zanetti",
-          "count": 27,
+          "count": 24,
           "country": "Argentina",
           "positions": [
             "RB"
           ]
         },
         {
-          "name": "Roberto Carlos",
-          "count": 22,
-          "country": "Brazil",
+          "name": "Silvio Marzolini",
+          "count": 20,
+          "country": "Argentina",
           "positions": [
+            "CB",
             "LB"
           ]
         },
         {
-          "name": "Bernardo Silva",
-          "count": 21,
-          "country": "Portugal",
+          "name": "Roberto Carlos",
+          "count": 18,
+          "country": "Brazil",
           "positions": [
-            "MID"
+            "LB"
           ]
         }
       ]
@@ -507,17 +508,17 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 475
+      "count": 377
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 45
+      "count": 42
     },
     {
       "rank": 3,
       "formation": "3-5-2",
-      "count": 8
+      "count": 7
     },
     {
       "rank": 4,
@@ -532,16 +533,8 @@
   ],
   "topPlayersOverall": [
     {
-      "name": "Gaizka Mendieta",
-      "count": 35,
-      "country": "Spain",
-      "positions": [
-        "MID"
-      ]
-    },
-    {
       "name": "Ousmane Dembélé",
-      "count": 35,
+      "count": 32,
       "country": "France",
       "positions": [
         "MID",
@@ -549,8 +542,16 @@
       ]
     },
     {
+      "name": "Gaizka Mendieta",
+      "count": 27,
+      "country": "Spain",
+      "positions": [
+        "MID"
+      ]
+    },
+    {
       "name": "Javier Zanetti",
-      "count": 28,
+      "count": 25,
       "country": "Argentina",
       "positions": [
         "RB"
@@ -558,15 +559,33 @@
     },
     {
       "name": "Roberto Carlos",
-      "count": 27,
+      "count": 23,
       "country": "Brazil",
       "positions": [
         "LB"
       ]
     },
     {
+      "name": "Nílton Santos",
+      "count": 21,
+      "country": "Brazil",
+      "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
+      "name": "Silvio Marzolini",
+      "count": 21,
+      "country": "Argentina",
+      "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
       "name": "Bernardo Silva",
-      "count": 25,
+      "count": 20,
       "country": "Portugal",
       "positions": [
         "MID",
@@ -575,7 +594,7 @@
     },
     {
       "name": "Cristiano Ronaldo",
-      "count": 24,
+      "count": 20,
       "country": "Portugal",
       "positions": [
         "LW",
@@ -584,35 +603,8 @@
       ]
     },
     {
-      "name": "Nílton Santos",
-      "count": 24,
-      "country": "Brazil",
-      "positions": [
-        "CB",
-        "LB"
-      ]
-    },
-    {
-      "name": "Timothy Weah",
-      "count": 23,
-      "country": "United States",
-      "positions": [
-        "MID",
-        "RW"
-      ]
-    },
-    {
-      "name": "Silvio Marzolini",
-      "count": 22,
-      "country": "Argentina",
-      "positions": [
-        "CB",
-        "LB"
-      ]
-    },
-    {
       "name": "José Antonio Camacho",
-      "count": 21,
+      "count": 18,
       "country": "Spain",
       "positions": [
         "CB",
@@ -621,47 +613,56 @@
     },
     {
       "name": "Claudio Caniggia",
-      "count": 20,
+      "count": 17,
       "country": "Argentina",
       "positions": [
         "MID",
         "ST"
       ]
+    },
+    {
+      "name": "Djalma Santos",
+      "count": 17,
+      "country": "Brazil",
+      "positions": [
+        "CB",
+        "RB"
+      ]
     }
   ],
   "topWinningTeam": {
     "country": "Brazil",
-    "count": 33
+    "count": 29
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 149
+    "count": 123
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 99,
-      "country": "Portugal"
-    },
-    {
-      "coach": "Vicente Feola",
-      "count": 86,
+      "count": 89,
       "country": "Brazil"
     },
     {
-      "coach": "Luis Aragonés",
-      "count": 75,
-      "country": "Spain"
-    },
-    {
-      "coach": "Bora Milutinovic",
-      "count": 68,
-      "country": "Mexico"
+      "coach": "Vicente Feola",
+      "count": 76,
+      "country": "Brazil"
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 68,
+      "count": 62,
       "country": "France"
+    },
+    {
+      "coach": "Luis Aragonés",
+      "count": 61,
+      "country": "Spain"
+    },
+    {
+      "coach": "César Luis Menotti",
+      "count": 58,
+      "country": "Argentina"
     }
   ]
 }
