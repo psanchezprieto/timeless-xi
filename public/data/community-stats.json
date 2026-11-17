@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-16T14:50:20.981Z",
+  "updatedAt": "2026-11-17T15:30:30.902Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-18T14:50:19.217Z",
-  "totalStarts": 413,
-  "totalWins": 123,
-  "winRate": 29.8,
+  "sinceDate": "2026-08-19T15:30:29.520Z",
+  "totalStarts": 411,
+  "totalWins": 121,
+  "winRate": 29.4,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 42
+      "count": 41
     },
     {
       "rank": 2,
@@ -18,18 +18,18 @@
     },
     {
       "rank": 3,
-      "country": "Spain",
-      "count": 28
-    },
-    {
-      "rank": 4,
-      "country": "Argentina",
+      "country": "Portugal",
       "count": 27
     },
     {
-      "rank": 5,
-      "country": "Portugal",
+      "rank": 4,
+      "country": "Spain",
       "count": 26
+    },
+    {
+      "rank": 5,
+      "country": "Argentina",
+      "count": 25
     },
     {
       "rank": 6,
@@ -41,7 +41,7 @@
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 42
+      "count": 41
     },
     {
       "rank": 2,
@@ -50,18 +50,18 @@
     },
     {
       "rank": 3,
-      "country": "Spain",
-      "count": 28
-    },
-    {
-      "rank": 4,
-      "country": "Argentina",
+      "country": "Portugal",
       "count": 27
     },
     {
-      "rank": 5,
-      "country": "Portugal",
+      "rank": 4,
+      "country": "Spain",
       "count": 26
+    },
+    {
+      "rank": 5,
+      "country": "Argentina",
+      "count": 25
     },
     {
       "rank": 6,
@@ -72,7 +72,7 @@
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 140,
+      "totalVotes": 139,
       "team": [
         {
           "position": "GK",
@@ -86,7 +86,7 @@
         {
           "position": "RB",
           "name": "Javier Zanetti",
-          "count": 18,
+          "count": 17,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -113,7 +113,7 @@
         {
           "position": "LB",
           "name": "Roberto Carlos",
-          "count": 15,
+          "count": 14,
           "country": "Brazil",
           "positions": [
             "LB"
@@ -139,18 +139,18 @@
         },
         {
           "position": "ST",
-          "name": "Eldor Shomurodov",
-          "count": 10,
-          "country": "Uzbekistan",
+          "name": "Pelé",
+          "count": 11,
+          "country": "Brazil",
           "positions": [
             "ST"
           ]
         },
         {
           "position": "ST",
-          "name": "Pelé",
+          "name": "Eldor Shomurodov",
           "count": 10,
-          "country": "Brazil",
+          "country": "Uzbekistan",
           "positions": [
             "ST"
           ]
@@ -193,19 +193,10 @@
         },
         {
           "name": "Javier Zanetti",
-          "count": 18,
+          "count": 17,
           "country": "Argentina",
           "positions": [
             "RB"
-          ]
-        },
-        {
-          "name": "Silvio Marzolini",
-          "count": 16,
-          "country": "Argentina",
-          "positions": [
-            "CB",
-            "LB"
           ]
         },
         {
@@ -215,17 +206,26 @@
           "positions": [
             "MID"
           ]
+        },
+        {
+          "name": "Silvio Marzolini",
+          "count": 15,
+          "country": "Argentina",
+          "positions": [
+            "CB",
+            "LB"
+          ]
         }
       ]
     },
     {
       "formation": "4-3-3",
-      "totalVotes": 40,
+      "totalVotes": 36,
       "team": [
         {
           "position": "GK",
           "name": "Gilmar",
-          "count": 5,
+          "count": 4,
           "country": "Brazil",
           "positions": [
             "GK"
@@ -242,15 +242,6 @@
         },
         {
           "position": "CB",
-          "name": "Hilderaldo Bellini",
-          "count": 3,
-          "country": "Brazil",
-          "positions": [
-            "CB"
-          ]
-        },
-        {
-          "position": "CB",
           "name": "Marquinhos",
           "count": 3,
           "country": "Brazil",
@@ -259,9 +250,18 @@
           ]
         },
         {
+          "position": "CB",
+          "name": "Thiago Silva",
+          "count": 3,
+          "country": "Brazil",
+          "positions": [
+            "CB"
+          ]
+        },
+        {
           "position": "LB",
-          "name": "Roberto Carlos",
-          "count": 4,
+          "name": "Nílton Santos",
+          "count": 3,
           "country": "Brazil",
           "positions": [
             "LB"
@@ -269,7 +269,7 @@
         },
         {
           "position": "CM",
-          "name": "Didi",
+          "name": "Dunga",
           "count": 4,
           "country": "Brazil",
           "positions": [
@@ -278,8 +278,8 @@
         },
         {
           "position": "CM",
-          "name": "Dunga",
-          "count": 4,
+          "name": "Didi",
+          "count": 3,
           "country": "Brazil",
           "positions": [
             "CM"
@@ -313,24 +313,16 @@
           ]
         },
         {
-          "name": "Amancio",
+          "name": "Bernardo Silva",
           "position": "RW",
-          "count": 4,
-          "country": "Spain",
+          "count": 3,
+          "country": "Portugal",
           "positions": [
             "RW"
           ]
         }
       ],
       "topPlayers": [
-        {
-          "name": "Gilmar",
-          "count": 5,
-          "country": "Brazil",
-          "positions": [
-            "GK"
-          ]
-        },
         {
           "name": "Ousmane Dembélé",
           "count": 5,
@@ -340,27 +332,35 @@
           ]
         },
         {
-          "name": "Amancio",
-          "count": 4,
-          "country": "Spain",
-          "positions": [
-            "RW"
-          ]
-        },
-        {
-          "name": "Didi",
-          "count": 4,
-          "country": "Brazil",
-          "positions": [
-            "CM"
-          ]
-        },
-        {
           "name": "Dunga",
           "count": 4,
           "country": "Brazil",
           "positions": [
             "CM"
+          ]
+        },
+        {
+          "name": "Gilmar",
+          "count": 4,
+          "country": "Brazil",
+          "positions": [
+            "GK"
+          ]
+        },
+        {
+          "name": "Benjamin Pavard",
+          "count": 3,
+          "country": "France",
+          "positions": [
+            "RB"
+          ]
+        },
+        {
+          "name": "Bernardo Silva",
+          "count": 3,
+          "country": "Portugal",
+          "positions": [
+            "RW"
           ]
         }
       ]
@@ -508,12 +508,12 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 346
+      "count": 348
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 42
+      "count": 38
     },
     {
       "rank": 3,
@@ -550,16 +550,8 @@
       ]
     },
     {
-      "name": "Roberto Carlos",
-      "count": 20,
-      "country": "Brazil",
-      "positions": [
-        "LB"
-      ]
-    },
-    {
       "name": "Javier Zanetti",
-      "count": 19,
+      "count": 18,
       "country": "Argentina",
       "positions": [
         "RB"
@@ -575,6 +567,14 @@
       ]
     },
     {
+      "name": "Roberto Carlos",
+      "count": 18,
+      "country": "Brazil",
+      "positions": [
+        "LB"
+      ]
+    },
+    {
       "name": "Cristiano Ronaldo",
       "count": 17,
       "country": "Portugal",
@@ -585,21 +585,21 @@
       ]
     },
     {
-      "name": "Silvio Marzolini",
-      "count": 17,
-      "country": "Argentina",
-      "positions": [
-        "CB",
-        "LB"
-      ]
-    },
-    {
       "name": "Bernardo Silva",
-      "count": 15,
+      "count": 16,
       "country": "Portugal",
       "positions": [
         "MID",
         "RW"
+      ]
+    },
+    {
+      "name": "Silvio Marzolini",
+      "count": 16,
+      "country": "Argentina",
+      "positions": [
+        "CB",
+        "LB"
       ]
     },
     {
@@ -611,12 +611,11 @@
       ]
     },
     {
-      "name": "Rivellino",
+      "name": "Pelé",
       "count": 15,
       "country": "Brazil",
       "positions": [
-        "CM",
-        "MID"
+        "ST"
       ]
     },
     {
@@ -624,7 +623,6 @@
       "count": 14,
       "country": "Brazil",
       "positions": [
-        "CM",
         "MID",
         "RW"
       ]
@@ -632,7 +630,7 @@
   ],
   "topWinningTeam": {
     "country": "Brazil",
-    "count": 26
+    "count": 23
   },
   "topWinningFormation": {
     "formation": "4-4-2",
@@ -641,8 +639,8 @@
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 77,
-      "country": "Brazil"
+      "count": 76,
+      "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
@@ -660,9 +658,9 @@
       "country": "Spain"
     },
     {
-      "coach": "César Luis Menotti",
-      "count": 44,
-      "country": "Argentina"
+      "coach": "Bora Milutinovic",
+      "count": 42,
+      "country": "United States"
     }
   ]
 }
