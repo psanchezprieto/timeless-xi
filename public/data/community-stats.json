@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-17T15:30:30.902Z",
+  "updatedAt": "2026-11-18T15:08:23.444Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-19T15:30:29.520Z",
-  "totalStarts": 411,
-  "totalWins": 121,
-  "winRate": 29.4,
+  "sinceDate": "2026-08-20T15:08:22.035Z",
+  "totalStarts": 385,
+  "totalWins": 116,
+  "winRate": 30.1,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 41
+      "count": 40
     },
     {
       "rank": 2,
@@ -19,7 +19,7 @@
     {
       "rank": 3,
       "country": "Portugal",
-      "count": 27
+      "count": 26
     },
     {
       "rank": 4,
@@ -29,19 +29,19 @@
     {
       "rank": 5,
       "country": "Argentina",
-      "count": 25
+      "count": 23
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 22
+      "count": 18
     }
   ],
   "topNations": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 41
+      "count": 40
     },
     {
       "rank": 2,
@@ -51,7 +51,7 @@
     {
       "rank": 3,
       "country": "Portugal",
-      "count": 27
+      "count": 26
     },
     {
       "rank": 4,
@@ -61,18 +61,18 @@
     {
       "rank": 5,
       "country": "Argentina",
-      "count": 25
+      "count": 23
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 22
+      "count": 18
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 139,
+      "totalVotes": 137,
       "team": [
         {
           "position": "GK",
@@ -86,7 +86,7 @@
         {
           "position": "RB",
           "name": "Javier Zanetti",
-          "count": 17,
+          "count": 16,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -139,18 +139,18 @@
         },
         {
           "position": "ST",
-          "name": "Pelé",
-          "count": 11,
-          "country": "Brazil",
+          "name": "Eldor Shomurodov",
+          "count": 10,
+          "country": "Uzbekistan",
           "positions": [
             "ST"
           ]
         },
         {
           "position": "ST",
-          "name": "Eldor Shomurodov",
+          "name": "Pelé",
           "count": 10,
-          "country": "Uzbekistan",
+          "country": "Brazil",
           "positions": [
             "ST"
           ]
@@ -193,7 +193,7 @@
         },
         {
           "name": "Javier Zanetti",
-          "count": 17,
+          "count": 16,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -208,11 +208,10 @@
           ]
         },
         {
-          "name": "Silvio Marzolini",
-          "count": 15,
-          "country": "Argentina",
+          "name": "Roberto Carlos",
+          "count": 14,
+          "country": "Brazil",
           "positions": [
-            "CB",
             "LB"
           ]
         }
@@ -508,7 +507,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 348
+      "count": 324
     },
     {
       "rank": 2,
@@ -550,23 +549,6 @@
       ]
     },
     {
-      "name": "Javier Zanetti",
-      "count": 18,
-      "country": "Argentina",
-      "positions": [
-        "RB"
-      ]
-    },
-    {
-      "name": "Nílton Santos",
-      "count": 18,
-      "country": "Brazil",
-      "positions": [
-        "CB",
-        "LB"
-      ]
-    },
-    {
       "name": "Roberto Carlos",
       "count": 18,
       "country": "Brazil",
@@ -575,8 +557,25 @@
       ]
     },
     {
-      "name": "Cristiano Ronaldo",
+      "name": "Javier Zanetti",
       "count": 17,
+      "country": "Argentina",
+      "positions": [
+        "RB"
+      ]
+    },
+    {
+      "name": "Nílton Santos",
+      "count": 17,
+      "country": "Brazil",
+      "positions": [
+        "CB",
+        "LB"
+      ]
+    },
+    {
+      "name": "Cristiano Ronaldo",
+      "count": 16,
       "country": "Portugal",
       "positions": [
         "LW",
@@ -586,20 +585,11 @@
     },
     {
       "name": "Bernardo Silva",
-      "count": 16,
+      "count": 15,
       "country": "Portugal",
       "positions": [
         "MID",
         "RW"
-      ]
-    },
-    {
-      "name": "Silvio Marzolini",
-      "count": 16,
-      "country": "Argentina",
-      "positions": [
-        "CB",
-        "LB"
       ]
     },
     {
@@ -611,14 +601,6 @@
       ]
     },
     {
-      "name": "Pelé",
-      "count": 15,
-      "country": "Brazil",
-      "positions": [
-        "ST"
-      ]
-    },
-    {
       "name": "Jairzinho",
       "count": 14,
       "country": "Brazil",
@@ -626,25 +608,42 @@
         "MID",
         "RW"
       ]
+    },
+    {
+      "name": "Pelé",
+      "count": 14,
+      "country": "Brazil",
+      "positions": [
+        "ST"
+      ]
+    },
+    {
+      "name": "Rivellino",
+      "count": 14,
+      "country": "Brazil",
+      "positions": [
+        "CM",
+        "MID"
+      ]
     }
   ],
   "topWinningTeam": {
     "country": "Brazil",
-    "count": 23
+    "count": 22
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 107
+    "count": 102
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 76,
+      "count": 74,
       "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
-      "count": 62,
+      "count": 60,
       "country": "Brazil"
     },
     {
@@ -658,9 +657,9 @@
       "country": "Spain"
     },
     {
-      "coach": "Bora Milutinovic",
-      "count": 42,
-      "country": "United States"
+      "coach": "Mário Zagallo",
+      "count": 40,
+      "country": "Brazil"
     }
   ]
 }
