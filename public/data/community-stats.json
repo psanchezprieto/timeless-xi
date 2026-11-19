@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-18T15:08:23.444Z",
+  "updatedAt": "2026-11-19T15:16:53.641Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-20T15:08:22.035Z",
-  "totalStarts": 385,
-  "totalWins": 116,
-  "winRate": 30.1,
+  "sinceDate": "2026-08-21T15:16:52.472Z",
+  "totalStarts": 371,
+  "totalWins": 111,
+  "winRate": 29.9,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -14,17 +14,17 @@
     {
       "rank": 2,
       "country": "France",
-      "count": 29
+      "count": 28
     },
     {
       "rank": 3,
       "country": "Portugal",
-      "count": 26
+      "count": 25
     },
     {
       "rank": 4,
       "country": "Spain",
-      "count": 26
+      "count": 24
     },
     {
       "rank": 5,
@@ -34,7 +34,7 @@
     {
       "rank": 6,
       "country": "England",
-      "count": 18
+      "count": 16
     }
   ],
   "topNations": [
@@ -46,17 +46,17 @@
     {
       "rank": 2,
       "country": "France",
-      "count": 29
+      "count": 28
     },
     {
       "rank": 3,
       "country": "Portugal",
-      "count": 26
+      "count": 25
     },
     {
       "rank": 4,
       "country": "Spain",
-      "count": 26
+      "count": 24
     },
     {
       "rank": 5,
@@ -66,19 +66,19 @@
     {
       "rank": 6,
       "country": "England",
-      "count": 18
+      "count": 16
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 137,
+      "totalVotes": 131,
       "team": [
         {
           "position": "GK",
-          "name": "Botirali Ergashev",
+          "name": "Nour Bani Attiah",
           "count": 10,
-          "country": "Uzbekistan",
+          "country": "Jordan",
           "positions": [
             "GK"
           ]
@@ -94,16 +94,16 @@
         },
         {
           "position": "CB",
-          "name": "Ricardo Carvalho",
-          "count": 10,
-          "country": "Portugal",
+          "name": "Djalma Santos",
+          "count": 9,
+          "country": "Brazil",
           "positions": [
             "CB"
           ]
         },
         {
           "position": "CB",
-          "name": "Djalma Santos",
+          "name": "Hilderaldo Bellini",
           "count": 9,
           "country": "Brazil",
           "positions": [
@@ -130,20 +130,11 @@
         },
         {
           "position": "CM",
-          "name": "Luis Suárez",
-          "count": 7,
-          "country": "Spain",
+          "name": "Zinedine Zidane",
+          "count": 6,
+          "country": "France",
           "positions": [
             "CM"
-          ]
-        },
-        {
-          "position": "ST",
-          "name": "Eldor Shomurodov",
-          "count": 10,
-          "country": "Uzbekistan",
-          "positions": [
-            "ST"
           ]
         },
         {
@@ -156,9 +147,18 @@
           ]
         },
         {
+          "position": "ST",
+          "name": "Eldor Shomurodov",
+          "count": 9,
+          "country": "Uzbekistan",
+          "positions": [
+            "ST"
+          ]
+        },
+        {
           "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 24,
+          "count": 23,
           "country": "France",
           "positions": [
             "MID"
@@ -167,7 +167,7 @@
         {
           "name": "Gaizka Mendieta",
           "position": "MID",
-          "count": 20,
+          "count": 18,
           "country": "Spain",
           "positions": [
             "MID"
@@ -177,7 +177,7 @@
       "topPlayers": [
         {
           "name": "Ousmane Dembélé",
-          "count": 24,
+          "count": 23,
           "country": "France",
           "positions": [
             "MID"
@@ -185,7 +185,7 @@
         },
         {
           "name": "Gaizka Mendieta",
-          "count": 20,
+          "count": 18,
           "country": "Spain",
           "positions": [
             "MID"
@@ -507,12 +507,12 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 324
+      "count": 311
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 38
+      "count": 37
     },
     {
       "rank": 3,
@@ -533,7 +533,7 @@
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 29,
+      "count": 28,
       "country": "France",
       "positions": [
         "MID",
@@ -542,7 +542,7 @@
     },
     {
       "name": "Gaizka Mendieta",
-      "count": 21,
+      "count": 19,
       "country": "Spain",
       "positions": [
         "MID"
@@ -575,7 +575,7 @@
     },
     {
       "name": "Cristiano Ronaldo",
-      "count": 16,
+      "count": 15,
       "country": "Portugal",
       "positions": [
         "LW",
@@ -584,20 +584,20 @@
       ]
     },
     {
-      "name": "Bernardo Silva",
-      "count": 15,
-      "country": "Portugal",
-      "positions": [
-        "MID",
-        "RW"
-      ]
-    },
-    {
       "name": "Florent Malouda",
       "count": 15,
       "country": "France",
       "positions": [
         "MID"
+      ]
+    },
+    {
+      "name": "Bernardo Silva",
+      "count": 14,
+      "country": "Portugal",
+      "positions": [
+        "MID",
+        "RW"
       ]
     },
     {
@@ -633,12 +633,12 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 102
+    "count": 97
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 74,
+      "count": 72,
       "country": "Portugal"
     },
     {
@@ -648,12 +648,12 @@
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 56,
+      "count": 54,
       "country": "France"
     },
     {
       "coach": "Luis Aragonés",
-      "count": 49,
+      "count": 45,
       "country": "Spain"
     },
     {
