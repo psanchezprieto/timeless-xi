@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-21T14:15:15.236Z",
+  "updatedAt": "2026-11-22T14:04:33.693Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-23T14:15:14.227Z",
-  "totalStarts": 376,
+  "sinceDate": "2026-08-24T14:04:32.437Z",
+  "totalStarts": 369,
   "totalWins": 111,
-  "winRate": 29.5,
+  "winRate": 30.1,
   "topCountriesPlaying": [
     {
       "rank": 1,
@@ -34,7 +34,7 @@
     {
       "rank": 6,
       "country": "England",
-      "count": 16
+      "count": 15
     }
   ],
   "topNations": [
@@ -66,18 +66,18 @@
     {
       "rank": 6,
       "country": "England",
-      "count": 16
+      "count": 15
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 132,
+      "totalVotes": 130,
       "team": [
         {
           "position": "GK",
           "name": "Nour Bani Attiah",
-          "count": 11,
+          "count": 10,
           "country": "Jordan",
           "positions": [
             "GK"
@@ -149,7 +149,7 @@
         {
           "position": "ST",
           "name": "Eldor Shomurodov",
-          "count": 9,
+          "count": 8,
           "country": "Uzbekistan",
           "positions": [
             "ST"
@@ -507,7 +507,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 316
+      "count": 309
     },
     {
       "rank": 2,
