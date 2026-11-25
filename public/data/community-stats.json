@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T16:58:52.374Z",
+  "updatedAt": "2026-11-25T16:49:02.300Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-26T16:58:51.382Z",
+  "sinceDate": "2026-08-27T16:49:00.373Z",
   "totalStarts": 351,
   "totalWins": 103,
   "winRate": 29.3,
@@ -23,12 +23,12 @@
     },
     {
       "rank": 4,
-      "country": "Argentina",
+      "country": "Portugal",
       "count": 19
     },
     {
       "rank": 5,
-      "country": "Portugal",
+      "country": "Argentina",
       "count": 19
     },
     {
@@ -55,12 +55,12 @@
     },
     {
       "rank": 4,
-      "country": "Argentina",
+      "country": "Portugal",
       "count": 19
     },
     {
       "rank": 5,
-      "country": "Portugal",
+      "country": "Argentina",
       "count": 19
     },
     {
