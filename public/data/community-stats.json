@@ -1,78 +1,78 @@
 {
-  "updatedAt": "2026-11-25T16:49:02.300Z",
+  "updatedAt": "2026-11-26T16:25:35.828Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-27T16:49:00.373Z",
-  "totalStarts": 351,
-  "totalWins": 103,
-  "winRate": 29.3,
+  "sinceDate": "2026-08-28T16:25:34.456Z",
+  "totalStarts": 336,
+  "totalWins": 92,
+  "winRate": 27.4,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 39
+      "count": 38
     },
     {
       "rank": 2,
       "country": "France",
-      "count": 25
+      "count": 24
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 24
+      "count": 23
     },
     {
       "rank": 4,
-      "country": "Portugal",
-      "count": 19
+      "country": "Argentina",
+      "count": 18
     },
     {
       "rank": 5,
-      "country": "Argentina",
-      "count": 19
+      "country": "Portugal",
+      "count": 17
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 13
+      "count": 12
     }
   ],
   "topNations": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 39
+      "count": 38
     },
     {
       "rank": 2,
       "country": "France",
-      "count": 25
+      "count": 24
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 24
+      "count": 23
     },
     {
       "rank": 4,
-      "country": "Portugal",
-      "count": 19
+      "country": "Argentina",
+      "count": 18
     },
     {
       "rank": 5,
-      "country": "Argentina",
-      "count": 19
+      "country": "Portugal",
+      "count": 17
     },
     {
       "rank": 6,
       "country": "England",
-      "count": 13
+      "count": 12
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 123,
+      "totalVotes": 120,
       "team": [
         {
           "position": "GK",
@@ -86,7 +86,7 @@
         {
           "position": "RB",
           "name": "Javier Zanetti",
-          "count": 14,
+          "count": 13,
           "country": "Argentina",
           "positions": [
             "RB"
@@ -158,7 +158,7 @@
         {
           "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 20,
+          "count": 19,
           "country": "France",
           "positions": [
             "MID"
@@ -167,7 +167,7 @@
         {
           "name": "Gaizka Mendieta",
           "position": "MID",
-          "count": 18,
+          "count": 17,
           "country": "Spain",
           "positions": [
             "MID"
@@ -177,7 +177,7 @@
       "topPlayers": [
         {
           "name": "Ousmane Dembélé",
-          "count": 20,
+          "count": 19,
           "country": "France",
           "positions": [
             "MID"
@@ -185,18 +185,10 @@
         },
         {
           "name": "Gaizka Mendieta",
-          "count": 18,
+          "count": 17,
           "country": "Spain",
           "positions": [
             "MID"
-          ]
-        },
-        {
-          "name": "Javier Zanetti",
-          "count": 14,
-          "country": "Argentina",
-          "positions": [
-            "RB"
           ]
         },
         {
@@ -208,8 +200,16 @@
           ]
         },
         {
+          "name": "Javier Zanetti",
+          "count": 13,
+          "country": "Argentina",
+          "positions": [
+            "RB"
+          ]
+        },
+        {
           "name": "Florent Malouda",
-          "count": 12,
+          "count": 11,
           "country": "France",
           "positions": [
             "MID"
@@ -498,7 +498,7 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 298
+      "count": 283
     },
     {
       "rank": 2,
@@ -524,7 +524,7 @@
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 25,
+      "count": 24,
       "country": "France",
       "positions": [
         "MID",
@@ -533,7 +533,7 @@
     },
     {
       "name": "Gaizka Mendieta",
-      "count": 19,
+      "count": 18,
       "country": "Spain",
       "positions": [
         "MID"
@@ -549,7 +549,7 @@
     },
     {
       "name": "Nílton Santos",
-      "count": 16,
+      "count": 15,
       "country": "Brazil",
       "positions": [
         "CB",
@@ -567,7 +567,7 @@
     },
     {
       "name": "Javier Zanetti",
-      "count": 14,
+      "count": 13,
       "country": "Argentina",
       "positions": [
         "RB"
@@ -591,15 +591,6 @@
       ]
     },
     {
-      "name": "Benjamin Pavard",
-      "count": 12,
-      "country": "France",
-      "positions": [
-        "CB",
-        "RB"
-      ]
-    },
-    {
       "name": "Carlos Alberto",
       "count": 12,
       "country": "Brazil",
@@ -608,48 +599,55 @@
       ]
     },
     {
-      "name": "Cristiano Ronaldo",
+      "name": "Djalma Santos",
       "count": 12,
-      "country": "Portugal",
+      "country": "Brazil",
       "positions": [
-        "LW",
-        "MID",
-        "ST"
+        "CB",
+        "RB"
+      ]
+    },
+    {
+      "name": "Gilmar",
+      "count": 12,
+      "country": "Brazil",
+      "positions": [
+        "GK"
       ]
     }
   ],
   "topWinningTeam": {
     "country": "Brazil",
-    "count": 21
+    "count": 20
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 91
+    "count": 80
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 64,
+      "count": 60,
       "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
-      "count": 58,
+      "count": 56,
       "country": "Brazil"
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 48,
+      "count": 46,
       "country": "France"
     },
     {
       "coach": "Luis Aragonés",
-      "count": 45,
+      "count": 43,
       "country": "Spain"
     },
     {
       "coach": "Mário Zagallo",
-      "count": 40,
+      "count": 38,
       "country": "Brazil"
     }
   ]
