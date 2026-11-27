@@ -1,78 +1,78 @@
 {
-  "updatedAt": "2026-11-26T16:25:35.828Z",
+  "updatedAt": "2026-11-27T16:10:27.948Z",
   "periodDays": 90,
-  "sinceDate": "2026-08-28T16:25:34.456Z",
-  "totalStarts": 336,
-  "totalWins": 92,
-  "winRate": 27.4,
+  "sinceDate": "2026-08-29T16:10:26.422Z",
+  "totalStarts": 305,
+  "totalWins": 88,
+  "winRate": 28.9,
   "topCountriesPlaying": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 38
+      "count": 35
     },
     {
       "rank": 2,
       "country": "France",
-      "count": 24
+      "count": 23
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 23
+      "count": 22
     },
     {
       "rank": 4,
-      "country": "Argentina",
-      "count": 18
+      "country": "Portugal",
+      "count": 16
     },
     {
       "rank": 5,
-      "country": "Portugal",
-      "count": 17
+      "country": "Argentina",
+      "count": 15
     },
     {
       "rank": 6,
-      "country": "England",
-      "count": 12
+      "country": "Jordan",
+      "count": 11
     }
   ],
   "topNations": [
     {
       "rank": 1,
       "country": "Brazil",
-      "count": 38
+      "count": 35
     },
     {
       "rank": 2,
       "country": "France",
-      "count": 24
+      "count": 23
     },
     {
       "rank": 3,
       "country": "Spain",
-      "count": 23
+      "count": 22
     },
     {
       "rank": 4,
-      "country": "Argentina",
-      "count": 18
+      "country": "Portugal",
+      "count": 16
     },
     {
       "rank": 5,
-      "country": "Portugal",
-      "count": 17
+      "country": "Argentina",
+      "count": 15
     },
     {
       "rank": 6,
-      "country": "England",
-      "count": 12
+      "country": "Jordan",
+      "count": 11
     }
   ],
   "topFormations": [
     {
       "formation": "4-4-2",
-      "totalVotes": 120,
+      "totalVotes": 116,
       "team": [
         {
           "position": "GK",
@@ -130,9 +130,9 @@
         },
         {
           "position": "CM",
-          "name": "Andrés Iniesta",
+          "name": "Gérson",
           "count": 5,
-          "country": "Spain",
+          "country": "Brazil",
           "positions": [
             "CM"
           ]
@@ -140,7 +140,7 @@
         {
           "position": "ST",
           "name": "Pelé",
-          "count": 9,
+          "count": 8,
           "country": "Brazil",
           "positions": [
             "ST"
@@ -149,7 +149,7 @@
         {
           "position": "ST",
           "name": "Eldor Shomurodov",
-          "count": 8,
+          "count": 7,
           "country": "Uzbekistan",
           "positions": [
             "ST"
@@ -158,7 +158,7 @@
         {
           "name": "Ousmane Dembélé",
           "position": "MID",
-          "count": 19,
+          "count": 18,
           "country": "France",
           "positions": [
             "MID"
@@ -167,7 +167,7 @@
         {
           "name": "Gaizka Mendieta",
           "position": "MID",
-          "count": 17,
+          "count": 16,
           "country": "Spain",
           "positions": [
             "MID"
@@ -177,7 +177,7 @@
       "topPlayers": [
         {
           "name": "Ousmane Dembélé",
-          "count": 19,
+          "count": 18,
           "country": "France",
           "positions": [
             "MID"
@@ -185,7 +185,7 @@
         },
         {
           "name": "Gaizka Mendieta",
-          "count": 17,
+          "count": 16,
           "country": "Spain",
           "positions": [
             "MID"
@@ -209,7 +209,7 @@
         },
         {
           "name": "Florent Malouda",
-          "count": 11,
+          "count": 10,
           "country": "France",
           "positions": [
             "MID"
@@ -356,139 +356,148 @@
       ]
     },
     {
-      "formation": "4-2-4",
-      "totalVotes": 13,
+      "formation": "5-3-2",
+      "totalVotes": 11,
       "team": [
         {
           "position": "GK",
-          "name": "Júlio César",
-          "count": 2,
-          "country": "Brazil",
+          "name": "Antonis Minou",
+          "count": 1,
+          "country": "Greece",
           "positions": [
             "GK"
           ]
         },
         {
-          "position": "RB",
-          "name": "Cafu",
-          "count": 1,
-          "country": "Brazil",
-          "positions": [
-            "RB"
-          ]
-        },
-        {
-          "position": "CB",
-          "name": "Héctor Moreno",
-          "count": 1,
-          "country": "Mexico",
-          "positions": [
-            "CB"
-          ]
-        },
-        {
-          "position": "CB",
-          "name": "Hilderaldo Bellini",
-          "count": 1,
-          "country": "Brazil",
-          "positions": [
-            "CB"
-          ]
-        },
-        {
           "position": "LB",
-          "name": "Jamba",
+          "name": "Christos Patsatzoglou",
           "count": 1,
-          "country": "Angola",
+          "country": "Greece",
           "positions": [
             "LB"
           ]
         },
         {
-          "position": "RW",
-          "name": "Jairzinho",
-          "count": 2,
-          "country": "Brazil",
-          "positions": [
-            "RW"
-          ]
-        },
-        {
-          "position": "ST",
-          "name": "Akwá",
+          "position": "CB",
+          "name": "Agustín Aranzábal",
           "count": 1,
-          "country": "Angola",
+          "country": "Spain",
           "positions": [
-            "ST"
+            "CB"
           ]
         },
         {
-          "position": "ST",
-          "name": "Douglas Costa",
+          "position": "CB",
+          "name": "Billy Wright",
           "count": 1,
-          "country": "Brazil",
+          "country": "England",
           "positions": [
-            "ST"
+            "CB"
           ]
         },
         {
-          "position": "LW",
-          "name": "Mário Zagallo",
+          "position": "CB",
+          "name": "Franco Baresi",
           "count": 1,
-          "country": "Brazil",
+          "country": "Italy",
           "positions": [
-            "LW"
+            "CB"
           ]
         },
         {
-          "name": "Casemiro",
+          "position": "RB",
+          "name": "Ernie Brandts",
+          "count": 1,
+          "country": "Netherlands",
+          "positions": [
+            "RB"
+          ]
+        },
+        {
           "position": "CM",
-          "count": 2,
-          "country": "Brazil",
+          "name": "David Beckham",
+          "count": 1,
+          "country": "England",
           "positions": [
             "CM"
+          ]
+        },
+        {
+          "position": "CM",
+          "name": "Edgar Davids",
+          "count": 1,
+          "country": "Netherlands",
+          "positions": [
+            "CM"
+          ]
+        },
+        {
+          "position": "CM",
+          "name": "Felipe Miñambres",
+          "count": 1,
+          "country": "Spain",
+          "positions": [
+            "CM"
+          ]
+        },
+        {
+          "position": "ST",
+          "name": "Angelos Charisteas",
+          "count": 1,
+          "country": "Greece",
+          "positions": [
+            "ST"
+          ]
+        },
+        {
+          "position": "ST",
+          "name": "Dennis Bergkamp",
+          "count": 1,
+          "country": "Netherlands",
+          "positions": [
+            "ST"
           ]
         }
       ],
       "topPlayers": [
         {
-          "name": "Casemiro",
-          "count": 2,
-          "country": "Brazil",
-          "positions": [
-            "CM"
-          ]
-        },
-        {
-          "name": "Jairzinho",
-          "count": 2,
-          "country": "Brazil",
-          "positions": [
-            "RW"
-          ]
-        },
-        {
-          "name": "Júlio César",
-          "count": 2,
-          "country": "Brazil",
-          "positions": [
-            "GK"
-          ]
-        },
-        {
-          "name": "Akwá",
+          "name": "Agustín Aranzábal",
           "count": 1,
-          "country": "Angola",
+          "country": "Spain",
+          "positions": [
+            "CB"
+          ]
+        },
+        {
+          "name": "Angelos Charisteas",
+          "count": 1,
+          "country": "Greece",
           "positions": [
             "ST"
           ]
         },
         {
-          "name": "Cafu",
+          "name": "Antonis Minou",
           "count": 1,
-          "country": "Brazil",
+          "country": "Greece",
           "positions": [
-            "RB"
+            "GK"
+          ]
+        },
+        {
+          "name": "Billy Wright",
+          "count": 1,
+          "country": "England",
+          "positions": [
+            "CB"
+          ]
+        },
+        {
+          "name": "Christos Patsatzoglou",
+          "count": 1,
+          "country": "Greece",
+          "positions": [
+            "LB"
           ]
         }
       ]
@@ -498,45 +507,37 @@
     {
       "rank": 1,
       "formation": "4-4-2",
-      "count": 283
+      "count": 258
     },
     {
       "rank": 2,
       "formation": "4-3-3",
-      "count": 33
+      "count": 30
     },
     {
       "rank": 3,
-      "formation": "3-5-2",
-      "count": 5
-    },
-    {
-      "rank": 4,
       "formation": "5-3-2",
       "count": 5
     },
     {
+      "rank": 4,
+      "formation": "3-5-2",
+      "count": 4
+    },
+    {
       "rank": 5,
       "formation": "4-2-4",
-      "count": 4
+      "count": 2
     }
   ],
   "topPlayersOverall": [
     {
       "name": "Ousmane Dembélé",
-      "count": 24,
+      "count": 23,
       "country": "France",
       "positions": [
         "MID",
         "RW"
-      ]
-    },
-    {
-      "name": "Gaizka Mendieta",
-      "count": 18,
-      "country": "Spain",
-      "positions": [
-        "MID"
       ]
     },
     {
@@ -548,17 +549,16 @@
       ]
     },
     {
-      "name": "Nílton Santos",
-      "count": 15,
-      "country": "Brazil",
+      "name": "Gaizka Mendieta",
+      "count": 17,
+      "country": "Spain",
       "positions": [
-        "CB",
-        "LB"
+        "MID"
       ]
     },
     {
       "name": "Jairzinho",
-      "count": 14,
+      "count": 13,
       "country": "Brazil",
       "positions": [
         "MID",
@@ -574,28 +574,12 @@
       ]
     },
     {
-      "name": "Pelé",
+      "name": "Nílton Santos",
       "count": 13,
       "country": "Brazil",
       "positions": [
-        "ST"
-      ]
-    },
-    {
-      "name": "Rivellino",
-      "count": 13,
-      "country": "Brazil",
-      "positions": [
-        "CM",
-        "MID"
-      ]
-    },
-    {
-      "name": "Carlos Alberto",
-      "count": 12,
-      "country": "Brazil",
-      "positions": [
-        "RB"
+        "CB",
+        "LB"
       ]
     },
     {
@@ -614,6 +598,33 @@
       "positions": [
         "GK"
       ]
+    },
+    {
+      "name": "Rivellino",
+      "count": 12,
+      "country": "Brazil",
+      "positions": [
+        "CM",
+        "MID"
+      ]
+    },
+    {
+      "name": "Carlos Alberto",
+      "count": 11,
+      "country": "Brazil",
+      "positions": [
+        "RB"
+      ]
+    },
+    {
+      "name": "Cristiano Ronaldo",
+      "count": 11,
+      "country": "Portugal",
+      "positions": [
+        "LW",
+        "MID",
+        "ST"
+      ]
     }
   ],
   "topWinningTeam": {
@@ -622,32 +633,32 @@
   },
   "topWinningFormation": {
     "formation": "4-4-2",
-    "count": 80
+    "count": 76
   },
   "topCoaches": [
     {
       "coach": "Luiz Felipe Scolari",
-      "count": 60,
+      "count": 56,
       "country": "Portugal"
     },
     {
       "coach": "Vicente Feola",
-      "count": 56,
+      "count": 52,
       "country": "Brazil"
     },
     {
       "coach": "Michel Hidalgo",
-      "count": 46,
+      "count": 44,
       "country": "France"
     },
     {
       "coach": "Luis Aragonés",
-      "count": 43,
+      "count": 41,
       "country": "Spain"
     },
     {
       "coach": "Mário Zagallo",
-      "count": 38,
+      "count": 34,
       "country": "Brazil"
     }
   ]
